@@ -68,6 +68,7 @@ case class Card(side1: Int, side2: Int, side3: Int, side4: Int ) {
 
 
 
+
   def print(): Null ={
     println(" _________")
     println("|         |")
