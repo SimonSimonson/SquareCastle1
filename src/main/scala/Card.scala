@@ -29,7 +29,7 @@ case class Card(side1: Int, side2: Int, side3: Int, side4: Int ) {
     true
   }
   def anlegen(pos:Int, karte:Card): Boolean ={
-
+    //pos ist die Seite der Karte
     if(roads(pos) == 1 || castle(pos) == 1 || none(pos) == 1 ){
       println("Da liegt schon eine Karte")
       return false
@@ -43,6 +43,7 @@ case class Card(side1: Int, side2: Int, side3: Int, side4: Int ) {
 
 
     if(mysides(pos) == karte.mysides(pos2)) {
+      println("Die Karte passt!")
       if (mysides(pos) == 0)
         none(pos) = 1
 
