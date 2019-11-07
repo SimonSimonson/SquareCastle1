@@ -54,6 +54,7 @@ case class Card(side1: Int, side2: Int, side3: Int, side4: Int ) {
 
       return true
     }
+    println("Die Karte passt nicht!")
 
     return false
 

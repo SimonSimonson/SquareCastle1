@@ -5,32 +5,36 @@ case class Map(x: Int, y: Int){
   def Setcard(card : Card, x:Int , y : Int): Int ={
     if(field(x)(y) != null)
       return -1
-    field(x)(y) = card
+
 
 
     if(field(x+1)(y) != null ) {
-      field(x+1)(y).anlegen(3,card)
+      if(!field(x + 1)(y).anlegen(3, card))
+        return -1
       card.anlegen(1,field(x+1)(y))
     }
 
 
     if(x-1 > 0 && field(x-1)(y) != null) {
-      field(x-1)(y).anlegen(1,card)
+      if(!field(x - 1)(y).anlegen(1, card))
+        return -1
       card.anlegen(3,field(x-1)(y))
 
     }
 
     if(field(x)(y+1) != null) {
-      field(x)(y+1).anlegen(0,card)
+      if(!field(x)(y+1).anlegen(0,card))
+        return -1
       card.anlegen(2,field(x)(y+1))
     }
 
     if(y-1 > 0 && field(x)(y-1) != null ) {
-      field(x)(y-1).anlegen(2,card)
+      if(!field(x)(y-1).anlegen(2,card))
+        return -1
       card.anlegen(0,field(x)(y-1))
 
     }
-
+    field(x)(y) = card
     return 1
   }
 
