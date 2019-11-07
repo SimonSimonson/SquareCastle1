@@ -34,15 +34,15 @@ case class Card(side1: Int, side2: Int, side3: Int, side4: Int ) {
       println("Da liegt schon eine Karte")
       return false
     }
-    var pos2
-    if(pos-2 < 0){
-      pos2 = pos+2
+    var pos2 = 0
+    if((pos - 2) < 0){
+      pos2 = pos + 2
     } else {
       pos2 = pos - 2
     }
 
 
-    if(mysides(pos)==karte.mysides(pos2)) {
+    if(mysides(pos) == karte.mysides(pos2)) {
       if (mysides(pos) == 0)
         none(pos) = 1
 
@@ -56,6 +56,13 @@ case class Card(side1: Int, side2: Int, side3: Int, side4: Int ) {
 
     return false
 
+  }
+
+  def CheckifAlone(): Boolean ={
+    if(none.isEmpty && roads.isEmpty && castle.isEmpty)
+      return true
+
+    false
   }
 
 
