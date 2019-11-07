@@ -1,11 +1,9 @@
 
 object main {
   def main(args: Array[String]): Unit = {
-    val karte = new Card(0,2,1,3)
+    val game1 = new Game
+    game1.start()
 
-    karte.print()
-    karte.rotate()
-    karte.print()
 
   }
 }
