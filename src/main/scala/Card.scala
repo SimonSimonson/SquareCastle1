@@ -68,6 +68,7 @@ case class Card(side1: Int, side2: Int, side3: Int, side4: Int ) {
 
 
 
+
   def print(): Null ={
     println(" _________")
     println("|         |")
@@ -77,6 +78,23 @@ case class Card(side1: Int, side2: Int, side3: Int, side4: Int ) {
     println("|_________|")
 
     null
+  }
+  def printline(zeile: Int): Unit={
+    zeile match{
+      case 0 => printf(" _________ ")
+      case 1 => printf("|         |")
+      case 2 => printf("|    " + mysides(0) + "    |")
+      case 3 => printf("| "+mysides(3)+"     "+ mysides(1)+" |")
+      case 4 => printf("|    " + mysides(2) + "    |")
+      case 5 => printf("|_________|")
+
+    }
+
+
+
+
+
+
   }
 
   override def equals(that: Any): Boolean = ???

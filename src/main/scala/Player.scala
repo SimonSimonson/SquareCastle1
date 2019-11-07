@@ -1,7 +1,7 @@
 package scala
 
-case class Player(value: "Name" ) {
+case class Player(value: String ) {
+    var points = 0
 
-  object name
 
 }
