@@ -1,6 +1,6 @@
-package scala
+package main.scala
 
-case class Map(mx: Int, my: Int){
+class Map(mx: Int, my: Int){
   val field = Array.ofDim[Card](mx,my)
   val mid = (mx/2,my/2)
 

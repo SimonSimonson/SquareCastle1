@@ -1,11 +1,10 @@
-package scala
-
+package main.scala
 case class Game () {
 
-  def start(p1: Player, p2: Player): Unit= {
-    //val map = new Map(10,5)
+  def start(p1: Player, p2: Player, runden: Int): Unit= {
+    val map = new Map(10,5)
+    map.print()
 
-    //map.print()
 
     /*
     val karte1 = new Card(0, 2, 1, 2)
@@ -32,4 +31,15 @@ case class Game () {
 
      */
   }
+  def RandomCard(): Card= {
+    val r = scala.util.Random
+    var s1 = r.nextInt(3)
+    var s2 = r.nextInt(3)
+    var s3 = r.nextInt(3)
+    var s4 = r.nextInt(3)
+
+    return new Card(s1,s2,s3,s4)
+  }
+
+
 }

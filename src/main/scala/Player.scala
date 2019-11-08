@@ -1,5 +1,5 @@
 
-package scala
+package main.scala
 import scala.collection.mutable.ListBuffer
 
 case class Player(name: String ) {
