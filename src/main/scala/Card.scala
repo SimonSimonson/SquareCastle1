@@ -66,7 +66,6 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
     if(none.isEmpty && roads.isEmpty && castle.isEmpty)
       return true
 
-
     false
   }
 

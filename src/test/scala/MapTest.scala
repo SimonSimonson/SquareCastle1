@@ -1,18 +1,21 @@
 /*
 import org.scalatest._
-import main.scala.Map
 
 class MapTest extends WordSpec with Matchers {
 
-  "A player" when { "new" should {
-    val player = Player("Julian")
-    "have a name"  in {
-      player.name should be("Julian")
-    }
-    "have a nice String representation" in {
-      player.toString should be("Player(Julian)")
-    }
-  }}
+  "A Map" when { "new" should {
 
+    "have setCard" in {
+      val field = Array.ofDim[Card](5,5)
+
+    "Karte kann gelegt werden" in {
+
+    }
+    "when karte passt nicht" in {
+      val karte1 = new Card(0, 2, 1, 2)
+      val karte2 = new Card(0, 1, 2, 1)
+      karte1.anlegen(1, karte2) should be(false)
+
+    }}
 }
 */

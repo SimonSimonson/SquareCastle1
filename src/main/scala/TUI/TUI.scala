@@ -18,9 +18,7 @@ case class TUI() {
 
     val x = scala.io.StdIn.readLine().toString
 
-    if (x.equals("Ja")|| x.equals("ja")) {
-      println(Console.WHITE + "Spiel gestartet")
-      prettyprint("................")
+    if (x.equals("Ja")|| x.equals("ja") || x.equals("JA")) {
       val game = new Game()
       return game
     }
@@ -29,17 +27,19 @@ case class TUI() {
   }
 
   def setPlayer(): (Player, Player) = {
-    prettyprint(Console.RED + "Gib deinen Namen ein spieler1  ")
+    prettyprint(Console.RED + "Gib deinen Namen ein Spieler 1  ")
     val player1 = Player(scala.io.StdIn.readLine().toString)
-    prettyprint(Console.RED + "Gib deinen Namen ein spieler2 ")
+    prettyprint(Console.RED + "Gib deinen Namen ein Spieler 2 ")
     val player2 = Player(scala.io.StdIn.readLine().toString)
 
     return (player1, player2)
   }
 
     def Runden(): Int = {
-      prettyprint(Console.RED + "Wie viele Runden?")
+      prettyprint(Console.RED + "Rundenanzahl?")
       val runden = scala.io.StdIn.readLine().toInt
+      println(Console.WHITE + "Spiel wird gestartet")
+      prettyprint(".  .  .  .  .  .  .  .")
       return runden
     }
 
@@ -48,7 +48,7 @@ case class TUI() {
       for (ix <- 0 until array.length) {
 
         print(array(ix))
-        Thread.sleep(200)
+        Thread.sleep(120)
       }
 
       println()

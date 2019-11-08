@@ -10,7 +10,7 @@ class Map(mx: Int, my: Int){
       return -1
 
 
-
+    //Folgende if Anweisungen schauen rechts, links, über und unter der liegeneden Karte
     if(field(x+1)(y) != null ) {
       if(!field(x + 1)(y).anlegen(3, card))
         return -1
@@ -50,7 +50,7 @@ class Map(mx: Int, my: Int){
       case 4 => printf("|         |")
       case 5 => printf("|_________|")
 
-        null
+
     }
   }
 
@@ -69,7 +69,7 @@ class Map(mx: Int, my: Int){
         }
         println()
       }
-      //println()
+
     }
 
 
