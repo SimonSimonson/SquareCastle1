@@ -4,9 +4,9 @@ import main.scala.model.Map
 case class Game() {
 
   def start(p1: Player, p2: Player, runden: Int): Unit= {
-    val map = new Map(10,5)
+    val map = new Map(3,3)
     map.print()
-
+    
     for(i <-  0 until runden){
       Thread.sleep(500)
       val card1 = Kartezeigen(p1)
@@ -60,7 +60,8 @@ case class Game() {
   }
 
   def Optionen(card: Card, map: Map): Unit = {
-    println(Console.RED + "r.... rotieren  ,  i x y.... Einfügen bei (x,y)")
+    println(Console.BLUE + "r.... rechts rum rotieren  ", Console.CYAN + "l.... links rumrotieren  ",
+      Console.MAGENTA + "  i x y.... Einfügen bei (x,y)  ", Console.RED + "  exit .... beenden")
     var a = true
     /*
     do {
@@ -83,7 +84,10 @@ case class Game() {
       var array = x.split(" +")
       println(array(0))
       if (array(0).equals("r")) {
-        card.rotate()
+        card.rotateRight()
+        card.print()
+      } else if (array(0).equals("l")){
+        card.rotateLeft()
         card.print()
       } else if (array(0).equals("i")) {
         if(map.Setcard(card, array(1).toInt, array(2).toInt)== 1){

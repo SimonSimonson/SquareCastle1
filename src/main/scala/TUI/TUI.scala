@@ -23,7 +23,7 @@ case class TUI() {
 
     val x = scala.io.StdIn.readLine().toString
 
-    if (x.equals("Ja")|| x.equals("ja") || x.equals("JA")) {
+    if (x.equals("Ja")|| x.equals("ja") || x.equals("JA") || x.equals("j")) {
       val game = new Game()
       return game
     }
@@ -43,8 +43,9 @@ case class TUI() {
     def Runden(): Int = {
       prettyprint(Console.RED + "Rundenanzahl?")
       val runden = scala.io.StdIn.readLine().toInt
+
       println(Console.WHITE + "Spiel wird gestartet")
-      prettyprint(".  .  .  .  .  .  .  .Ja")
+      prettyprint(".  .  .  .  .  .  .  .")
       return runden
     }
 

@@ -20,16 +20,27 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
 
 
 
-  def rotate(): Boolean ={
-    val rot:Array[Int] = new Array[Int](4)
-    rot(0) = mysides(3)
-    rot(1) = mysides(0)
-    rot(2) = mysides(1)
-    rot(3) = mysides(2)
-    mysides = rot
+  def rotateRight(): Boolean ={
+    val rotRight:Array[Int] = new Array[Int](4)
+    rotRight(0) = mysides(3)
+    rotRight(1) = mysides(0)
+    rotRight(2) = mysides(1)
+    rotRight(3) = mysides(2)
+    mysides = rotRight
 
     true
   }
+
+  def rotateLeft(): Boolean ={
+    val rotLeft:Array[Int] = new Array[Int](4)
+    rotLeft(0) = mysides(1)
+    rotLeft(1) = mysides(2)
+    rotLeft(2) = mysides(3)
+    rotLeft(3) = mysides(0)
+    mysides = rotLeft
+    true
+  }
+
   def anlegen(pos:Int, karte:Card): Boolean ={
     //pos ist die Seite der Karte
     if(roads(pos) == 1 || castle(pos) == 1 || none(pos) == 1 ){
