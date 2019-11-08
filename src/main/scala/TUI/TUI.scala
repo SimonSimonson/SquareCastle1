@@ -7,6 +7,10 @@ case class TUI() {
   def start(): Unit = {
 
     val g1 = newGame()
+    if(g1 == null){
+      println("Spiel beendet")
+      return
+    }
     val players = setPlayer()
 
     g1.start(players._1, players._2, Runden() )
