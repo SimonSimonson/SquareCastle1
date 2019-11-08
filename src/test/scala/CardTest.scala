@@ -26,6 +26,9 @@ class CardTest extends WordSpec with Matchers {
 
     }
     "when alone" in {
+      val none:Array[Card] = new Array[Card](4)
+      val roads:Array[Card] = new Array[Card](4)
+      val castle:Array[Card] = new Array[Card](4)
       cards.none should be (null)
       cards.roads should be (null)
       cards.castle should be (null)
