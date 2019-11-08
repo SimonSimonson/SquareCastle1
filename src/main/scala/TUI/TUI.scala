@@ -39,7 +39,7 @@ case class TUI() {
       prettyprint(Console.RED + "Rundenanzahl?")
       val runden = scala.io.StdIn.readLine().toInt
       println(Console.WHITE + "Spiel wird gestartet")
-      prettyprint(".  .  .  .  .  .  .  .")
+      prettyprint(".  .  .  .  .  .  .  .Ja")
       return runden
     }
 
