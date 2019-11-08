@@ -1,4 +1,6 @@
-import model.Player
+package main.scala.test.scala
+
+import main.scala.model.Player
 import org.scalatest._
 
 

@@ -1,4 +1,4 @@
-package model
+package main.scala.model
 
 case class Game () {
 
