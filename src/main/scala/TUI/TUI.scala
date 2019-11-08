@@ -1,6 +1,7 @@
 package main.scala.TUI
 
-import main.scala.model.{Game, Player}
+import main.scala.model.Player
+import main.scala.model.Game
 
 case class TUI() {
 

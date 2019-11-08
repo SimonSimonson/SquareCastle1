@@ -7,7 +7,7 @@ case class Game() {
     val map = new Map(10,5)
     map.print()
 
-    for(i <-  0 to runden){
+    for(i <-  0 until runden){
       Thread.sleep(500)
       val card1 = Kartezeigen(p1)
       Optionen(card1, map)
@@ -87,11 +87,11 @@ case class Game() {
         card.print()
       } else if (array(0).equals("i")) {
         println("Karte einfügen")
-        map.Setcard(card, array(1).toInt, array(2).toInt)
+        if(map.Setcard(card, array(1).toInt, array(2).toInt)== 1){
         a = false
         return
+        }
       }
     }
   }
-
 }
