@@ -36,6 +36,7 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
       println("Da liegt schon eine Karte")
       return false
     }
+
     var pos2 = 0
     if((pos - 2) < 0){
       pos2 = pos + 2
@@ -43,16 +44,23 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
       pos2 = pos - 2
     }
 
-
     if(mysides(pos) == karte.mysides(pos2)) {
       println("Die Karte passt!")
+
+      mysides(pos) match{
+        case 0 => none(pos) = karte
+        case 1 => roads(pos) = karte
+        case 2 => castle(pos) = karte
+      }
+
+      /*
       if (mysides(pos) == 0)
         none(pos) = karte
-
       if (mysides(pos) == 1)
         roads(pos) = karte
       if (mysides(pos) == 2)
         castle(pos) = karte
+      */
 
       return true
     }
