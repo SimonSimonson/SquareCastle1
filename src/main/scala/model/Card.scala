@@ -37,14 +37,7 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
     mysides = rotLeft
     true
   }
-
-  def anlegen(pos:Int, karte:Card): Boolean ={
-    //pos ist die Seite der liegenden Karte
-    if(roads(pos) == 1 || castle(pos) == 1 || none(pos) == 1 ){
-      println("Da liegt schon eine Karte")
-      return false
-    }
-    // pos2 = zu legende Karte; pos = liegende Karte
+  def getantipos(pos:Int): Int ={
     var pos2 = 0
     pos match{
       case 0 => pos2 = 2
@@ -52,6 +45,7 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
       case 2 => pos2 = 0
       case 3 => pos2 = 1
     }
+    return pos2
     /*
     if((pos - 2) <= 0){
       pos2 = pos + 2
@@ -59,7 +53,14 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
       pos2 = pos - 2
     }
     */
-
+  }
+  def anlegen(pos:Int, karte:Card): Boolean ={
+    //pos ist die Seite der Karte
+    //if(roads(pos) == 1 || castle(pos) == 1 || none(pos) == 1 ){
+    // println("Da liegt schon eine Karte")
+    //  return false
+    //}
+   var pos2 = getantipos(pos)
     if(mysides(pos) == karte.mysides(pos2)) {
         println("Die Karte passt!")
 

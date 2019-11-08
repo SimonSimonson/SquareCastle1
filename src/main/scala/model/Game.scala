@@ -7,7 +7,7 @@ case class Game() {
     val map = new Map(3,3)
     map.print()
 
-    for(i <- 0 until runden){
+    for(i <-  0 until runden){
       Thread.sleep(500)
       val card1 = Kartezeigen(p1)
       Optionen(card1, map)
@@ -92,6 +92,7 @@ case class Game() {
       return
     }
      */
+
 
     while (a) {
       val x = scala.io.StdIn.readLine().toString
