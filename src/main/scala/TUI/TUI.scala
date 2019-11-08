@@ -15,7 +15,6 @@ case class TUI() {
 
     val players = setPlayer()
     g1.start(players._1, players._2, Runden() )
-
   }
 
   def newGame(): Game = {
@@ -23,11 +22,10 @@ case class TUI() {
 
     val x = scala.io.StdIn.readLine().toString
 
-    if (x.equals("Ja")|| x.equals("ja") || x.equals("JA") || x.equals("j")) {
+    if (x.equals("Ja")|| x.equals("ja") || x.equals("JA") || x.equals("j") || x.equals("J")) {
       val game = new Game()
       return game
     }
-
     return null
   }
 

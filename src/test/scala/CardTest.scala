@@ -16,7 +16,7 @@ class CardTest extends WordSpec with Matchers {
     }
     "when rotateLeft"  in {
       cards.rotateLeft() should be (true)
-      cards.mysides(3) should be (0)
+      cards.mysides(2) should be (3)
     }
     "when karte passt" in {
       val karte1 = Card(0,2,1,2)

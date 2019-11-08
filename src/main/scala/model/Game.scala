@@ -7,7 +7,7 @@ case class Game() {
     val map = new Map(3,3)
     map.print()
 
-    for(i <-  0 until runden){
+    for(i <- 0 until runden){
       Thread.sleep(500)
       val card1 = Kartezeigen(p1)
       Optionen(card1, map)
@@ -45,21 +45,21 @@ case class Game() {
   }
   def RandomCard(): Card= {
     val r = scala.util.Random
-    var s1 = r.nextInt(3)
-    var s2 = r.nextInt(3)
-    var s3 = r.nextInt(3)
-    var s4 = r.nextInt(3)
+    val s1 = r.nextInt(3)
+    val s2 = r.nextInt(3)
+    val s3 = r.nextInt(3)
+    val s4 = r.nextInt(3)
 
-    return new Card(s1,s2,s3,s4)
+    return Card(s1,s2,s3,s4)
   }
   def Kartezeigen(player: Player): Card ={
     val card = RandomCard()
-    println(Console.RED + "spieler " + player.toString() + " hier ist deine Karte")
+    println(Console.RED + "Spieler " + player.toString() + " ist an der Reihe")
     card.print()
     return card
   }
 
-
+/*
   //Fürs Interface!
   def isNumber(string: String): Boolean ={
     //val x = scala.io.StdIn.readLine().toString
@@ -69,13 +69,14 @@ case class Game() {
     }
     return false
   }
-
+*/
 
 
   def Optionen(card: Card, map: Map): Unit = {
     println(Console.BLUE + "r.... rechts rum rotieren  ", Console.CYAN + "l.... links rumrotieren  ",
       Console.MAGENTA + "  i x y.... Einfügen bei (x,y)  ", Console.RED + "  exit .... beenden")
     var a = true
+
     /*
     do {
       var x = scala.io.StdIn.readLine().toString
@@ -90,8 +91,8 @@ case class Game() {
     } while (a)
       return
     }
-
      */
+
     while (a) {
       val x = scala.io.StdIn.readLine().toString
       val array = x.split(" +")
