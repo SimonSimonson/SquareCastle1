@@ -1,4 +1,4 @@
-import org.scalatest._
+/*import org.scalatest._
 
 
 class PlayerTest extends WordSpec with Matchers {
@@ -13,4 +13,4 @@ class PlayerTest extends WordSpec with Matchers {
     }
   }}
 
-}
+}*/

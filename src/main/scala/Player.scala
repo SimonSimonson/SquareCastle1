@@ -1,7 +1,9 @@
-package scala
 
-case class Player(value: String ) {
-    var points = 0
+package scala
+import scala.collection.mutable.ListBuffer
+
+case class Player(name: String ) {
+    val karten = new ListBuffer[Int]()
 
 
 }
