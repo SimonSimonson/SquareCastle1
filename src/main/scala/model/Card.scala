@@ -18,8 +18,6 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
   val roads:Array[Card] = new Array[Card](4)
   val castle:Array[Card] = new Array[Card](4)
 
-
-
   def rotateRight(): Boolean ={
     val rotRight:Array[Int] = new Array[Int](4)
     rotRight(0) = mysides(3)
@@ -63,7 +61,9 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
     */
 
     if(mysides(pos) == karte.mysides(pos2)) {
-      println("Die Karte passt!")
+        println("Die Karte passt!")
+
+
 
       mysides(pos) match{
         case 0 => none(pos) = karte

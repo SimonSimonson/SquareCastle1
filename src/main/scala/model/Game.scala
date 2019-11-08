@@ -73,7 +73,7 @@ case class Game() {
 
 
   def Optionen(card: Card, map: Map): Unit = {
-    println(Console.BLUE + "r.... rechts rum rotieren  ", Console.CYAN + "l.... links rumrotieren  ",
+    println(Console.BLUE + "r.... rechts rum rotieren  ", Console.CYAN + "l.... links rum rotieren  ",
       Console.MAGENTA + "  i x y.... Einfügen bei (x,y)  ", Console.RED + "  exit .... beenden")
     var a = true
 
