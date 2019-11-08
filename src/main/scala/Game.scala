@@ -1,9 +1,13 @@
-class Game () {
+package scala
 
-  def start(): Unit= {
+case class Game () {
+
+  def start(p1: Player, p2: Player): Unit= {
     val map = new Map(10,5)
 
+    map.print()
 
+    /*
     val karte1 = new Card(0, 2, 1, 2)
     val karte2 = new Card(0, 2, 1, 2)
     val karte3 = new Card(0, 2, 1, 2)
@@ -25,5 +29,7 @@ class Game () {
     if(er == -1)
       println("Karte konnte nicht gesetzt werden")
     map.print()
+
+     */
   }
 }

@@ -1,3 +1,5 @@
+package scala
+
 case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
 
   if(side0 > 2  || side1 > 2 || side2 > 2 || side3 > 2 ) {
@@ -63,6 +65,7 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
   def CheckifAlone(): Boolean ={
     if(none.isEmpty && roads.isEmpty && castle.isEmpty)
       return true
+
 
     false
   }

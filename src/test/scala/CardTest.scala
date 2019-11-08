@@ -29,9 +29,9 @@ class CardTest extends WordSpec with Matchers {
       val none:Array[Card] = new Array[Card](4)
       val roads:Array[Card] = new Array[Card](4)
       val castle:Array[Card] = new Array[Card](4)
-      cards.none should be (null)
-      cards.roads should be (null)
-      cards.castle should be (null)
+      cards.none should be (Array(null,null,null,null))
+      cards.roads should be (Array(null,null,null,null))
+      cards.castle should be (Array(null,null,null,null))
       cards.CheckifAlone() should be (true)
     }
 
