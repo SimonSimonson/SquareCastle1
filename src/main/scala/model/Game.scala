@@ -1,4 +1,5 @@
-package main.scala
+package model
+
 case class Game () {
 
   def start(p1: Player, p2: Player, runden: Int): Unit= {

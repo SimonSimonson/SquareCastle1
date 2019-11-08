@@ -1,4 +1,4 @@
-package main.scala
+package model
 
 case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
 

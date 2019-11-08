@@ -1,7 +1,7 @@
 package test.scala
 
+import model.Card
 import org.scalatest._
-import main.scala.Card
 
 class CardTest extends WordSpec with Matchers {
 
