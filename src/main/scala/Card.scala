@@ -1,6 +1,6 @@
 case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
 
-  if(side0 > 3  || side1 > 3 || side2 > 3 || side3 > 3 ) {
+  if(side0 > 2  || side1 > 2 || side2 > 2 || side3 > 2 ) {
     println("ungültige Eingabe")
     throw new Exception
   }
@@ -12,9 +12,9 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
   mysides(3)= side3;
 
   //ANGELEGTE KARTEN UND WAS ANGELEGT IST
-  val none:Array[Int] = new Array[Int](4)
-  val roads:Array[Int] = new Array[Int](4)
-  val castle:Array[Int] = new Array[Int](4)
+  val none:Array[Card] = new Array[Card](4)
+  val roads:Array[Card] = new Array[Card](4)
+  val castle:Array[Card] = new Array[Card](4)
 
 
 
@@ -45,12 +45,12 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
     if(mysides(pos) == karte.mysides(pos2)) {
       println("Die Karte passt!")
       if (mysides(pos) == 0)
-        none(pos) = 1
+        none(pos) = karte
 
       if (mysides(pos) == 1)
-        roads(pos) = 1
+        roads(pos) = karte
       if (mysides(pos) == 2)
-        castle(pos) = 1
+        castle(pos) = karte
 
       return true
     }
@@ -91,12 +91,6 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
       case 5 => printf("|_________|")
 
     }
-
-
-
-
-
-
   }
 
   override def equals(that: Any): Boolean = ???

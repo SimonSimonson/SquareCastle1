@@ -1,6 +1,6 @@
-case class Map(x: Int, y: Int){
-  val field = Array.ofDim[Card](x,y)
-  val mid = (x/2,y/2)
+case class Map(mx: Int, my: Int){
+  val field = Array.ofDim[Card](mx,my)
+  val mid = (mx/2,my/2)
 
   def Setcard(card : Card, x:Int , y : Int): Int ={
 
@@ -55,9 +55,9 @@ case class Map(x: Int, y: Int){
 
 
   def print(): Unit ={
-    for(iy <- 0 until y){
+    for(iy <- 0 until my){
       for(zeile <- 0 to 5){
-        for(ix <- 0 until x){
+        for(ix <- 0 until mx){
 
           if(field(ix)(iy)==null)
             nullprint(zeile)
@@ -66,7 +66,7 @@ case class Map(x: Int, y: Int){
         }
         println()
       }
-      println()
+      //println()
     }
 
 

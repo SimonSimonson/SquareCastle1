@@ -1,16 +1,16 @@
 class Game () {
 
   def start(): Unit= {
-    val map = new Map(5,5)
+    val map = new Map(10,5)
 
 
-    val karte1 = new Card(0, 2, 1, 3)
-    val karte2 = new Card(0, 2, 1, 3)
-    val karte3 = new Card(0, 2, 1, 3)
+    val karte1 = new Card(0, 2, 1, 2)
+    val karte2 = new Card(0, 2, 1, 2)
+    val karte3 = new Card(0, 2, 1, 2)
 
     //karte2.rotate()
     karte2.rotate()
-    karte2.rotate()
+    //karte2.rotate()
 
     var er = map.Setcard(karte1,map.mid._1,map.mid._2)
     er = map.Setcard(karte3,map.mid._1+1,map.mid._2-1)
