@@ -54,7 +54,7 @@ case class Game () {
   }
   def Kartezeigen(player: Player): Card ={
     val card = RandomCard()
-    println(Console.RED + "spieler " + player.toString() + "hier ist deine erste Karte")
+    println(Console.RED + "spieler " + player.toString() + " hier ist deine erste Karte")
     card.print()
     return card
   }
@@ -62,9 +62,10 @@ case class Game () {
   def Optionen(card: Card, map: Map): Unit ={
     println(Console.RED+ "r.... rotieren  ,  i x y.... Einfügen bei (x,y)  ,  exit .... beenden")
 
-    val x = scala.io.StdIn.readLine().toString
-    val array = x.split("//s")
     while(true) {
+
+      val x = scala.io.StdIn.readLine().toString
+      val array = x.split("//s")
       if (array(0).equals("r")) {
         card.rotate()
         card.print()

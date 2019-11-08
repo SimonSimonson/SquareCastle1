@@ -8,8 +8,8 @@ case class TUI() {
 
     val g1 = newGame()
     if(g1 == null){
-      println("Spiel beendet")
-      return
+      println("Goodbye!")
+      return -1
     }
     val players = setPlayer()
 
