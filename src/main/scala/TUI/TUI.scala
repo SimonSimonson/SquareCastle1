@@ -6,7 +6,6 @@ case class TUI() {
   def start(): Unit = {
 
     val g1 = newGame()
-
     val players = setPlayer()
     g1.start(players._1,players._2)
 
@@ -14,7 +13,7 @@ case class TUI() {
 
   }
   def newGame(): Game ={
-    prettyprint(Console.RED + " Neues Spiel erstellen...")
+    prettyprint(Console.RED + " Neues Spiel erstellen ?")
     val x = scala.io.StdIn.readLine().toString
 
     if(x.equals("Ja")) {
@@ -41,7 +40,7 @@ case class TUI() {
     for(ix <- 0 until array.length) {
 
       print(array(ix))
-      Thread.sleep(500)
+      Thread.sleep(200)
     }
 
     println()

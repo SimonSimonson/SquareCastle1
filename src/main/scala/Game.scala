@@ -3,9 +3,9 @@ package scala
 case class Game () {
 
   def start(p1: Player, p2: Player): Unit= {
-    val map = new Map(10,5)
+    //val map = new Map(10,5)
 
-    map.print()
+    //map.print()
 
     /*
     val karte1 = new Card(0, 2, 1, 2)
