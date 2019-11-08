@@ -5,7 +5,7 @@ import org.scalatest._
 class CardTest extends WordSpec with Matchers {
 
   "A Card" when { "new" should {
-    var cards = Card(0,1,2,3)
+    var cards = Card(0,1,2,2)
     "have an Array"  in {
       cards.side3 should be (2)
     }
@@ -26,10 +26,10 @@ class CardTest extends WordSpec with Matchers {
 
     }
     "when alone" in {
-      cards.CheckifAlone() should be (true)
       cards.none should be (null)
       cards.roads should be (null)
       cards.castle should be (null)
+      cards.CheckifAlone() should be (true)
     }
 
   }}
