@@ -1,4 +1,4 @@
-
+/*
 package main.scala.test.scala
 
 import org.scalatest._
@@ -18,3 +18,4 @@ class MapTest extends WordSpec with Matchers {
 
     }}
 }
+*/
