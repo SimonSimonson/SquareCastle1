@@ -19,6 +19,16 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
   val castle:Array[Card] = new Array[Card](4)
 
 
+  def getAngelegteR(): Int = {
+    var count = 0
+    none.indices.foreach( i =>  count += none(i).getAngelegteR())
+    return count
+
+  }
+  def getAngelegte(): Int = {
+    val sum = getAngelegteR()
+    return sum
+  }
 
   def rotateRight(): Boolean ={
     val rotRight:Array[Int] = new Array[Int](4)

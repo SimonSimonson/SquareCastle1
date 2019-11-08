@@ -18,30 +18,13 @@ case class Game() {
       Optionen(card2, map)
       map.print()
     }
-    /*
-    val karte1 = new Card(0, 2, 1, 2)
-    val karte2 = new Card(0, 2, 1, 2)
-    val karte3 = new Card(0, 2, 1, 2)
-
-    //karte2.rotate()
-    karte2.rotate()
-    //karte2.rotate()
-
-    var er = map.Setcard(karte1,map.mid._1,map.mid._2)
-    er = map.Setcard(karte3,map.mid._1+1,map.mid._2-1)
-
-    if(er == -1)
-      println("Karte konnte nicht gesetzt werden")
-    map.print()
+    getPoints(p1,p2)
 
 
-    er = map.Setcard(karte2,map.mid._1,map.mid._2-1)
 
-    if(er == -1)
-      println("Karte konnte nicht gesetzt werden")
-    map.print()
 
-     */
+
+
   }
   def RandomCard(): Card= {
     val r = scala.util.Random
@@ -55,6 +38,7 @@ case class Game() {
   def Kartezeigen(player: Player): Card ={
     val card = RandomCard()
     println(Console.RED + "Spieler " + player.toString() + " ist an der Reihe")
+    print(Console.WHITE)
     card.print()
     return card
   }
@@ -75,22 +59,6 @@ case class Game() {
   def Optionen(card: Card, map: Map): Unit = {
     println(Console.RED + "r.... rotieren  ,  i x y.... Einfügen bei (x,y)")
     var a = true
-    /*
-    do {
-      var x = scala.io.StdIn.readLine().toString
-      var array = x.split("//s")
-      if (array(0).equals("r")) {
-        card.rotate()
-        card.print()
-      } else if (array(0).equals("i")) {
-        map.Setcard(card, array(1).toInt, array(2).toInt)
-        a = false
-      }
-    } while (a)
-      return
-    }
-
-     */
     while (a) {
       val x = scala.io.StdIn.readLine().toString
       val array = x.split(" +")
@@ -111,4 +79,16 @@ case class Game() {
       }
     }
   }
+  def getPoints(player1: Player, player2: Player): (Int,Int) ={
+    val points1 = player1.getPoints()
+    val points2 = player2.getPoints()
+
+
+    return (points1,points2)
+  }
+
+
+
+
+
 }
