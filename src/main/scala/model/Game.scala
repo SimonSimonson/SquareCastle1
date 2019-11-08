@@ -7,7 +7,7 @@ case class Game() {
     val map = new Map(3,3)
     map.print()
 
-    for(i <- 0 until runden){
+    for(i <-  0 until runden){
       Thread.sleep(500)
       val card1 = Kartezeigen(p1)
       Optionen(card1, map)
@@ -73,10 +73,8 @@ case class Game() {
 
 
   def Optionen(card: Card, map: Map): Unit = {
-    println(Console.BLUE + "r.... rechts rum rotieren  ", Console.CYAN + "l.... links rumrotieren  ",
-      Console.MAGENTA + "  i x y.... Einfügen bei (x,y)  ", Console.RED + "  exit .... beenden")
+    println(Console.RED + "r.... rotieren  ,  i x y.... Einfügen bei (x,y)")
     var a = true
-
     /*
     do {
       var x = scala.io.StdIn.readLine().toString
@@ -91,8 +89,8 @@ case class Game() {
     } while (a)
       return
     }
-     */
 
+     */
     while (a) {
       val x = scala.io.StdIn.readLine().toString
       val array = x.split(" +")
