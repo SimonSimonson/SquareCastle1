@@ -1,7 +1,7 @@
 package main.scala.model
 import main.scala.model.Card
 import main.scala.model.Map
-case class Game () {
+case class Game() {
 
   def start(p1: Player, p2: Player, runden: Int): Unit= {
     val map = new Map(10,5)
@@ -59,25 +59,39 @@ case class Game () {
     return card
   }
 
-  def Optionen(card: Card, map: Map): Unit ={
-    println(Console.RED+ "r.... rotieren  ,  i x y.... Einfügen bei (x,y)  ,  exit .... beenden")
-
-    while(true) {
-
-      val x = scala.io.StdIn.readLine().toString
-      val array = x.split("//s")
+  def Optionen(card: Card, map: Map): Unit = {
+    println(Console.RED + "r.... rotieren  ,  i x y.... Einfügen bei (x,y)  ,  exit .... beenden")
+    var a = true
+    /*
+    do {
+      var x = scala.io.StdIn.readLine().toString
+      var array = x.split("//s")
       if (array(0).equals("r")) {
         card.rotate()
         card.print()
       } else if (array(0).equals("i")) {
         map.Setcard(card, array(1).toInt, array(2).toInt)
-        return
-
+        a = false
       }
+    } while (a)
+      return
     }
 
-
-
-
+     */
+    while (a) {
+      var x = scala.io.StdIn.readLine().toString
+      var array = x.split(" +")
+      println(array(0))
+      if (array(0).equals("r")) {
+        card.rotate()
+        card.print()
+      } else if (array(0).equals("i")) {
+        println("Karte einfügen")
+        map.Setcard(card, array(1).toInt, array(2).toInt)
+        a = false
+        return
+      }
+    }
   }
+
 }
