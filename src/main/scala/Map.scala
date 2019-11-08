@@ -57,6 +57,7 @@ class Map(mx: Int, my: Int){
 
 
   def print(): Unit ={
+    println(Console.WHITE)
     for(iy <- 0 until my){
       for(zeile <- 0 to 5){
         for(ix <- 0 until mx){

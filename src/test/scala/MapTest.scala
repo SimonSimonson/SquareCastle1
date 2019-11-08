@@ -1,5 +1,6 @@
 /*
 import org.scalatest._
+import main.scala.Map
 
 class MapTest extends WordSpec with Matchers {
 
