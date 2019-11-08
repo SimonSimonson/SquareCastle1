@@ -6,13 +6,15 @@ class Map(mx: Int, my: Int){
   val mid = (mx/2,my/2)
 
   def Setcard(card : Card, x:Int , y : Int): Int ={
-
+    if(x > mx-1 || y > my-1)
+      return -1
     if(field(x)(y) != null)
       return -1
 
 
+
     //Folgende if Anweisungen schauen rechts, links, über und unter der liegeneden Karte
-    if(field(x+1)(y) != null ) {
+    if(x+1 < mx &&field(x+1)(y) != null ) {
       if(!field(x + 1)(y).anlegen(3, card))
         return -1
       card.anlegen(1,field(x+1)(y))
@@ -27,7 +29,7 @@ class Map(mx: Int, my: Int){
 
     }
 
-    if(field(x)(y+1) != null) {
+    if(y+1 < my && field(x)(y+1) != null) {
       if(!field(x)(y+1).anlegen(0,card))
         return -1
       card.anlegen(2,field(x)(y+1))

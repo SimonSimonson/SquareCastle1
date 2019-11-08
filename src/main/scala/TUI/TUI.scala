@@ -53,7 +53,7 @@ case class TUI() {
       for (ix <- 0 until array.length) {
 
         print(array(ix))
-        Thread.sleep(120)
+        //Thread.sleep(120)
       }
 
       println()

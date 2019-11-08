@@ -60,7 +60,7 @@ case class Game() {
   }
 
   def Optionen(card: Card, map: Map): Unit = {
-    println(Console.RED + "r.... rotieren  ,  i x y.... Einfügen bei (x,y)  ,  exit .... beenden")
+    println(Console.RED + "r.... rotieren  ,  i x y.... Einfügen bei (x,y)")
     var a = true
     /*
     do {
@@ -86,10 +86,11 @@ case class Game() {
         card.rotate()
         card.print()
       } else if (array(0).equals("i")) {
-        println("Karte einfügen")
         if(map.Setcard(card, array(1).toInt, array(2).toInt)== 1){
-        a = false
-        return
+          a = false
+          return
+        }else {
+          println("Fehler beim einfügen")
         }
       }
     }
