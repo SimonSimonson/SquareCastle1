@@ -1,15 +1,15 @@
-case class Card(side1: Int, side2: Int, side3: Int, side4: Int ) {
+case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
 
-  if(side1 > 3  || side2 > 3 || side3 > 3 || side4 > 3 ) {
+  if(side0 > 3  || side1 > 3 || side2 > 3 || side3 > 3 ) {
     println("ungültige Eingabe")
     throw new Exception
   }
   //STRUKTUR DER KARTE
   var mysides:Array[Int] = new Array[Int](4)
-  mysides(0)= side1;
-  mysides(1)= side2;
-  mysides(2)= side3;
-  mysides(3)= side4;
+  mysides(0)= side0;
+  mysides(1)= side1;
+  mysides(2)= side2;
+  mysides(3)= side3;
 
   //ANGELEGTE KARTEN UND WAS ANGELEGT IST
   val none:Array[Int] = new Array[Int](4)

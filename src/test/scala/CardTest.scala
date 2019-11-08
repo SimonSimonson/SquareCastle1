@@ -11,7 +11,7 @@ class CardTest extends WordSpec with Matchers {
     }
     "when rotate"  in {
       cards.rotate() should be (true)
-      cards.side3 should be (2)
+      cards.mysides should be (2)
     }
 
   }}

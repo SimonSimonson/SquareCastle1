@@ -14,6 +14,7 @@ class Game () {
 
     var er = map.Setcard(karte1,map.mid._1,map.mid._2)
     er = map.Setcard(karte3,map.mid._1+1,map.mid._2-1)
+
     if(er == -1)
       println("Karte konnte nicht gesetzt werden")
     map.print()
