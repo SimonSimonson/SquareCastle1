@@ -12,8 +12,8 @@ case class TUI() {
       println("Goodbye!")
       return -1
     }
-    val players = setPlayer()
 
+    val players = setPlayer()
     g1.start(players._1, players._2, Runden() )
 
   }
@@ -42,10 +42,17 @@ case class TUI() {
 
     def Runden(): Int = {
       prettyprint(Console.RED + "Rundenanzahl?")
-      val runden = scala.io.StdIn.readLine().toInt
-
+      val x = scala.io.StdIn.readLine().toString
+      for(c <- x) {
+        if (!c.isDigit) {
+          println(Console.WHITE + "SPIEL WIRD ABGEBROCHEN! ?#!*!?!#")
+          return -1
+        }
+      }
       println(Console.WHITE + "Spiel wird gestartet")
       prettyprint(".  .  .  .  .  .  .  .")
+      val runden = x.toInt
+      println(Console.WHITE + runden)
       return runden
     }
 
