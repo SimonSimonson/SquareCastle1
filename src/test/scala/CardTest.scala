@@ -1,18 +1,20 @@
-/*
+
 import org.scalatest._
 
 
 class CardTest extends WordSpec with Matchers {
 
   "A Card" when { "new" should {
-    var mysides:Array[Int] = new Array[Int](4)
-    "have a size"  in {
-      mysides.length == 4
+    var cards = Card(1,2,3,0)
+    "have an Array"  in {
+      cards.side3 should be (3)
     }
-    "have a Value " in {
-      //player.toString should be("Julian")
+    "when rotate"  in {
+      cards.rotate() should be (true)
+      cards.side3 should be (2)
     }
+
   }}
 
 }
-*/
+
