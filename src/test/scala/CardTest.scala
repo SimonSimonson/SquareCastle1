@@ -27,6 +27,7 @@ class CardTest extends WordSpec with Matchers {
       val karte2 = Card(0,1,2,2)
       karte1.anlegen(1, karte2) should be (true)
 
+
     }
     "when karte passt nicht" in {
       val karte1 = Card(0,2,1,2)
