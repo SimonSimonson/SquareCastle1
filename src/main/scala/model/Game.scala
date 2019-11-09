@@ -19,7 +19,7 @@ case class Game() {
       map.print()
     }
     //PUNKTE AUSGEBEN, AUSWERTEN DER PUNKTE
-    val punkte = getPoints(p1,p2)
+    //val punkte = getPoints(p1,p2)
     if(punkte._1 > punkte._2)
       println(Console.RED + p1.toString()+" GEWINNT")
     else if(punkte._1 > punkte._2)
@@ -82,6 +82,7 @@ case class Game() {
       } else if (array(0).equals("i")) {
         if(map.Setcard(card, array(1).toInt, array(2).toInt)== 1){
           player.addCard(card)
+          player.addPoints(card.getAngelegte())
           a = false
           return
         }else {

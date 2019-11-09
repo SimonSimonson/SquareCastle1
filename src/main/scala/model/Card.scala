@@ -19,24 +19,19 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
   val castle:Array[Card] = new Array[Card](4)
 
   //REKTUSIVE METHODE, DIE ALLE ANGELEGTEN KARTEN DER 3 ARRAYS OBEN DURCHLÄUFT UND DIE GLEICHEN ZÄHLT
-  def getAngelegteR(kind: Int): Int = {
-    var count = 0
-    println(this)
-    println(roads(0)+ " " + roads(1)+ " " + roads(2) +" "+ roads(3))
-    println(castle(0)+" " + castle(1)+" "+castle(2)+" "+castle(3))
-    println(none(0)+ " "+none(1)+ " "+none(2)+ " "+none(3))
+  def getAngelegteR(kind: Int, l: Int): Int = {
 
     kind match{
-      case 0 => none.indices.foreach( i =>  if(none(i) != null){count += none(i).getAngelegteR(kind)})
-      case 1 => roads.indices.foreach( i =>  if(roads(i) != null) {count += roads(i).getAngelegteR(kind)})
-      case 2 => castle.indices.foreach( i =>  if(castle(i) != null) {count += castle(i).getAngelegteR(kind)})
+      case 0 => none.foreach( i =>  if(i != null){i.getAngelegteR(kind, l+1)})
+      case 1 => roads.foreach( i =>  if(i != null) {i.getAngelegteR(kind, l+1)})
+      case 2 => castle.foreach( i =>  if(i != null) {i.getAngelegteR(kind, l+1)})
     }
-    return count
+    return l
 
   }
   def getAngelegte(): Int = {
     val kind = 0
-    val sum = getAngelegteR(kind) + getAngelegteR(kind+1)*2 +getAngelegteR(kind+2)*3
+    val sum = getAngelegteR(kind, 0) + getAngelegteR(kind+1, 0)*2 +getAngelegteR(kind+2, 0)*3
     return sum
   }
 
