@@ -16,6 +16,7 @@ class Map(mx: Int, my: Int){
     //Folgende if Anweisungen schauen rechts, links, über und unter der liegeneden Karte
     //Rechts von liegender
     if(x+1 < mx &&field(x+1)(y) != null ) {
+      println("karte rechts davon")
       if(!field(x + 1)(y).anlegen(3, card))
         return -1
       card.anlegen(1,field(x+1)(y))
@@ -24,20 +25,23 @@ class Map(mx: Int, my: Int){
 
     //Links von liegender
     if(x-1 > 0 && field(x-1)(y) != null) {
+      println("karte links davon")
       if(!field(x - 1)(y).anlegen(1, card))
         return -1
       card.anlegen(3,field(x-1)(y))
 
     }
-    //Unter von liegender
+    //Über liegender Karte
     if(y+1 < my && field(x)(y+1) != null) {
+      println("karte unter davon")
       if(!field(x)(y+1).anlegen(0,card))
         return -1
       card.anlegen(2,field(x)(y+1))
 
     }
-    //Über von liegender
+    //Unter liegender Karte
     if(y-1 > 0 && field(x)(y-1) != null ) {
+      println("karte über davon")
       if(!field(x)(y-1).anlegen(2,card))
         return -1
       card.anlegen(0,field(x)(y-1))

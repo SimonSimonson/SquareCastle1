@@ -60,11 +60,12 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
     // println("Da liegt schon eine Karte")
     //  return false
     //}
+
    var pos2 = getantipos(pos)
-    if(mysides(pos) == karte.mysides(pos2)) {
+    println(mysides(pos) + " <-> " + mysides(pos2))
+
+    if(mysides(pos) == karte.mysides(pos2) ) {
         println("Die Karte passt!")
-
-
 
       mysides(pos) match{
         case 0 => none(pos) = karte
