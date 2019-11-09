@@ -10,17 +10,24 @@ case class Game() {
     for(i <-  0 until runden){
       Thread.sleep(500)
       val card1 = Kartezeigen(p1)
-      Optionen(card1, map)
+      Optionen(card1, map, p1)
       map.print()
 
       Thread.sleep(500)
       val card2 = Kartezeigen(p2)
-      Optionen(card2, map)
+      Optionen(card2, map, p2)
       map.print()
     }
-    getPoints(p1,p2)
+    //PUNKTE AUSGEBEN, AUSWERTEN DER PUNKTE
+    val punkte = getPoints(p1,p2)
+    if(punkte._1 > punkte._2)
+      println(Console.RED + p1.toString()+" GEWINNT")
+    else if(punkte._1 > punkte._2)
+      println(Console.RED + p2.toString()+" GEWINNT")
+    else{
+      println(Console.RED + "UNENTSCHIEDEN")
 
-
+    }
 
 
 
@@ -56,8 +63,8 @@ case class Game() {
 */
 
 
-  def Optionen(card: Card, map: Map): Unit = {
-    println(Console.RED + "r.... rotieren  ,  i x y.... Einfügen bei (x,y)")
+  def Optionen(card: Card, map: Map, player: Player): Unit = {
+    println(Console.RED + "r.... rotieren  ,  i x y.... Einfügen bei (x,y)  ,  wait .... Warten")
     var a = true
     while (a) {
       val x = scala.io.StdIn.readLine().toString
@@ -66,11 +73,15 @@ case class Game() {
       if (array(0).equals("r")) {
         card.rotateRight()
         card.print()
+      } else if (array(0).equals("wait")){
+        a = false
+        return
       } else if (array(0).equals("l")){
         card.rotateLeft()
         card.print()
       } else if (array(0).equals("i")) {
         if(map.Setcard(card, array(1).toInt, array(2).toInt)== 1){
+          player.addCard(card)
           a = false
           return
         }else {
@@ -81,7 +92,10 @@ case class Game() {
   }
   def getPoints(player1: Player, player2: Player): (Int,Int) ={
     val points1 = player1.getPoints()
+    println(points1)
     val points2 = player2.getPoints()
+    println(points2)
+
 
 
     return (points1,points2)
