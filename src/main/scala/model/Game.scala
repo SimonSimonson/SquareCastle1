@@ -20,9 +20,9 @@ case class Game() {
     }
     //PUNKTE AUSGEBEN, AUSWERTEN DER PUNKTE
     //val punkte = getPoints(p1,p2)
-    if(punkte._1 > punkte._2)
+    if(p1.Punkte > p2.Punkte)
       println(Console.RED + p1.toString()+" GEWINNT")
-    else if(punkte._1 > punkte._2)
+    else if(p2.Punkte > p2.Punkte)
       println(Console.RED + p2.toString()+" GEWINNT")
     else{
       println(Console.RED + "UNENTSCHIEDEN")
@@ -69,7 +69,6 @@ case class Game() {
     while (a) {
       val x = scala.io.StdIn.readLine().toString
       val array = x.split(" +")
-      println(array(0))
       if (array(0).equals("r")) {
         card.rotateRight()
         card.print()
@@ -80,9 +79,10 @@ case class Game() {
         card.rotateLeft()
         card.print()
       } else if (array(0).equals("i")) {
-        if(map.Setcard(card, array(1).toInt, array(2).toInt)== 1){
+        if(map.Setcard(card, array(1).toInt, array(2).toInt) == 1){
           player.addCard(card)
           player.addPoints(card.getAngelegte())
+          //println(player.toString() +"  :"+ player.Punkte)
           a = false
           return
         }else {

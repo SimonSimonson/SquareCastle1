@@ -8,6 +8,7 @@ class Map(mx: Int, my: Int){
   def Setcard(card : Card, x:Int , y : Int): Int ={
     if(x > mx-1 || y > my-1)
       return -1
+
     if(field(x)(y) != null)
       return -1
 
@@ -15,35 +16,26 @@ class Map(mx: Int, my: Int){
 
     //Folgende if Anweisungen schauen rechts, links, über und unter der liegeneden Karte
     //Rechts von liegender
-    if(x+1 < mx &&field(x+1)(y) != null ) {
-      if(!field(x + 1)(y).anlegen(3, card))
+    if(x+1 < mx && field(x+1)(y) != null ) {
+      if(!card.anlegen(1,field(x+1)(y)))
         return -1
-      card.anlegen(1,field(x+1)(y))
-
     }
 
     //Links von liegender
-    if(x-1 > 0 && field(x-1)(y) != null) {
-      if(!field(x - 1)(y).anlegen(1, card))
+    if(x-1 >= 0 && field(x-1)(y) != null) {
+      if(!card.anlegen(3,field(x-1)(y)))
         return -1
-      card.anlegen(3,field(x-1)(y))
-
     }
     //Unter von liegender
     if(y+1 < my && field(x)(y+1) != null) {
-      if(!field(x)(y+1).anlegen(0,card))
+      if(!card.anlegen(2,field(x)(y+1)))
         return -1
-      card.anlegen(2,field(x)(y+1))
-
     }
     //Über von liegender
-    if(y-1 > 0 && field(x)(y-1) != null ) {
-      if(!field(x)(y-1).anlegen(2,card))
+    if(y-1 >= 0 && field(x)(y-1) != null ) {
+      if(!card.anlegen(0,field(x)(y-1)))
         return -1
-      card.anlegen(0,field(x)(y-1))
-
     }
-
 
     field(x)(y) = card
     return 1
