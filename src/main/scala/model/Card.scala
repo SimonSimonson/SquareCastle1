@@ -20,7 +20,6 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
 
   //REKTUSIVE METHODE, DIE ALLE ANGELEGTEN KARTEN DER 3 ARRAYS OBEN DURCHLÄUFT UND DIE GLEICHEN ZÄHLT
   def getAngelegteR(kind: Int, l: Int): Int = {
-
     kind match{
       case 0 => {
         for(i <- 0 until 4){

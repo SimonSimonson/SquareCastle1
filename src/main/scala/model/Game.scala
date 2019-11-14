@@ -4,7 +4,7 @@ import main.scala.model.Map
 case class Game() {
 
   def start(p1: Player, p2: Player, runden: Int): Unit= {
-    val map = new Map(3,3)
+    val map = new Map(10,5)
     map.print()
 
     for(i <-  0 until runden){
@@ -64,7 +64,8 @@ case class Game() {
 
 
   def Optionen(card: Card, map: Map, player: Player): Unit = {
-    println(Console.RED + "r.... rotieren  ,  i x y.... Einfügen bei (x,y)  ,  wait .... Warten")
+    println(Console.BLUE + "r.... rechts rum rotieren  ", Console.CYAN + "l.... links rum rotieren  ",
+      Console.MAGENTA + "  i x y.... Einfügen bei (x,y)  ", Console.RED + "  exit .... beenden")
     var a = true
     while (a) {
       val x = scala.io.StdIn.readLine().toString
@@ -81,7 +82,7 @@ case class Game() {
       } else if (array(0).equals("i")) {
         if(map.Setcard(card, array(1).toInt, array(2).toInt) == 1){
           player.addCard(card)
-          player.addPoints(card.getAngelegte())
+          //player.addPoints(card.getAngelegte())
           //println(player.toString() +"  :"+ player.Punkte)
           a = false
           return
