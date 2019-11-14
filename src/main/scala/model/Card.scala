@@ -18,20 +18,42 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
   val roads:Array[Card] = new Array[Card](4)
   val castle:Array[Card] = new Array[Card](4)
 
+
   //REKTUSIVE METHODE, DIE ALLE ANGELEGTEN KARTEN DER 3 ARRAYS OBEN DURCHLÄUFT UND DIE GLEICHEN ZÄHLT
   def getAngelegteR(kind: Int, l: Int): Int = {
 
     kind match{
-      case 0 => none.foreach( i =>  if(i != null){i.getAngelegteR(kind, l+1)})
-      case 1 => roads.foreach( i =>  if(i != null) {i.getAngelegteR(kind, l+1)})
-      case 2 => castle.foreach( i =>  if(i != null) {i.getAngelegteR(kind, l+1)})
+      case 0 => {
+        if(none.isEmpty)
+          l
+        for(i <- 0 until 4){
+          if(none(i) != null)
+            none(i).getAngelegteR(kind, l+1)
+        }
+      }
+      case 1 =>  {
+        if(roads.isEmpty)
+          l
+        for(x <- 0 until 4){
+          if(roads(x) != null)
+            roads(x).getAngelegteR(kind, l+1)
+        }
+      }
+      case 2 =>  {
+        if(castle.isEmpty)
+          l
+        for(y <- 0 until 4){
+          if(castle(y) != null)
+            castle(y).getAngelegteR(kind, l+1)
+        }
+      }
     }
-    return l
+    l
 
   }
   def getAngelegte(): Int = {
-    val kind = 0
-    val sum = getAngelegteR(kind, 0) + getAngelegteR(kind+1, 0)*2 +getAngelegteR(kind+2, 0)*3
+    val sum = getAngelegteR(0, 0) + getAngelegteR(1, 0)*2 +getAngelegteR(2, 0)*3
+    println(sum)
     return sum
   }
 
@@ -63,46 +85,32 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
       case 3 => pos2 = 1
     }
     return pos2
-    /*
-    if((pos - 2) <= 0){
-      pos2 = pos + 2
-    } else {
-      pos2 = pos - 2
-    }
-    */
+  }
+  def passt(card: Card, pos1: Int, pos2: Int): Boolean = {
+    println("Vergleiche "+ this.mysides(pos1) + " mit "+ card.mysides(pos2))
+    return this.mysides(pos1) == card.mysides(pos2)
   }
   def anlegen(pos:Int, karte:Card): Boolean ={
-    //pos ist die Seite der Karte
-    //if(roads(pos) == 1 || castle(pos) == 1 || none(pos) == 1 ){
-    // println("Da liegt schon eine Karte")
-    //  return false
-    //}
-   var pos2 = getantipos(pos)
-    if(mysides(pos) == karte.mysides(pos2)) {
-      println("Die Karte passt!")
 
-      mysides(pos) match{
-        case 0 => none(pos) = karte
-        case 1 => roads(pos) = karte
-        case 2 => castle(pos) = karte
+    if(karte != null) {
+
+      var pos2 = getantipos(pos)
+      if (this.passt(karte, pos, pos2)) {
+
+        mysides(pos) match {
+          case 0 => none(pos) = karte; karte.none(pos2) = this
+          case 1 => roads(pos) = karte; karte.roads(pos2) = this
+          case 2 => castle(pos) = karte; karte.castle(pos2) = this
+        }
+        return true
+
       }
-
-      /*
-      if (mysides(pos) == 0)
-        none(pos) = karte
-      if (mysides(pos) == 1)
-        roads(pos) = karte
-      if (mysides(pos) == 2)
-        castle(pos) = karte
-      */
-
-      return true
+      println("Die Karte passt nicht!")
     }
-    println("Die Karte passt nicht!")
-
     false
-
   }
+
+
 
   def CheckifAlone(): Boolean ={
     if(none.isEmpty && roads.isEmpty && castle.isEmpty)
