@@ -4,7 +4,7 @@ import main.scala.model.Map
 case class Game() {
 
   def start(p1: Player, p2: Player, runden: Int): Unit= {
-    val map = new Map(3,3)
+    val map = new Map(6,6)
     map.print()
 
     for(i <-  0 until runden){
