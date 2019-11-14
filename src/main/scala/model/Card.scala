@@ -18,6 +18,7 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
   val roads:Array[Card] = new Array[Card](4)
   val castle:Array[Card] = new Array[Card](4)
 
+
   //REKTUSIVE METHODE, DIE ALLE ANGELEGTEN KARTEN DER 3 ARRAYS OBEN DURCHLÄUFT UND DIE GLEICHEN ZÄHLT
   def getAngelegteR(kind: Int, l: Int): Int = {
 
