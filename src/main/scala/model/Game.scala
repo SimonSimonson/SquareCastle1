@@ -82,7 +82,7 @@ case class Game() {
       } else if (array(0).equals("i")) {
         if(map.Setcard(card, array(1).toInt, array(2).toInt) == 1){
           player.addCard(card)
-          //player.addPoints(card.getAngelegte())
+          player.addPoints(card.getAngelegte())
           //println(player.toString() +"  :"+ player.Punkte)
           a = false
           return

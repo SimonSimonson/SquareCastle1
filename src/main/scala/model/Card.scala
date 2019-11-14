@@ -20,20 +20,27 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
 
   //REKTUSIVE METHODE, DIE ALLE ANGELEGTEN KARTEN DER 3 ARRAYS OBEN DURCHLÄUFT UND DIE GLEICHEN ZÄHLT
   def getAngelegteR(kind: Int, l: Int): Int = {
+
     kind match{
       case 0 => {
+        if(none.isEmpty)
+          l
         for(i <- 0 until 4){
           if(none(i) != null)
             none(i).getAngelegteR(kind, l+1)
         }
       }
       case 1 =>  {
+        if(roads.isEmpty)
+          l
         for(x <- 0 until 4){
           if(roads(x) != null)
             roads(x).getAngelegteR(kind, l+1)
         }
       }
       case 2 =>  {
+        if(castle.isEmpty)
+          l
         for(y <- 0 until 4){
           if(castle(y) != null)
             castle(y).getAngelegteR(kind, l+1)
@@ -44,8 +51,7 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
 
   }
   def getAngelegte(): Int = {
-    val kind = 0
-    val sum = getAngelegteR(kind, 0) + getAngelegteR(kind+1, 0)*2 +getAngelegteR(kind+2, 0)*3
+    val sum = getAngelegteR(0, 0) + getAngelegteR(1, 0)*2 +getAngelegteR(2, 0)*3
     println(sum)
     return sum
   }
