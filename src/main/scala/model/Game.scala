@@ -20,9 +20,9 @@ case class Game() {
     }
     //PUNKTE AUSGEBEN, AUSWERTEN DER PUNKTE
     //val punkte = getPoints(p1,p2)
-    if(punkte._1 > punkte._2)
+    if(p1.Punkte > p2.Punkte)
       println(Console.RED + p1.toString()+" GEWINNT")
-    else if(punkte._1 > punkte._2)
+    else if(p1.Punkte > p2.Punkte)
       println(Console.RED + p2.toString()+" GEWINNT")
     else{
       println(Console.RED + "UNENTSCHIEDEN")
