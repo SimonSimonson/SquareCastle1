@@ -1,6 +1,6 @@
 package main.scala.util
 
-import scala.swing.event.Event
+//import scala.swing.event.Event
 
 trait Observer {
   def update: Unit
