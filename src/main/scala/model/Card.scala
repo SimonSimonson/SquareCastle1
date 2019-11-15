@@ -20,40 +20,29 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
 
 
   //REKTUSIVE METHODE, DIE ALLE ANGELEGTEN KARTEN DER 3 ARRAYS OBEN DURCHLÄUFT UND DIE GLEICHEN ZÄHLT
-  def getAngelegteR(kind: Int, l: Int): Int = {
-
+  def getAngelegteR(kind: Int, l: Int, prev: Card): Int = {
+    var x = l
     kind match{
-      case 0 => {
-        if(none.isEmpty)
-          l
-        for(i <- 0 until 4){
-          if(none(i) != null)
-            none(i).getAngelegteR(kind, l+1)
+      case 0 =>  {
+        for(y <- 0 to 3 if none(y) != null && none(y)!= prev) {
+          x += none(y).getAngelegteR(kind, l + 1, this)
         }
       }
       case 1 =>  {
-        if(roads.isEmpty)
-          l
-        for(x <- 0 until 4){
-          if(roads(x) != null)
-            roads(x).getAngelegteR(kind, l+1)
-        }
+        for(y <- 0 to 3 if roads(y) != null && roads(y)!= prev)
+           x += roads(y).getAngelegteR(kind, l+1, this)
       }
       case 2 =>  {
-        if(castle.isEmpty)
-          l
-        for(y <- 0 until 4){
-          if(castle(y) != null)
-            castle(y).getAngelegteR(kind, l+1)
-        }
+        for(y <- 0 to 3 if castle(y) != null && castle(y)!=prev)
+           x += castle(y).getAngelegteR(kind, l+1, this)
       }
     }
-    l
+    x
 
   }
   def getAngelegte(): Int = {
-    val sum = getAngelegteR(0, 0) + getAngelegteR(1, 0)*2 +getAngelegteR(2, 0)*3
-    println(sum)
+    println("Wege angelegt: "+ getAngelegteR(1, 0, this) + " Burgen angelegt: " + getAngelegteR(2, 0,this))
+    var sum = getAngelegteR(1, 0, this) + getAngelegteR(2, 0,this)
     return sum
   }
 
@@ -146,5 +135,5 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
     }
   }
 
-  override def equals(that: Any): Boolean = ???
+  //override def equals(card: Card): Boolean = ???
 }

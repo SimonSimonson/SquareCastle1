@@ -1,9 +1,12 @@
 package main.scala.TUI
 
+import java.util.{Observable, Observer}
+
+import controller.Controller
 import main.scala.model.Player
 import main.scala.model.Game
 
-case class TUI() {
+case class TUI(controller:Controller) extends Observer{
 
   def start(): Unit = {
 
@@ -14,7 +17,7 @@ case class TUI() {
     }
 
     val players = setPlayer()
-    g1.start(players._1, players._2, Runden() )
+    controller.start(players._1, players._2, Runden() )
   }
 
   def newGame(): Game = {
@@ -65,4 +68,5 @@ case class TUI() {
       println()
     }
 
+  override def update(observable: Observable, o: Any): Unit = ???
 }
