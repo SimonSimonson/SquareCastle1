@@ -23,8 +23,7 @@ class Controller extends Observable{
       Optionen(card2, map, p2)
       map.print()
     }
-    //PUNKTE AUSGEBEN, AUSWERTEN DER PUNKTE
-    //val punkte = getPoints(p1,p2)
+  notifyObservers()
     println(p1.Punkte)
     println(p2.Punkte)
     if(p1.Punkte > p2.Punkte)
@@ -93,7 +92,7 @@ class Controller extends Observable{
           a = false
           return
         } else {
-          println("Fehler beim einfügen")
+          println("Die Karte passt nicht")
         }
       } else if (array(0).equals("tipp")) {
         map.tipp(card)

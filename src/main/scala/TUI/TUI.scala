@@ -4,14 +4,13 @@ import java.util.{Observable, Observer}
 
 import controller.Controller
 import main.scala.model.Player
-import main.scala.model.Game
 
 case class TUI(controller:Controller) extends Observer{
-
+  controller.addObserver(this)
   def start(): Unit = {
 
     val g1 = newGame()
-    if(g1 == null){
+    if(g1 == 0){
       println("Goodbye!")
       return -1
     }
@@ -20,16 +19,15 @@ case class TUI(controller:Controller) extends Observer{
     controller.start(players._1, players._2, Runden() )
   }
 
-  def newGame(): Game = {
+  def newGame(): Int = {
     prettyprint(Console.RED + "Neues Spiel erstellen ?")
 
     val x = scala.io.StdIn.readLine().toString
 
     if (x.equals("Ja")|| x.equals("ja") || x.equals("JA") || x.equals("j") || x.equals("J")) {
-      val game = new Game()
-      return game
+      return 1
     }
-    null
+    0
   }
 
   def setPlayer(): (Player, Player) = {

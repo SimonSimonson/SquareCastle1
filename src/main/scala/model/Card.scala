@@ -108,19 +108,6 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
     false
   }
 
-
-
-  def CheckifAlone(): Boolean ={
-    if(none.isEmpty && roads.isEmpty && castle.isEmpty)
-      return true
-
-    false
-  }
-
-
-
-
-
   def print(): Null ={
     println(" _________")
     println("|         |")

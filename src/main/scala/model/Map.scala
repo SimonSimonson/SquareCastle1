@@ -74,7 +74,7 @@ class Map(mx: Int, my: Int){
       field(x)(y) = card
       return 1
     } else {
-      println("Die Karte passt nicht!")
+      //println("Die Karte passt nicht!")
       return -1
     }
 
