@@ -9,7 +9,7 @@ class Controller extends Observable{
 
   def start(p1: Player, p2: Player, runden: Int): Unit= {
 
-    val map = new Map(10,5)
+    val map = new Map(5,4)
     map.print()
 
     for(i <-  0 until runden){
