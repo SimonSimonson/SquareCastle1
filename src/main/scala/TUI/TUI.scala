@@ -65,7 +65,11 @@ case class TUI(controller:Controller) extends Observer {
       println()
     }
 
-  override def update(string: String): Unit ={
-    println(string)
+  override def update(string: String, i: Int): Unit ={
+
+    if(i == 0)
+      println(string)
+    if(i == 1)
+      printf(string)
   }
 }

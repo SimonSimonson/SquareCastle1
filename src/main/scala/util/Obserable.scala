@@ -3,7 +3,7 @@ package main.scala.util
 //import scala.swing.event.Event
 
 trait Observer {
-  def update(string: String): Unit
+  def update(string: String, int: Int): Unit
 }
 
 class Observable {
@@ -14,5 +14,5 @@ class Observable {
   def remove(s: Observer): Unit =
     subscribers = subscribers.filterNot(o => o == s)
     //beide parameter
-  def notifyObservers(string: String): Unit = subscribers.foreach(o => o.update(string))
+  def notifyObservers(string: String, int: Int): Unit = subscribers.foreach(o => o.update(string, int))
 }

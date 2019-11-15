@@ -4,6 +4,12 @@ package main.scala.model
 class Map(mx: Int, my: Int){
   val field = Array.ofDim[Card](mx,my)
   val mid = (mx/2,my/2)
+  def getmx(): Int ={
+    mx
+  }
+  def getmy(): Int ={
+    my
+  }
 
   def pruefen(card : Card, x:Int , y : Int): Boolean ={
     //Folgende if Anweisungen schauen rechts, links, über und unter der liegeneden Karte
@@ -34,31 +40,7 @@ class Map(mx: Int, my: Int){
   var x = 0
   var y = 0
 
-  def tipp(card: Card): Unit = {
-    println(Console.WHITE)
-    for (iy <- 0 until my) {
-      for (zeile <- 0 to 5) {
-        for (ix <- 0 until mx) {
-          if(field(ix)(iy) != null)
-            field(ix)(iy).printline(zeile)
-          else{
-            if(pruefen(card,ix,iy))
-              highlight(zeile)
-            else
-              nullprint(zeile)
-          }
-        }
-        println()
-      }
 
-    }
-    /*
-            x = x + 1
-            if (x == mx) {
-              y = y + 1
-              x = 0
-            }*/
-  }
 
 
   def Setcard(card : Card, x:Int , y : Int): Int ={
@@ -81,49 +63,6 @@ class Map(mx: Int, my: Int){
     return 1
   }
 
-  def nullprint(zeile: Int): Unit = {
-    zeile match {
 
-      case 0 => printf(" _________ ")
-      case 1 => printf("|         |")
-      case 2 => printf("|         |")
-      case 3 => printf("|         |")
-      case 4 => printf("|         |")
-      case 5 => printf("|_________|")
-
-    }
-  }
-
-  def highlight(zeile: Int): Unit = {
-    zeile match {
-
-      case 0 => printf(Console.YELLOW + " _________ ")
-      case 1 => printf(Console.YELLOW + "|         |")
-      case 2 => printf(Console.YELLOW + "|         |")
-      case 3 => printf(Console.YELLOW + "|         |")
-      case 4 => printf(Console.YELLOW + "|         |")
-      case 5 => printf(Console.YELLOW + "|_________|")
-
-    }
-    printf(Console.WHITE)
-  }
-
-  def print(): Unit ={
-    println(Console.WHITE)
-    for(iy <- 0 until my){
-      for(zeile <- 0 to 5){
-        for(ix <- 0 until mx){
-
-          if(field(ix)(iy)==null)
-            nullprint(zeile)
-          else
-           field(ix)(iy).printline(zeile)
-        }
-        println()
-      }
-
-    }
-
-  }
 
 }

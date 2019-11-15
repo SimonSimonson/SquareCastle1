@@ -3,7 +3,7 @@ package util
 import main.scala.util.{Observable, Observer}
 
 class TestObject extends Observer {
-  def update(string: String):Unit = println(string)
+  def update(string: String,int: Int):Unit = println(string)
 }
 
 object Observerpattern {
@@ -12,10 +12,10 @@ object Observerpattern {
   val observer2 = new TestObject                  //> observer2  : TestObject = TestObject@26ee7a14
   observable.add(observer1)
   observable.add(observer2)
-  observable.notifyObservers("Ping")                  //> Ping
+  observable.notifyObservers("Ping",0)                  //> Ping
   //| Ping
   observable.remove(observer1)
-  observable.notifyObservers("Pong ")                      //> Ping
+  observable.notifyObservers("Pong ",0)                      //> Ping
   observable.remove(observer2)
-  observable.notifyObservers("Ping")
+  observable.notifyObservers("Ping",0)
 }

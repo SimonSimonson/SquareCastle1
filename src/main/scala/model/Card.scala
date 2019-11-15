@@ -109,16 +109,7 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
     false
   }
 
-  def print(): Null ={
-    println(" _________")
-    println("|         |")
-    println("|    " + mysides(0) + "    |")
-    println("| "+mysides(3)+"     "+ mysides(1)+" |")
-    println("|    " + mysides(2) + "    |")
-    println("|_________|")
 
-    null
-  }
   def printline(zeile: Int): Unit={
     zeile match{
       case 0 => printf(" _________ ")
