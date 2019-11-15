@@ -123,7 +123,7 @@ class Controller extends Observable{
       for (zeile <- 0 to 5) {
         for (ix <- 0 until map.getmx()) {
           if(map.field(ix)(iy) != null)
-            map.field(ix)(iy).printline(zeile)
+            printline(zeile,map.field(ix)(iy))
           else{
             if(map.pruefen(card,ix,iy))
               highlight(zeile)
@@ -142,7 +142,17 @@ class Controller extends Observable{
               x = 0
             }*/
   }
+  def printline(zeile: Int, card: Card): Unit={
+    zeile match{
+      case 0 => printf(" _________ ")
+      case 1 => printf("|         |")
+      case 2 => printf("|    " + card.mysides(0) + "    |")
+      case 3 => printf("| "+card.mysides(3)+"     "+ card.mysides(1)+" |")
+      case 4 => printf("|    " + card.mysides(2) + "    |")
+      case 5 => printf("|_________|")
 
+    }
+  }
 
   def printcard(card: Card): Null ={
     notifyObservers(" _________", 0)
@@ -190,7 +200,7 @@ class Controller extends Observable{
           if(map.field(ix)(iy)==null)
             nullprint(zeile)
           else
-            map.field(ix)(iy).printline(zeile)
+            printline(zeile,map.field(ix)(iy))
         }
         notifyObservers("",0)
       }
