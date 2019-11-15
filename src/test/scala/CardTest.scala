@@ -9,6 +9,9 @@ class CardTest extends WordSpec with Matchers {
     val cards = Card(0,1,2,2)
     val cards2 = Card(0,0,1,2)
     "have an Array"  in {
+      cards.side0 should be (0)
+      cards.side1 should be (1)
+      cards.side2 should be (2)
       cards.side3 should be (2)
     }
     "when rotateRight"  in {
@@ -35,10 +38,8 @@ class CardTest extends WordSpec with Matchers {
       val none:Array[Card] = new Array[Card](4)
       val roads:Array[Card] = new Array[Card](4)
       val castle:Array[Card] = new Array[Card](4)
-      none.isEmpty
-      roads.isEmpty
-      castle.isEmpty
-      cards.CheckifAlone() should be (false)
+      none.isEmpty && roads.isEmpty && castle.isEmpty
+      cards.CheckifAlone() should be (true)
     }
 
   }}
