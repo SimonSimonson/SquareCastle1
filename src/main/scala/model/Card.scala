@@ -76,6 +76,7 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
     mysides = rotLeft
     true
   }
+
   def getantipos(pos:Int): Int ={
     var pos2 = 0
     pos match{
@@ -87,7 +88,7 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
     return pos2
   }
   def passt(card: Card, pos1: Int, pos2: Int): Boolean = {
-    println("Vergleiche "+ this.mysides(pos1) + " mit "+ card.mysides(pos2))
+    //println("Vergleiche "+ this.mysides(pos1) + " mit "+ card.mysides(pos2))
     return this.mysides(pos1) == card.mysides(pos2)
   }
   def anlegen(pos:Int, karte:Card): Boolean ={
@@ -105,7 +106,7 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
         return true
 
       }
-      println("Die Karte passt nicht!")
+      //println("Die Karte passt nicht!")
     }
     false
   }

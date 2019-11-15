@@ -26,7 +26,7 @@ case class TUI() {
       val game = new Game()
       return game
     }
-    return null
+    null
   }
 
   def setPlayer(): (Player, Player) = {
