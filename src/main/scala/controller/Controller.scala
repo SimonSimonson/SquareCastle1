@@ -1,7 +1,7 @@
 package controller
 import main.scala.model.{Card, Map, Player}
 import main.scala.TUI.TUI
-import java.util.Observable
+import main.scala.util.Observable
 
 class Controller extends Observable{
 
@@ -23,15 +23,19 @@ class Controller extends Observable{
       Optionen(card2, map, p2)
       map.print()
     }
-  notifyObservers()
-    println(p1.Punkte)
-    println(p2.Punkte)
+    notifyObservers(p1.Punkte.toString)
+    //println(p1.Punkte)
+    notifyObservers(p2.Punkte.toString)
+    //println(p2.Punkte)
     if(p1.Punkte > p2.Punkte)
-      println(Console.RED + p1.toString()+" GEWINNT")
+      notifyObservers(Console.RED + p1.toString()+" GEWINNT")
+      //println(Console.RED + p1.toString()+" GEWINNT")
     else if(p2.Punkte > p1.Punkte)
-      println(Console.RED + p2.toString()+" GEWINNT")
+      notifyObservers(Console.RED + p2.toString()+" GEWINNT")
+      //println(Console.RED + p2.toString()+" GEWINNT")
     else{
-      println(Console.RED + "UNENTSCHIEDEN")
+      notifyObservers("unentschieden")
+      //println(Console.RED + "UNENTSCHIEDEN")
 
     }
   }
@@ -46,29 +50,23 @@ class Controller extends Observable{
   }
   def Kartezeigen(player: Player): Card ={
     val card = RandomCard()
-    println(Console.RED + "Spieler " + player.toString() + " ist an der Reihe")
-    print(Console.WHITE)
+    notifyObservers(Console.RED + "Spieler " + player.toString() + " ist an der Reihe")
+    //println(Console.RED + "Spieler " + player.toString() + " ist an der Reihe")
+    notifyObservers(Console.WHITE)
+    //print(Console.WHITE)
     card.print()
     return card
   }
 
-  /*
-    //Fürs Interface!
-    def isNumber(string: String): Boolean ={
-      //val x = scala.io.StdIn.readLine().toString
-      for (c <- string){
-        c.isDigit
-        return true
-      }
-      return false
-    }
-  */
+
+
 
 
   def Optionen(card: Card, map: Map, player: Player): Unit = {
-    println(Console.BLUE + "r.... rechts rum rotieren", Console.CYAN + "  l.... links rum rotieren",
-      Console.MAGENTA + "  i x y.... Einfügen bei (x,y)", Console.YELLOW + "  wait.... eine runde aussetzen",
-      Console.BLACK + "  tipp .... zeigt wo man anlegen kann", Console.RED + "  exit .... beenden")
+    notifyObservers(Console.BLUE + "r.... rechts rum rotieren"+ Console.CYAN + "  l.... links rum rotieren"+
+      Console.MAGENTA + "  i x y.... Einfügen bei (x,y)"+ Console.YELLOW + "  wait.... eine runde aussetzen"+
+      Console.BLACK + "  tipp .... zeigt wo man anlegen kann"+ Console.RED + "  exit .... beenden")
+
     var a = true
     while (a) {
       val x = scala.io.StdIn.readLine().toString
@@ -86,13 +84,15 @@ class Controller extends Observable{
         if (map.Setcard(card, array(1).toInt, array(2).toInt) == 1) {
           player.addCard(card)
           val punkte = card.getAngelegte()
-          println("Spieler "+ player.toString()+ " erhält "+ punkte + " Punkte")
+          notifyObservers("Spieler "+ player.toString()+ " erhält "+ punkte + " Punkte")
+          //println("Spieler "+ player.toString()+ " erhält "+ punkte + " Punkte")
           player.addPoints(punkte)
           //println(player.toString() +"  :"+ player.Punkte)
           a = false
           return
         } else {
-          println("Die Karte passt nicht")
+          notifyObservers("Die Karte passt nicht")
+          //println("Die Karte passt nicht")
         }
       } else if (array(0).equals("tipp")) {
         map.tipp(card)

@@ -1,12 +1,11 @@
 package main.scala.TUI
-
-import java.util.{Observable, Observer}
+import main.scala.util.{Observable, Observer}
 
 import controller.Controller
 import main.scala.model.Player
 
-case class TUI(controller:Controller) extends Observer{
-  controller.addObserver(this)
+case class TUI(controller:Controller) extends Observer {
+  controller.add(this)
   def start(): Unit = {
 
     val g1 = newGame()
@@ -66,5 +65,7 @@ case class TUI(controller:Controller) extends Observer{
       println()
     }
 
-  override def update(observable: Observable, o: Any): Unit = ???
+  override def update(string: String): Unit ={
+    println(string)
+  }
 }
