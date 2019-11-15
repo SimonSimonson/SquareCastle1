@@ -1,6 +1,7 @@
 
 package main.scala.test.scala
 
+import controller.Controller
 import org.scalatest._
 import main.scala.model.{Card, Map}
 
@@ -29,10 +30,11 @@ class MapTest extends WordSpec with Matchers {
 
     }
     "have tipp" in {
+      val Controller = new Controller
       val card = new Card(0,1,2,1)
-      val field = Array.ofDim[Card](3,3)
+      val map = new Map(3,3)
 
-      map.tipp(card) should be (true)
+      Controller.tipp(card, map) should be (true)
 
     }
 

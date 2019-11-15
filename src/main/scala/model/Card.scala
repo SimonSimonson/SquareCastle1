@@ -35,7 +35,7 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
       }
       case 2 =>  {
         for(y <- 0 to 3 if castle(y) != null && castle(y)!=prev)
-           x = castle(y).getAngelegteR(kind, l+1, this)
+           x = castle(y).getAngelegteR(kind, l + 1, this)
       }
     }
     x

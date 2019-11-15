@@ -17,11 +17,15 @@ class Controller extends Observable{
       val card1 = Kartezeigen(p1)
       Optionen(card1, map, p1)
       print(map)
+      notifyObservers("Puntkte von Spieler " + p1 + ": " + p1.getPoints().toString(), 0)
+      notifyObservers("Puntkte von Spieler " + p2 + ": " + p2.getPoints().toString(), 0)
 
       Thread.sleep(500)
       val card2 = Kartezeigen(p2)
       Optionen(card2, map, p2)
       print(map)
+      notifyObservers("Puntkte von Spieler " + p1 + ": " + p1.getPoints().toString(), 0)
+      notifyObservers("Puntkte von Spieler " + p2 + ": " + p2.getPoints().toString(), 0)
     }
     notifyObservers(p1.Punkte.toString,0)
     //println(p1.Punkte)
@@ -117,7 +121,7 @@ class Controller extends Observable{
     return (points1,points2)
   }
 
-  def tipp(card: Card, map: Map): Unit = {
+  def tipp(card: Card, map: Map): Boolean = {
     println(Console.WHITE)
     for (iy <- 0 until map.getmy()) {
       for (zeile <- 0 to 5) {
@@ -135,12 +139,7 @@ class Controller extends Observable{
       }
 
     }
-    /*
-            x = x + 1
-            if (x == mx) {
-              y = y + 1
-              x = 0
-            }*/
+    true
   }
   def printline(zeile: Int, card: Card): Unit={
     zeile match{
