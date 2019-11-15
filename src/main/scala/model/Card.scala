@@ -41,7 +41,7 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
 
   }
   def getAngelegte(): Int = {
-    println("Wege angelegt: "+ getAngelegteR(1, 0, this) + " Burgen angelegt: " + getAngelegteR(2, 0,this))
+    //println("Wege angelegt: "+ getAngelegteR(1, 0, this) + " Burgen angelegt: " + getAngelegteR(2, 0,this))
     var sum = getAngelegteR(1, 0, this) + getAngelegteR(2, 0,this)
     return sum
   }

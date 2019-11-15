@@ -29,7 +29,7 @@ class Controller extends Observable{
     println(p2.Punkte)
     if(p1.Punkte > p2.Punkte)
       println(Console.RED + p1.toString()+" GEWINNT")
-    else if(p2.Punkte > p2.Punkte)
+    else if(p2.Punkte > p1.Punkte)
       println(Console.RED + p2.toString()+" GEWINNT")
     else{
       println(Console.RED + "UNENTSCHIEDEN")
@@ -86,7 +86,9 @@ class Controller extends Observable{
       } else if (array(0).equals("i")) {
         if (map.Setcard(card, array(1).toInt, array(2).toInt) == 1) {
           player.addCard(card)
-          player.addPoints(card.getAngelegte())
+          val punkte = card.getAngelegte()
+          println("Spieler "+ player.toString()+ " erhält "+ punkte + " Punkte")
+          player.addPoints(punkte)
           //println(player.toString() +"  :"+ player.Punkte)
           a = false
           return
