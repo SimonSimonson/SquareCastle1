@@ -67,8 +67,9 @@ class Controller extends Observable{
 
 
   def Optionen(card: Card, map: Map, player: Player): Unit = {
-    println(Console.BLUE + "r.... rechts rum rotieren  ", Console.CYAN + "l.... links rum rotieren  ",
-      Console.MAGENTA + "  i x y.... Einfügen bei (x,y)  ", Console.RED + "  exit .... beenden")
+    println(Console.BLUE + "r.... rechts rum rotieren", Console.CYAN + "  l.... links rum rotieren",
+      Console.MAGENTA + "  i x y.... Einfügen bei (x,y)", Console.YELLOW + "  wait.... eine runde aussetzen",
+      Console.BLACK + "  tipp .... zeigt wo man anlegen kann", Console.RED + "  exit .... beenden")
     var a = true
     while (a) {
       val x = scala.io.StdIn.readLine().toString
@@ -76,27 +77,24 @@ class Controller extends Observable{
       if (array(0).equals("r")) {
         card.rotateRight()
         card.print()
-      } else if (array(0).equals("wait")){
+      } else if (array(0).equals("wait")) {
         a = false
         return
-      } else if (array(0).equals("l")){
+      } else if (array(0).equals("l")) {
         card.rotateLeft()
         card.print()
       } else if (array(0).equals("i")) {
-        if(array.length != 3) {
-          println("Fehler")
-          return
-        }
-
-        if(map.Setcard(card, array(1).toInt, array(2).toInt) == 1){
+        if (map.Setcard(card, array(1).toInt, array(2).toInt) == 1) {
           player.addCard(card)
           player.addPoints(card.getAngelegte())
           //println(player.toString() +"  :"+ player.Punkte)
           a = false
           return
-        }else {
+        } else {
           println("Fehler beim einfügen")
         }
+      } else if (array(0).equals("tipp")) {
+        map.tipp(card)
       }
     }
   }
