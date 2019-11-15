@@ -34,13 +34,6 @@ class CardTest extends WordSpec with Matchers {
       karte1.anlegen(1, karte2) should be (false)
 
     }
-    "when alone" in {
-      val none:Array[Card] = new Array[Card](4)
-      val roads:Array[Card] = new Array[Card](4)
-      val castle:Array[Card] = new Array[Card](4)
-      none.isEmpty && roads.isEmpty && castle.isEmpty
-      cards.CheckifAlone() should be (true)
-    }
 
   }}
 

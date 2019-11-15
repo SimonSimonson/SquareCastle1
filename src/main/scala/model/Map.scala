@@ -12,24 +12,23 @@ class Map(mx: Int, my: Int){
   }
 
   def pruefen(card : Card, x:Int , y : Int): Boolean ={
-    //Folgende if Anweisungen schauen rechts, links, über und unter der liegeneden Karte
-    //Rechts von liegender
+
     if(x+1 < mx && field(x+1)(y) != null ) {
       if(!card.anlegen(1,field(x+1)(y)))
         return false
     }
 
-    //Links von liegender
+
     if(x-1 >= 0 && field(x-1)(y) != null) {
       if(!card.anlegen(3,field(x-1)(y)))
         return false
     }
-    //Über von liegender
+
     if(y+1 < my && field(x)(y+1) != null) {
       if(!card.anlegen(2,field(x)(y+1)))
         return false
     }
-    //Unter von liegender
+
     if(y-1 >= 0 && field(x)(y-1) != null ) {
       if(!card.anlegen(0,field(x)(y-1)))
         return false

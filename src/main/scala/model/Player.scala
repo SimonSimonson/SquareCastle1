@@ -17,7 +17,7 @@ case class Player(name: String ) {
 
         var sum = 0
         karten.foreach(c => sum += c.getAngelegte())
-        return sum
+        sum
     }
 
 
