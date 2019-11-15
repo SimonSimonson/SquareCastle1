@@ -25,16 +25,16 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
     kind match{
       case 0 =>  {
         for(y <- 0 to 3 if none(y) != null && none(y)!= prev) {
-          x += none(y).getAngelegteR(kind, l + 1, this)
+          x = none(y).getAngelegteR(kind, l + 1, this)
         }
       }
       case 1 =>  {
         for(y <- 0 to 3 if roads(y) != null && roads(y)!= prev)
-           x += roads(y).getAngelegteR(kind, l+1, this)
+           x = roads(y).getAngelegteR(kind, l+1, this)
       }
       case 2 =>  {
         for(y <- 0 to 3 if castle(y) != null && castle(y)!=prev)
-           x += castle(y).getAngelegteR(kind, l+1, this)
+           x = castle(y).getAngelegteR(kind, l+1, this)
       }
     }
     x
@@ -42,8 +42,16 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
   }
   def getAngelegte(): Int = {
     //println("Wege angelegt: "+ getAngelegteR(1, 0, this) + " Burgen angelegt: " + getAngelegteR(2, 0,this))
-    var sum = getAngelegteR(1, 0, this) + getAngelegteR(2, 0,this)
-    return sum
+    var wege = getAngelegteR(1, 0, this)
+    if(wege > 0)
+      wege += 1
+    var burgen = getAngelegteR(2, 0,this)
+    if(burgen > 0)
+      burgen += 1
+
+
+    wege + burgen*2
+
   }
 
   def rotateRight(): Boolean ={
