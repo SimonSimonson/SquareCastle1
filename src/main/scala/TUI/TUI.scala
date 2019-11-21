@@ -37,6 +37,7 @@ case class TUI(controller:Controller) extends Observer {
 
     0
   }
+
   def botornot(): KI={
     println("Willst du gegen einen Bot spielen?")
 
