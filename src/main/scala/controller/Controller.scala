@@ -84,12 +84,14 @@ class Controller extends Observable{
   }
   def Calculatebot(bot: KI, card: Card,map:Map): Unit ={
     val data = bot.anlegen(map, card)
+
     for(i <- 0 until data._3){
       notifyObservers("rotieren",0)
       card.rotateRight()
     }
-    if(data._1 < 0 || data._2 < 0 ) {
+    if(data._1 < 0 || data._2 < 0 || data._3 < 0) {
       map.setRandom(card)
+      notifyObservers("beep boop ich kann nicht anlegen",0);
       return
     }
       notifyObservers("Bot legt auf " +data._1 +" "+ data._2,0)

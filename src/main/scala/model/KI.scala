@@ -34,65 +34,61 @@ case class KI(){
     (punkte)
 
   }
+
 //gibt maximum des arrays mit index zurück
   def getxy(array: Array[Array[Int]],int: Int): (Int,Int)={
     for (y <- 0 until Array(0).length) {
       for (x <- 0 until array.length) {
         if (array(x)(y) == int) {
-          return (x,y)
+          (x,y)
         }
       }
     }
     (-1,-1)
   }
-  //Gibt die rollen zum Perfekten zug zurück
-  def getarraymax(array: Array[Array[Array[Int]]]):(Int)={
-    var rolls = 0
-    var max = 0
-    for(i <- 0 to 3){
-      var tmp = array(i).flatten.max
-      if(tmp > max){
-        rolls = i
-        max = tmp
-      }
-    }
-    rolls
-  }
-  //GIBT DIE X,Y KOORDINATEN DER BESTEN FUNKTION UND DIE ANZAHL DER ROLLS ZURÜCK   FEEEHLER: falsche punktezahlen in arrays
+
+  //GIBT DIE X,Y KOORDINATEN DER BESTEN FUNKTION UND DIE ANZAHL DER ROLLS ZURÜCK   FEEEHLER: falsche punktezahlen(immer+2) in arrays
   def anlegen(map:Map, card: Card):(Int,Int,Int)= {
     var all = Array.ofDim[Array[Array[Int]]](4)
-    var opt = Array.ofDim[Int](4)
-
+    val list = List()
     all(0)= punktefeld(map,card)
     card.rotateRight()
-    opt(0) = all(0).flatten.max
+    println(all(0).flatten.max)
 
     all(1) = punktefeld(map,card)
-    opt(1) = all(1).flatten.max
     card.rotateRight()
+    println(all(1).flatten.max)
 
     all(2) = punktefeld(map,card)
-    opt(2) = all(2).flatten.max
     card.rotateRight()
+    println(all(2).flatten.max)
 
     all(3) = punktefeld(map,card)
-    opt(3) = all(3).flatten.max
     card.rotateRight()
+    println(all(3).flatten.max)
 
-    scala.util.Sorting.quickSort(opt)
+    var opt = List(all(0).flatten.max,all(1).flatten.max, all(2).flatten.max,all(3).flatten.max)
+    println("LISTE DER PUNKTE : "+ opt)
+    var tmp = opt.sorted
+    println("LISTE DER PUNKTE : "+ tmp)
+    var rolls = opt.indexOf(tmp(3))
+    println("ANZAHL ROLLEN IST " + rolls)
 
 
-
-
-    /* var rollen = getarraymax(all)
-     println(rollen)
-     var a = getxy(all(rollen),all(rollen).flatten.max)._1
-     var b = getxy(all(rollen),all(rollen).flatten.max)._2
-     println(a + " " + b)*/
-    //(a,b,rollen)
-    (0,0,0)
+    val a = all(rolls).toList :: list
+    var i = 0
+    for(index <- all(rolls)){
+      var iy = 0
+      for(index2 <- all(rolls)(i)){
+        if(index2 == tmp(3))
+          return (i,iy,rolls)
+        iy +=1
+      }
+      i += 1;
+    }
+    (-1,-1,-1)
   }
 
-  override def toString(): String = "bot 01001101"
+  override def toString(): String = "01001101"
 
 }
