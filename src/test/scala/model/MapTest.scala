@@ -1,9 +1,9 @@
 
-package main.scala.test.scala
+package model
 
 import controller.Controller
-import org.scalatest._
 import main.scala.model.{Card, Map}
+import org.scalatest._
 
 class MapTest extends WordSpec with Matchers {
 
@@ -34,7 +34,7 @@ class MapTest extends WordSpec with Matchers {
       val card = new Card(0,1,2,1)
       val map = new Map(3,3)
 
-      Controller.tipp(card, map) should be (true)
+      Controller.tipp(card,map) should be (true)
 
     }
 

@@ -1,9 +1,7 @@
-package main.scala.test.scala
+package model
 
-import main.scala.model.{Card, Player}
+import main.scala.model.Player
 import org.scalatest._
-
-import scala.collection.mutable.ListBuffer
 
 
 class PlayerTest extends WordSpec with Matchers {
@@ -18,7 +16,7 @@ class PlayerTest extends WordSpec with Matchers {
     }
     "get Points" in {
       player.addPoints(2)
-      player.getPoints() should be(2)
+      player.Punkte should be(2)
     }
   }}
 

@@ -1,4 +1,4 @@
-package main.scala.test.scala
+package model
 
 import main.scala.model.Card
 import org.scalatest._

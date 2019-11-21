@@ -61,19 +61,24 @@ case class KI(){
   //GIBT DIE X,Y KOORDINATEN DER BESTEN FUNKTION UND DIE ANZAHL DER ROLLS ZURÜCK   FEEEHLER: falsche punktezahlen in arrays
   def anlegen(map:Map, card: Card):(Int,Int,Int)= {
     var all = Array.ofDim[Array[Array[Int]]](4)
+    var opt = Array.ofDim[Int](4)
 
     all(0)= punktefeld(map,card)
     card.rotateRight()
-    println(all(0).flatten.max)
+    opt(0) = all(0).flatten.max
+
     all(1) = punktefeld(map,card)
-    println(all(1).flatten.max)
+    opt(1) = all(1).flatten.max
     card.rotateRight()
+
     all(2) = punktefeld(map,card)
-    println(all(2).flatten.max)
+    var c = all(2).flatten.max
     card.rotateRight()
+
     all(3) = punktefeld(map,card)
-    println(all(3).flatten.max)
+    var d = all(3).flatten.max
     card.rotateRight()
+
 
 
 
