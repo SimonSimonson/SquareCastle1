@@ -2,6 +2,7 @@ package controller
 import main.scala.model.{Card, Map, Player}
 import main.scala.TUI.TUI
 import main.scala.util.Observable
+import mainn.scala.model.KI
 
 class Controller extends Observable{
 
@@ -17,15 +18,15 @@ class Controller extends Observable{
       val card1 = Kartezeigen(p1)
       Optionen(card1, map, p1)
       print(map)
-      notifyObservers("Puntkte von Spieler " + p1 + ": " + p1.getPoints().toString(), 0)
-      notifyObservers("Puntkte von Spieler " + p2 + ": " + p2.getPoints().toString(), 0)
+      notifyObservers("Puntkte von Spieler " + p1 + ": " + p1.Punkte.toString(), 0)
+      notifyObservers("Puntkte von Spieler " + p2 + ": " + p2.Punkte.toString(), 0)
 
       Thread.sleep(500)
       val card2 = Kartezeigen(p2)
       Optionen(card2, map, p2)
       print(map)
-      notifyObservers("Puntkte von Spieler " + p1 + ": " + p1.getPoints().toString(), 0)
-      notifyObservers("Puntkte von Spieler " + p2 + ": " + p2.getPoints().toString(), 0)
+      notifyObservers("Puntkte von Spieler " + p1 + ": " + p1.Punkte.toString(), 0)
+      notifyObservers("Puntkte von Spieler " + p2 + ": " + p2.Punkte.toString(), 0)
     }
     notifyObservers(p1.Punkte.toString,0)
     //println(p1.Punkte)
@@ -43,6 +44,61 @@ class Controller extends Observable{
 
     }
   }
+
+  def startbot(p1:Player,bot: KI, runden: Int): Unit= {
+    val map = new Map(6, 5)
+
+    print(map)
+
+    for (i <- 0 until runden) {
+      Thread.sleep(500)
+
+      val card1 = Kartezeigen(p1)
+      Optionen(card1, map, p1)
+      print(map)
+      notifyObservers("Puntkte von Spieler " + p1 + ": " + p1.Punkte.toString(), 0)
+      notifyObservers("Puntkte von Bot " + bot + ": " + bot.Punkte.toString(), 0)
+
+      Thread.sleep(500)
+      val card = RandomCard()
+      notifyObservers("Karte von Bot:",0)
+      printcard(card)
+      //wait(500)
+      Calculatebot(bot,card,map)
+      print(map)
+      notifyObservers("Puntkte von Spieler " + p1 + ": " + p1.Punkte.toString(), 0)
+      notifyObservers("Puntkte von Bot " + bot + ": " + bot.Punkte.toString(), 0)
+
+    }
+
+
+    if(p1.Punkte > bot.Punkte)
+      notifyObservers(Console.RED + p1.toString()+" GEWINNT",0)
+    //println(Console.RED + p1.toString()+" GEWINNT")
+    else if(bot.Punkte > p1.Punkte)
+      notifyObservers(Console.RED + bot.toString()+" GEWINNT",0)
+    //println(Console.RED + p2.toString()+" GEWINNT")
+    else{
+      notifyObservers("unentschieden",0)
+      //println(Console.RED + "UNENTSCHIEDEN")
+
+    }
+  }
+  def Calculatebot(bot:KI, card: Card,map:Map): Unit ={
+    val data = bot.anlegen(map, card)
+    for(i <- 0 until data._3){
+      notifyObservers("rotieren",0)
+      card.rotateRight()
+    }
+    if(data._1 < 0 || data._2 < 0 ) {
+      map.setRandom(card)
+      return
+    }
+      notifyObservers("Bot legt auf " +data._1 +" "+ data._2,0)
+      map.Setcard(card,data._1,data._2)
+      bot.addPoints(card.getAngelegte())
+  }
+
   def RandomCard(): Card= {
     val r = scala.util.Random
     val s1 = r.nextInt(3)
@@ -122,6 +178,7 @@ class Controller extends Observable{
   }
 
   def tipp(card: Card, map: Map): Boolean = {
+
     println(Console.WHITE)
     for (iy <- 0 until map.getmy()) {
       for (zeile <- 0 to 5) {
@@ -143,12 +200,12 @@ class Controller extends Observable{
   }
   def printline(zeile: Int, card: Card): Unit={
     zeile match{
-      case 0 => printf(" _________ ")
-      case 1 => printf("|         |")
-      case 2 => printf("|    " + card.mysides(0) + "    |")
-      case 3 => printf("| "+card.mysides(3)+"     "+ card.mysides(1)+" |")
-      case 4 => printf("|    " + card.mysides(2) + "    |")
-      case 5 => printf("|_________|")
+      case 0 => notifyObservers(" _________ ",1)
+      case 1 => notifyObservers("|         |",1)
+      case 2 => notifyObservers("|    " + card.mysides(0) + "    |",1)
+      case 3 => notifyObservers("| "+card.mysides(3)+"     "+ card.mysides(1)+" |",1)
+      case 4 => notifyObservers("|    " + card.mysides(2) + "    |",1)
+      case 5 => notifyObservers("|_________|",1)
 
     }
   }

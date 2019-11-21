@@ -14,7 +14,6 @@ case class Player(name: String ) {
     def getPoints(): Int={
         if(karten.isEmpty)
             return -1
-
         var sum = 0
         karten.foreach(c => sum += c.getAngelegte())
         sum

@@ -31,7 +31,7 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
       }
       case 1 =>  {
         for(y <- 0 to 3 if roads(y) != null && roads(y)!= prev)
-           x = roads(y).getAngelegteR(kind, l+1, this)
+           x = roads(y).getAngelegteR(kind, l + 1, this)
       }
       case 2 =>  {
         for(y <- 0 to 3 if castle(y) != null && castle(y)!=prev)
@@ -52,7 +52,6 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
 
 
     wege + burgen*2
-
   }
 
   def rotateRight(): Boolean ={
@@ -89,6 +88,7 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
     //println("Vergleiche "+ this.mysides(pos1) + " mit "+ card.mysides(pos2))
     return this.mysides(pos1) == card.mysides(pos2)
   }
+  //Schreibt Verbundene Karten in die Instanzvariablen
   def anlegen(pos:Int, karte:Card): Boolean ={
 
     if(karte != null) {
@@ -97,9 +97,9 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
       if (this.passt(karte, pos, pos2)) {
 
         mysides(pos) match {
-          case 0 => none(pos) = karte; karte.none(pos2) = this
-          case 1 => roads(pos) = karte; karte.roads(pos2) = this
-          case 2 => castle(pos) = karte; karte.castle(pos2) = this
+          case 0 => none(pos) = karte;  karte.none(pos2)=this
+          case 1 => roads(pos) = karte; karte.roads(pos2)=this
+          case 2 => castle(pos) = karte; karte.castle(pos2)=this
         }
         return true
 
@@ -107,6 +107,22 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
       //println("Die Karte passt nicht!")
     }
     false
+  }
+  //bereinigen des Anlegefehlers
+  def cleansides(pos:Int) :Boolean={
+    var pos2 = getantipos(pos)
+    if(none(pos)!=null )//&& none(pos).none(pos2)==this)
+      none(pos).none(pos2)=null
+    if(castle(pos)!=null)// && castle(pos).castle(pos2)==this)
+      castle(pos).castle(pos2)=null
+    if(roads(pos)!=null)// && castle(pos).castle(pos2)==this)
+      roads(pos).roads(pos2)=null
+    none(pos)=null
+    castle(pos)=null
+    none(pos)=null
+
+
+    true
   }
 
 

@@ -1,21 +1,28 @@
 package main.scala.TUI
 import main.scala.util.{Observable, Observer}
-
 import controller.Controller
 import main.scala.model.Player
+import mainn.scala.model.KI
 
 case class TUI(controller:Controller) extends Observer {
   controller.add(this)
   def start(): Unit = {
 
     val g1 = newGame()
+    val bot = botornot()
     if(g1 == 0){
       println("Goodbye!")
       return -1
     }
-
-    val players = setPlayer()
-    controller.start(players._1, players._2, Runden() )
+    if(bot==null) {
+      val player1 = setPlayer(1)
+      val player2 = setPlayer(2)
+      controller.start(player1, player2, Runden())
+      return
+    }else {
+      val player1 = setPlayer(1)
+      controller.startbot(player1,bot,Runden())
+    }
   }
 
   def newGame(): Int = {
@@ -25,17 +32,28 @@ case class TUI(controller:Controller) extends Observer {
 
     if (x.equals("Ja")|| x.equals("ja") || x.equals("JA") || x.equals("j") || x.equals("J")) {
       return 1
+
     }
+
     0
   }
+  def botornot(): KI={
+    println("Willst du gegen einen Bot spielen?")
 
-  def setPlayer(): (Player, Player) = {
-    prettyprint(Console.RED + "Gib deinen Namen ein Spieler 1  ")
-    val player1 = Player(scala.io.StdIn.readLine().toString)
-    prettyprint(Console.RED + "Gib deinen Namen ein Spieler 2 ")
-    val player2 = Player(scala.io.StdIn.readLine().toString)
+    val y = scala.io.StdIn.readLine().toString
 
-    return (player1, player2)
+    if (y.equals("Ja")|| y.equals("ja") || y.equals("JA") || y.equals("j") || y.equals("J")) {
+      return new KI()
+    }
+    null
+  }
+
+  def setPlayer(spielernr:Int): (Player) = {
+    prettyprint(Console.RED + "Gib deinen Namen ein Spieler "+ spielernr)
+    val player = Player(scala.io.StdIn.readLine().toString)
+
+
+    return (player)
   }
 
     def Runden(): Int = {
