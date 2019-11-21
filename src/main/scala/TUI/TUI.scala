@@ -3,6 +3,7 @@ import main.scala.util.{Observable, Observer}
 import controller.Controller
 import main.scala.model.Player
 import mainn.scala.model.KI
+import main.scala.model.Map
 
 case class TUI(controller:Controller) extends Observer {
   controller.add(this)
@@ -14,14 +15,15 @@ case class TUI(controller:Controller) extends Observer {
       println("Goodbye!")
       return -1
     }
+    val sM = setMap()
     if(bot==null) {
       val player1 = setPlayer(1)
       val player2 = setPlayer(2)
-      controller.start(player1, player2, Runden())
+      controller.start(player1, player2, sM ,Runden())
       return
     }else {
       val player1 = setPlayer(1)
-      controller.startbot(player1,bot,Runden())
+      controller.startbot(player1, bot, sM, Runden())
     }
   }
 
@@ -55,6 +57,15 @@ case class TUI(controller:Controller) extends Observer {
 
 
     return (player)
+  }
+
+  def setMap(): Map = {
+    prettyprint(Console.RED + "Gib die Map Größe ein (Bsp.: 2x2)")
+    val i = scala.io.StdIn.readLine().toString
+    val array = i.split("x")
+    val mapSize = new Map(array(0).toInt, array(1).toInt)
+
+    return mapSize
   }
 
     def Runden(): Int = {

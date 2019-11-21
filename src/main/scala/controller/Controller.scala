@@ -6,9 +6,9 @@ import mainn.scala.model.KI
 
 class Controller extends Observable{
 
-  def start(p1: Player, p2: Player, runden: Int): Unit= {
+  def start(p1: Player, p2: Player, setMap: Map,runden: Int): Unit= {
 
-    val map = new Map(5,4)
+    val map = setMap
     print(map)
 
     for(i <-  0 until runden){
@@ -31,20 +31,20 @@ class Controller extends Observable{
     notifyObservers(p2.Punkte.toString,0)
     //println(p2.Punkte)
     if(p1.Punkte > p2.Punkte)
-      notifyObservers(Console.RED + p1.toString()+" GEWINNT",0)
+      notifyObservers(Console.RED + "SPIELER " + p1.toString()+" GEWINNT",0)
       //println(Console.RED + p1.toString()+" GEWINNT")
     else if(p2.Punkte > p1.Punkte)
-      notifyObservers(Console.RED + p2.toString()+" GEWINNT",0)
+      notifyObservers(Console.RED + "SPIELER " + p2.toString()+" GEWINNT",0)
       //println(Console.RED + p2.toString()+" GEWINNT")
     else{
-      notifyObservers("unentschieden",0)
+      notifyObservers("UNENTSCHIEDEN",0)
       //println(Console.RED + "UNENTSCHIEDEN")
 
     }
   }
 
-  def startbot(p1:Player,bot: KI, runden: Int): Unit= {
-    val map = new Map(6, 5)
+  def startbot(p1:Player,bot: KI, setMap: Map, runden: Int): Unit= {
+    val map = setMap
 
     print(map)
 
@@ -71,13 +71,13 @@ class Controller extends Observable{
 
 
     if(p1.Punkte > bot.Punkte)
-      notifyObservers(Console.RED + p1.toString()+" GEWINNT",0)
+      notifyObservers(Console.RED + "SPIELER " + p1.toString()+" GEWINNT",0)
     //println(Console.RED + p1.toString()+" GEWINNT")
     else if(bot.Punkte > p1.Punkte)
-      notifyObservers(Console.RED + bot.toString()+" GEWINNT",0)
+      notifyObservers(Console.RED + "SPIELER " + bot.toString()+" GEWINNT",0)
     //println(Console.RED + p2.toString()+" GEWINNT")
     else{
-      notifyObservers("unentschieden",0)
+      notifyObservers("UNENTSCHIEDEN",0)
       //println(Console.RED + "UNENTSCHIEDEN")
 
     }
