@@ -72,12 +72,14 @@ case class KI(){
     card.rotateRight()
 
     all(2) = punktefeld(map,card)
-    var c = all(2).flatten.max
+    opt(2) = all(2).flatten.max
     card.rotateRight()
 
     all(3) = punktefeld(map,card)
-    var d = all(3).flatten.max
+    opt(3) = all(3).flatten.max
     card.rotateRight()
+
+    scala.util.Sorting.quickSort(opt)
 
 
 
