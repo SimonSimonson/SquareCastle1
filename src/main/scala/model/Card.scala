@@ -108,7 +108,8 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
     }
     false
   }
-  //bereinigen des Anlegefehlers
+
+  //bereinigen einer seite
   def cleansides(pos:Int) :Boolean={
     var pos2 = getantipos(pos)
     if(none(pos)!=null )//&& none(pos).none(pos2)==this)

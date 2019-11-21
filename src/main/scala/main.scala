@@ -20,7 +20,7 @@ object main {
 
     field.pruefen(legen1, 1, 1)
     field.pruefen(legen2, 1, 1)
-
+    //Bot testen die methoden
     //Controller.tipp(legen1, field)
 
   }
