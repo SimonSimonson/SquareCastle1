@@ -37,5 +37,6 @@ class CardTest extends WordSpec with Matchers {
 
   }}
 
+
 }
 

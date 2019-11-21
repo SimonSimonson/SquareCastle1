@@ -7,6 +7,7 @@ import org.scalatest._
 
 class MapTest extends WordSpec with Matchers {
 
+
   "A Map" when { "new" should {
       val map = new Map(3,3)
     "have a new field" in {

@@ -18,6 +18,7 @@ class PlayerTest extends WordSpec with Matchers {
       player.addPoints(2)
       player.Punkte should be(2)
     }
+
   }}
 
 }
