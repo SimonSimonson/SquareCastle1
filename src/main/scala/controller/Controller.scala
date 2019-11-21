@@ -6,8 +6,6 @@ import mainn.scala.model.KI
 
 class Controller extends Observable{
 
-
-
   def start(p1: Player, p2: Player, runden: Int): Unit= {
 
     val map = new Map(5,4)
