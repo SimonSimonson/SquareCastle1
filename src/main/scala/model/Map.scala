@@ -10,9 +10,8 @@ class Map(mx: Int, my: Int){
   def getmy(): Int ={
     my
   }
-
+//prüft die Karten, legt aber noch nicht an
   def pruefen(card : Card, x:Int , y : Int): Boolean ={
-//llegt zuviele Karten an, auch wenn diese nicht passen
     if(x+1 < mx && field(x+1)(y) != null ) {
       if(!card.passt(field(x+1)(y),1,3))
         return false
@@ -76,6 +75,7 @@ class Map(mx: Int, my: Int){
 
   var x = 0
   var y = 0
+
 //Setzt die Karte nach dem Prüfen auf das Spielfeld.
   def Setcard(card : Card, x:Int , y : Int): Int ={
     if(x > mx-1 || y > my-1)
