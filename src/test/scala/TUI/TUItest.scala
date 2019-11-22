@@ -27,7 +27,8 @@ class TUItest extends WordSpec with Matchers {
       }
       "when botornot" in {
         val b = new KI
-        tui.botornot("Ja") should be ()
+        tui.botornot("nein") should be (null)
+
 
 
 
