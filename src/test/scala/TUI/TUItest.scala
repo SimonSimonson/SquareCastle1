@@ -26,12 +26,8 @@ class TUItest extends WordSpec with Matchers {
         tui.newGame("Nein") should be (0)
       }
       "when botornot" in {
-        val b = new KI
-        tui.botornot("nein") should be ()
-
-
-
-
+        //val b = new KI
+        tui.botornot("nein") should be (null)
       }
     }
   }

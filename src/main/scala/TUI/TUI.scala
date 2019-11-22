@@ -52,8 +52,7 @@ case class TUI(controller:Controller) extends Observer {
     val y = scala.io.StdIn.readLine().toString
     if(y==null)
       return null
-    var b = botornot(y)
-    return b
+    botornot(y)
     }
 
 
