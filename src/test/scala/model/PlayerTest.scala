@@ -1,5 +1,4 @@
 package model
-
 import main.scala.model.Player
 import org.scalatest._
 
