@@ -24,10 +24,14 @@ case class TUI(controller:Controller) extends Observer {
     if(bot==null) {
       val player1 = playera
       val player2 = setPlayer(2)
+      update(Console.WHITE + "Spiel wird gestartet",1)
+      prettyprint(".  .  .  .  .  .  .  .")
       controller.start(player1, player2, sM ,runden)
       1
     }else {
       val player1 = playera
+      update(Console.WHITE + "Spiel wird gestartet",1)
+      prettyprint(".  .  .  .  .  .  .  .")
       controller.startbot(player1, bot, sM, runden)
       1
     }
@@ -80,21 +84,23 @@ case class TUI(controller:Controller) extends Observer {
 
     return mapSize
   }
-
-  def Runden(): Int = {
-    prettyprint(Console.RED + "Rundenanzahl?")
-    val x = scala.io.StdIn.readLine().toString
+  def Runden(x: String): Int ={
     for (c <- x) {
       if (!c.isDigit) {
-        println(Console.WHITE + "SPIEL WIRD ABGEBROCHEN! ?#!*!?!#")
+        update(Console.WHITE + "SPIEL WIRD ABGEBROCHEN! ?#!*!?!#",1)
         return -1
       }
     }
-    println(Console.WHITE + "Spiel wird gestartet")
-    prettyprint(".  .  .  .  .  .  .  .")
-    val runden = x.toInt
-    println(Console.WHITE + runden)
-    return runden
+    x.toInt
+  }
+  def Runden(): Int = {
+    prettyprint(Console.RED + "Rundenanzahl?")
+    val x = scala.io.StdIn.readLine().toString
+    if(x==null)
+      return -1
+    Runden(x)
+    1
+
   }
 
   def prettyprint(s: String): Unit = {
