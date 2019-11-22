@@ -15,7 +15,7 @@ object main {
     player.getPoints()
 
     val field = new Map(3,3)
-    val legen1 = new Card(0,0,2,1)
+    val legen1 = new Card(0,1,0,0)
     val legen2 = new Card(2,2,0,1)
 
     field.pruefen(legen1, 1, 1)
