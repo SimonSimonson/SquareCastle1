@@ -16,6 +16,10 @@ case class TUI(controller:Controller) extends Observer {
   def start(g :Int, b : KI, map:Map, playera: Player,playerb: Player, runden: Int): Int = {
     val g1 = g
     val bot = b
+    if(runden == -1){
+      update("Rundenanzahl falsch",0)
+      return -1
+    }
     if(g1 == 0){
       update("Goodbye!",0)
       return -1
