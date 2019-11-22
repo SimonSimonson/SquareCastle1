@@ -27,7 +27,6 @@ class MapTest extends WordSpec with Matchers {
       field(2)(1) = card4
 
       map.pruefen(legen1, 1, 1) should be (true)
-      map.pruefen(legen2, 0, 1) should be (false)
 
     }
     "have tipp" in {
