@@ -7,7 +7,7 @@ class CardTest extends WordSpec with Matchers {
 
   "A Card" when { "new" should {
     val cards = Card(0,1,2,2)
-    val cards2 = Card(0,0,1,2)
+    val cards2 = Card(0,1,2,2)
     "have an Array"  in {
       cards.side0 should be (0)
       cards.side1 should be (1)
@@ -20,7 +20,7 @@ class CardTest extends WordSpec with Matchers {
     }
     "when rotateLeft"  in {
       cards2.rotateLeft() should be (true)
-      cards2.mysides(0) should be (0)
+      cards2.mysides(1) should be (2)
     }
     "when karte passt" in {
       val karte1 = Card(0,2,1,2)
