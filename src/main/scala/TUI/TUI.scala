@@ -9,11 +9,11 @@ case class TUI(controller:Controller) extends Observer {
   controller.add(this)
 
   def start(): Int = {
-    start(newGame(),botornot(),setMap(),setPlayer(1),null)
+    start(newGame(),botornot(),setMap(),setPlayer(1),null, Runden())
     1
   }
   //nur zum testen in 2 Methoden geteilt
-  def start(g :Int, b : KI, map:Map, playera: Player,playerb: Player): Int = {
+  def start(g :Int, b : KI, map:Map, playera: Player,playerb: Player, runden: Int): Int = {
     val g1 = g
     val bot = b
     if(g1 == 0){
@@ -24,11 +24,11 @@ case class TUI(controller:Controller) extends Observer {
     if(bot==null) {
       val player1 = playera
       val player2 = setPlayer(2)
-      controller.start(player1, player2, sM ,Runden())
+      controller.start(player1, player2, sM ,runden)
       1
     }else {
       val player1 = playera
-      controller.startbot(player1, bot, sM, Runden())
+      controller.startbot(player1, bot, sM, runden)
       1
     }
   }
