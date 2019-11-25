@@ -122,10 +122,15 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
     castle(pos)=null
     none(pos)=null
 
-
     true
   }
-
+  def cleanall() : Boolean ={
+    cleansides(0)
+    cleansides(1)
+    cleansides(2)
+    cleansides(3)
+    true
+  }
 
 
 

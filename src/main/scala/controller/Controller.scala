@@ -6,7 +6,7 @@ import mainn.scala.model.KI
 
 class Controller extends Observable{
 
-  def start(p1: Player, p2: Player, setMap: Map,runden: Int): Unit= {
+  def start(p1: Player, p2: Player, setMap: Map, runden: Int): Unit= {
 
     val map = setMap
     print(map)
@@ -95,6 +95,7 @@ class Controller extends Observable{
       return
     }
       notifyObservers("Bot legt auf " +data._1 +" "+ data._2,0)
+      card.cleanall()
       map.Setcard(card,data._1,data._2)
       bot.addPoints(card.getAngelegte())
   }

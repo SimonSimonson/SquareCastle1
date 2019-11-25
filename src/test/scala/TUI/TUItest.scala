@@ -17,7 +17,7 @@ class TUItest extends WordSpec with Matchers {
       val tui = new TUI(controller)
 
       "when start" in {
-        tui.start(0,new KI,new Map(3,3),new Player("Peter"),new Player("Kurt"),-1) should be (-1)
+        tui.start(0,new KI,new Map(3,3),-1,new Player("Peter"),new Player("Kurt")) should be (-1)
 
       }
       "when newgame" in {

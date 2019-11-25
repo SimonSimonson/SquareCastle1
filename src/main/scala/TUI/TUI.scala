@@ -9,11 +9,11 @@ case class TUI(controller:Controller) extends Observer {
   controller.add(this)
 
   def start(): Int = {
-    start(newGame(),botornot(),setMap(),setPlayer(1),null, Runden())
+    start(newGame(),botornot(),setMap(),Runden(),setPlayer(1),null)
     1
   }
   //nur zum testen in 2 Methoden geteilt
-  def start(g :Int, b : KI, map:Map, playera: Player,playerb: Player, runden: Int): Int = {
+  def start(g :Int, b : KI, map:Map, runden: Int, playera: Player, playerb: Player): Int = {
     val g1 = g
     val bot = b
     if(runden == -1){
@@ -116,7 +116,6 @@ case class TUI(controller:Controller) extends Observer {
       return -1
     if (anzInt <= (x * y) / 2) {
       Runden(anzahl)
-      1
     } else {
       var max = (x * y) / 2
       update(Console.WHITE + "Das Spielfeld ist zu klein, du darfst maximal " + max + " Runden auswählen!", 0)

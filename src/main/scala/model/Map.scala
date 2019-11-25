@@ -43,16 +43,10 @@ class Map(mx: Int, my: Int){
 
   //gibt die Punkte an der Stelle ohne wirklich anzulegen(für den bot)
   def getpunkteohneanlegen(card: Card,x:Int, y:Int): Int ={
-    if(Setcard(card,x,y)>0){
-      //komischer weise werden angelegte karten gezeigt wo keine sind
-      //falsche Punkteauswertung
-      //akzeptiert sich selbst als angelegte karte
+    if(Setcard(card,x,y) > 0){
 
       val points = card.getAngelegte()
-      card.cleansides(0)
-      card.cleansides(1)
-      card.cleansides(2)
-      card.cleansides(3)
+      card.cleanall()
       field(x)(y) = null
       return points
     }
@@ -99,6 +93,7 @@ class Map(mx: Int, my: Int){
       return 1
     } else {
       //println("Die Karte passt nicht!")
+      card.cleanall()
       return -1
     }
 

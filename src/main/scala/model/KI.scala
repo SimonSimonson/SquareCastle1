@@ -27,11 +27,12 @@ case class KI() {
 
     for (y <- 0 until map.field(1).length) {
       for (x <- 0 until map.field.length) {
+
         //prüft und legt an
 
         //geht nicht weil karte nicht angelegt ist
         punkte(x)(y) = map.getpunkteohneanlegen(card, x, y)
-
+        println("X:  "x+y+punkte(x)(y))
 
       }
     }
@@ -46,18 +47,22 @@ case class KI() {
     all(0) = punktefeld(map, card)
     card.rotateRight()
     println(all(0).flatten.max)
+    //card.cleanall()
 
     all(1) = punktefeld(map, card)
     card.rotateRight()
     println(all(1).flatten.max)
+    //card.cleanall()
 
     all(2) = punktefeld(map, card)
     card.rotateRight()
     println(all(2).flatten.max)
+    //card.cleanall()
 
     all(3) = punktefeld(map, card)
     card.rotateRight()
     println(all(3).flatten.max)
+    //card.cleanall()
 
     var opt = List(all(0).flatten.max, all(1).flatten.max, all(2).flatten.max, all(3).flatten.max)
     println("LISTE DER PUNKTE : " + opt)
@@ -69,8 +74,9 @@ case class KI() {
 
     val a = all(rolls).toList :: list
     var i = 0
+    var iy = 0
     for (index <- all(rolls)) {
-      var iy = 0
+      iy = 0
       for (index2 <- all(rolls)(i)) {
         if (index2 == tmp(3))
           return (i, iy, rolls)
@@ -78,6 +84,9 @@ case class KI() {
       }
       i += 1;
     }
+    //Legt, wenn egal ist wie oft er die Karte dreht, irgendwo an
+    if(opt(0)==opt(3))
+      (i, iy, rolls)
     (-1, -1, -1)
   }
 
