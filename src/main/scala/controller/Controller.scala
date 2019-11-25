@@ -146,7 +146,7 @@ class Controller extends Observable{
       } else if (array(0).equals("i")) {
 
         if (map.Setcard(card, array(1).toInt, array(2).toInt) == 1) {
-          player.addCard(card)
+
           val punkte = card.getAngelegte()
           notifyObservers("Spieler "+ player.toString()+ " erhält "+ punkte + " Punkte",0)
           //println("Spieler "+ player.toString()+ " erhält "+ punkte + " Punkte")
