@@ -109,7 +109,6 @@ case class TUI(controller:Controller) extends Observer {
   }
 
   def Runden(): Int = {
-
     prettyprint(Console.RED + "Rundenanzahl?")
     val anzahl = scala.io.StdIn.readLine().toString
     var anzInt = anzahl.toInt
