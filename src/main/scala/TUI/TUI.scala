@@ -76,30 +76,49 @@ case class TUI(controller:Controller) extends Observer {
     return (player)
   }
 
+  var x = 0
+  var y = 0
+
   def setMap(): Map = {
     prettyprint(Console.RED + "Gib die Map Größe ein (Bsp.: 2x2)")
     val i = scala.io.StdIn.readLine().toString
     val array = i.split("x")
-    val mapSize = new Map(array(0).toInt, array(1).toInt)
-
-    return mapSize
-  }
-  def Runden(x: String): Int ={
-    for (c <- x) {
-      if (!c.isDigit) {
-        update(Console.WHITE + "SPIEL WIRD ABGEBROCHEN! ?#!*!?!#",1)
-        return -1
-      }
+    x = array(0).toInt
+    y = array(1).toInt
+    if(x < 2 || y < 2){
+      update(Console.WHITE + "Das Spielfeld muss mindestens 2x2 groß sein!", 0)
+      setMap()
+    } else {
+      val mapSize = new Map(array(0).toInt, array(1).toInt)
+      return mapSize
     }
+  }
+
+  def Runden(x: String): Int ={
+      for (c <- x) {
+        if (!c.isDigit) {
+          update(Console.WHITE + "SPIEL WIRD ABGEBROCHEN! ?#!*!?!#", 1)
+          return -1
+        }
+      }
     x.toInt
   }
+
   def Runden(): Int = {
+
     prettyprint(Console.RED + "Rundenanzahl?")
-    val x = scala.io.StdIn.readLine().toString
-    if(x==null)
+    val anzahl = scala.io.StdIn.readLine().toString
+    var anzInt = anzahl.toInt
+    if(anzahl==null)
       return -1
-    Runden(x)
-    1
+    if (anzInt <= (x * y) / 2) {
+      Runden(anzahl)
+      1
+    } else {
+      var max = (x * y) / 2
+      update(Console.WHITE + "Das Spielfeld ist zu klein, du darfst maximal " + max + " Runden auswählen!", 0)
+      Runden()
+    }
 
   }
 
