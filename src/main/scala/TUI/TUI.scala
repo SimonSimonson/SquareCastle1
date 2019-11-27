@@ -13,9 +13,12 @@ case class TUI(controller:Controller) extends Observer {
     1
   }
   //nur zum testen in 2 Methoden geteilt
-  def start(g :Int, b : KI, map:Map, runden: Int, playera: Player, playerb: Player): Int = {
+  def start(g :Int, b : Boolean, map:Map, runden: Int, playera: Player, playerb: Player): Int = {
     val g1 = g
-    val bot = b
+    var bot = new KI()
+    if(!b) {
+      bot = null
+    }
     if(runden == -1){
       update("Rundenanzahl falsch",0)
       return -1
@@ -25,7 +28,7 @@ case class TUI(controller:Controller) extends Observer {
       return -1
     }
     val sM = map
-    if(bot==null) {
+    if(bot == null) {
       val player1 = playera
       val player2 = setPlayer(2)
       update(Console.WHITE + "Spiel wird gestartet",1)
@@ -55,12 +58,13 @@ case class TUI(controller:Controller) extends Observer {
     0
   }
 
-  def botornot(): KI = {
+  def botornot(): Boolean = {
     update("Willst du gegen einen Bot spielen?", 0)
     val y = scala.io.StdIn.readLine().toString
     if(y==null)
-      return null
+      return false
     botornot(y)
+    return true
     }
 
 
