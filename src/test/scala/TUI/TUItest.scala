@@ -19,21 +19,16 @@ class TUItest extends WordSpec with Matchers {
       "when not start" in {
         tui.start(0, true , new Map(3,3),-1, new Player("Peter"), new Player("Kurt")) should be (-1)
       }
-      "when start" in {
-        tui.start(1, false ,new Map(3,3),3,new Player("Peter"), new Player("Kurt")) should be (1)
-      }
       "when no Bot" in {
         tui.start(0, false , new Map(3,3),-1, new Player("Peter"), new Player("Kurt")) should be (-1)
       }
       "when newgame" in {
         tui.newGame("Ja") should be (1)
         tui.newGame("Nein") should be (0)
-        tui.newGame() should be (1)
       }
       "when botornot" in {
         //val b = new KI
         tui.botornot("nein") should be (null)
-        tui.botornot() should be (true)
       }
     }
   }
