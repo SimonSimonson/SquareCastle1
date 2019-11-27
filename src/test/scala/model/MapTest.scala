@@ -40,6 +40,11 @@ class MapTest extends WordSpec with Matchers {
 
     }
 
+    "have random Card" in {
+      val card = new Card(0,0,0,0)
+      map.setRandom(card) should be (true)
+    }
+
 
     }}
 }

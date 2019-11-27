@@ -53,7 +53,10 @@ class Map(mx: Int, my: Int){
     return -1
   }
   //setzt eine karte an eine random stelle in der map (für den Bot)
-  def setRandom(card: Card): Unit ={
+  def setRandom(card: Card): Boolean ={
+    if(card == null){
+      return false
+    }
     println("setze random karte")
     val r = scala.util.Random
     var a = r.nextInt(field(0).length)
@@ -62,7 +65,7 @@ class Map(mx: Int, my: Int){
     while(Setcard(card,a,b) < 0)
       a = r.nextInt(field(2).length)
       b = r.nextInt(field(1).length)
-
+    return true
   }
 
 
