@@ -115,17 +115,49 @@ class Controller extends Observable{
 
     return Card(s1,s2,s3,s4)
   }
+
   def Kartezeigen(player: Player): Card ={
     val card = RandomCard()
+
     notifyObservers(Console.RED + "Spieler " + player.toString() + " ist an der Reihe",0)
     //println(Console.RED + "Spieler " + player.toString() + " ist an der Reihe")
+
     notifyObservers(Console.WHITE,0)
     //print(Console.WHITE)
+
     printcard(card)
     return card
   }
+  /*
+  def selectCard(player:Player): Card ={
+    val card1 = RandomCard()
+    val card2 = RandomCard()
+    val card3 = RandomCard()
 
+    notifyObservers(Console.RED + "Spieler " + player.toString() + " ist an der Reihe",0)
+    notifyObservers(Console.WHITE,0)
 
+    printcard(card1)
+    printcard(card2)
+    printcard(card3)
+
+    notifyObservers(Console.RED + "Wähle eine Karte aus (Bsp.: Gib für die erste Karte eine 1 ein!", 0)
+    val x = scala.io.StdIn.readLine().toString
+
+    x match {
+      case "1" =>
+        printcard(card1)
+        return card1
+      case "2" =>
+        printcard(card2)
+        return card2
+      case "3" =>
+        printcard(card3)
+        return card3
+    }
+
+  }
+  */
 
 
 

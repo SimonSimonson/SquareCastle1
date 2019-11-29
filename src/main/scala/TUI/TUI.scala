@@ -85,11 +85,10 @@ case class TUI(controller:Controller) extends Observer {
   def setPlayer(spielernr: Int): (Player) = {
     val f = new playerFactory
     prettyprint(Console.RED + "Gib deinen Namen ein Spieler " + spielernr)
-    val player = f.create(scala.io.StdIn.readLine().toString)
+    val player = f.create("Player", scala.io.StdIn.readLine().toString)
 
+    return (player._1)
 
-
-    return (player)
   }
 
   var x = 0
