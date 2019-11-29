@@ -6,6 +6,12 @@ import mainn.scala.model.KI
 
 class Controller extends Observable{
 
+  var state = 0
+
+  def changeState(int: Int): Unit={
+    state = int
+  }
+
   def start(p1: Player, p2: Player, setMap: Map, runden: Int): Unit= {
 
     val map = setMap

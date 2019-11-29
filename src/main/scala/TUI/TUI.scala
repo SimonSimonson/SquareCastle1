@@ -1,9 +1,11 @@
 package main.scala.TUI
 import main.scala.util.{Observable, Observer}
-import controller.Controller
+import controller.{Controller, StateA, StateB}
 import main.scala.model.Player
 import mainn.scala.model.KI
 import main.scala.model.Map
+import util.playerFactory
+
 
 case class TUI(controller:Controller) extends Observer {
   controller.add(this)
@@ -13,12 +15,8 @@ case class TUI(controller:Controller) extends Observer {
     1
   }
   //nur zum testen in 2 Methoden geteilt
-  def start(g :Int, b : Boolean, map:Map, runden: Int, playera: Player, playerb: Player): Int = {
+  def start(g :Int, b : KI, map:Map, runden: Int, playerA: Player, playerB: Player): Int = {
     val g1 = g
-    var bot = new KI()
-    if(!b) {
-      bot = null
-    }
     if(runden == -1){
       update("Rundenanzahl falsch",0)
       return -1
@@ -28,18 +26,27 @@ case class TUI(controller:Controller) extends Observer {
       return -1
     }
     val sM = map
-    if(bot == null) {
-      val player1 = playera
+    if(b == null) {
+      val player1 = playerA
       val player2 = setPlayer(2)
       update(Console.WHITE + "Spiel wird gestartet",1)
       prettyprint(".  .  .  .  .  .  .  .")
-      controller.start(player1, player2, sM ,runden)
+
+      var s = new StateA
+      controller.changeState(s.state())
+      s.handle(controller, player1, player2, b, sM, runden)
+      //controller.start(player1, player2, sM ,runden)
       1
     }else {
-      val player1 = playera
+      val player1 = playerA
       update(Console.WHITE + "Spiel wird gestartet",1)
       prettyprint(".  .  .  .  .  .  .  .")
-      controller.startbot(player1, bot, sM, runden)
+      val player2 = null
+
+      var s = new StateB
+      controller.changeState(s.state())
+      s.handle(controller, player1, player2, b, sM, runden)
+      //controller.startbot(player1, bot, sM, runden)
       1
     }
   }
@@ -58,13 +65,12 @@ case class TUI(controller:Controller) extends Observer {
     0
   }
 
-  def botornot(): Boolean = {
+  def botornot(): KI = {
     update("Willst du gegen einen Bot spielen?", 0)
     val y = scala.io.StdIn.readLine().toString
     if(y==null)
-      return false
+      return null
     botornot(y)
-    return true
     }
 
 
@@ -77,8 +83,10 @@ case class TUI(controller:Controller) extends Observer {
 
 
   def setPlayer(spielernr: Int): (Player) = {
+    val f = new playerFactory
     prettyprint(Console.RED + "Gib deinen Namen ein Spieler " + spielernr)
-    val player = Player(scala.io.StdIn.readLine().toString)
+    val player = f.create(scala.io.StdIn.readLine().toString)
+
 
 
     return (player)
