@@ -33,6 +33,7 @@ case class KI() {
         //geht nicht weil karte nicht angelegt ist
         punkte(x)(y) = map.getpunkteohneanlegen(card, x, y)
 
+        //println("X:  "+x+"  Y:   "+y+"  Punkte:   "+punkte(x)(y))
       }
     }
     (punkte)

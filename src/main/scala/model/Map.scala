@@ -57,7 +57,7 @@ class Map(mx: Int, my: Int){
     if(card == null){
       return false
     }
-    println("setze random karte")
+    //println("setze random karte")
     val r = scala.util.Random
     var a = r.nextInt(field(0).length)
 

@@ -1,15 +1,16 @@
 package controller
 import main.scala.model.{Card, Map, Player}
-import main.scala.TUI.TUI
 import main.scala.util.Observable
 import mainn.scala.model.KI
+import util.State
 
 class Controller extends Observable{
 
-  var state = 0
+  var state:State = _
+  var befehl:String = _
 
-  def changeState(int: Int): Unit={
-    state = int
+  def changeState(state: State):Unit={
+    this.state = state
   }
 
   def start(p1: Player, p2: Player, setMap: Map, runden: Int): Unit= {
@@ -19,7 +20,9 @@ class Controller extends Observable{
 
     for(i <-  0 until runden){
       Thread.sleep(500)
-      val card1 = Kartezeigen(p1)
+      var card1 = Kartezeigen(p1)
+      //if(decoratedplayer).noob = true
+      //card1 = selectcard()
       Optionen(card1, map, p1)
       print(map)
       notifyObservers("Puntkte von Spieler " + p1 + ": " + p1.Punkte.toString(), 0)
@@ -96,7 +99,7 @@ class Controller extends Observable{
       card.rotateRight()
     }
     if(data._1 < 0 || data._2 < 0 || data._3 < 0) {
-      map.setRandom(card)
+      //map.setRandom(card)
       notifyObservers("beep boop ich kann nicht anlegen",0);
       return
     }
@@ -118,14 +121,21 @@ class Controller extends Observable{
 
   def Kartezeigen(player: Player): Card ={
     val card = RandomCard()
-
-    notifyObservers(Console.RED + "Spieler " + player.toString() + " ist an der Reihe",0)
+    if(player == null)
+      notifyObservers(Console.RED + "BOT ist an der Reihe",0)
+    else
+      notifyObservers(Console.RED + "Spieler " + player.toString() + " ist an der Reihe",0)
     //println(Console.RED + "Spieler " + player.toString() + " ist an der Reihe")
 
     notifyObservers(Console.WHITE,0)
     //print(Console.WHITE)
 
     printcard(card)
+    if(player!= null)
+      notifyObservers(Console.BLUE + "r.... rechts rum rotieren"+ Console.CYAN + "  l.... links rum rotieren"+
+        Console.MAGENTA + "  i x y.... Einfügen bei (x,y)"+ Console.YELLOW + "  wait.... eine runde aussetzen"+
+        Console.BLACK + "  tipp .... zeigt wo man anlegen kann"+ Console.RED + "  exit .... beenden",0)
+
     return card
   }
   /*
@@ -160,15 +170,12 @@ class Controller extends Observable{
   */
 
 
-
   def Optionen(card: Card, map: Map, player: Player): Unit = {
-    notifyObservers(Console.BLUE + "r.... rechts rum rotieren"+ Console.CYAN + "  l.... links rum rotieren"+
-      Console.MAGENTA + "  i x y.... Einfügen bei (x,y)"+ Console.YELLOW + "  wait.... eine runde aussetzen"+
-      Console.BLACK + "  tipp .... zeigt wo man anlegen kann"+ Console.RED + "  exit .... beenden",0)
 
     var a = true
     while (a) {
-      val x = scala.io.StdIn.readLine().toString
+      //auslagern durch neuen parameter der String
+      val x = befehl
       val array = x.split(" +")
 
       if (array(0).equals("r")) {
