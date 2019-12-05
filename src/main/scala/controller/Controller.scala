@@ -13,84 +13,7 @@ class Controller extends Observable{
     this.state = state
   }
 
-  def start(p1: Player, p2: Player, setMap: Map, runden: Int): Unit= {
 
-    val map = setMap
-    print(map)
-
-    for(i <-  0 until runden){
-      Thread.sleep(500)
-      var card1 = Kartezeigen(p1)
-      //if(decoratedplayer).noob = true
-      //card1 = selectcard()
-      Optionen(card1, map, p1)
-      print(map)
-      notifyObservers("Puntkte von Spieler " + p1 + ": " + p1.Punkte.toString(), 0)
-      notifyObservers("Puntkte von Spieler " + p2 + ": " + p2.Punkte.toString(), 0)
-
-      Thread.sleep(500)
-      val card2 = Kartezeigen(p2)
-      Optionen(card2, map, p2)
-      print(map)
-      notifyObservers("Puntkte von Spieler " + p1 + ": " + p1.Punkte.toString(), 0)
-      notifyObservers("Puntkte von Spieler " + p2 + ": " + p2.Punkte.toString(), 0)
-    }
-    notifyObservers(p1.Punkte.toString,0)
-    //println(p1.Punkte)
-    notifyObservers(p2.Punkte.toString,0)
-    //println(p2.Punkte)
-    if(p1.Punkte > p2.Punkte)
-      notifyObservers(Console.RED + "SPIELER " + p1.toString()+" GEWINNT",0)
-      //println(Console.RED + p1.toString()+" GEWINNT")
-    else if(p2.Punkte > p1.Punkte)
-      notifyObservers(Console.RED + "SPIELER " + p2.toString()+" GEWINNT",0)
-      //println(Console.RED + p2.toString()+" GEWINNT")
-    else{
-      notifyObservers("UNENTSCHIEDEN",0)
-      //println(Console.RED + "UNENTSCHIEDEN")
-
-    }
-  }
-
-  def startbot(p1:Player,bot: KI, setMap: Map, runden: Int): Unit= {
-    val map = setMap
-
-    print(map)
-
-    for (i <- 0 until runden) {
-      Thread.sleep(500)
-
-      val card1 = Kartezeigen(p1)
-      Optionen(card1, map, p1)
-      print(map)
-      notifyObservers("Puntkte von Spieler " + p1 + ": " + p1.Punkte.toString(), 0)
-      notifyObservers("Puntkte von Bot " + bot + ": " + bot.Punkte.toString(), 0)
-
-      Thread.sleep(500)
-      val card = RandomCard()
-      notifyObservers("Karte von Bot:",0)
-      printcard(card)
-      //wait(500)
-      Calculatebot(bot,card,map)
-      print(map)
-      notifyObservers("Puntkte von Spieler " + p1 + ": " + p1.Punkte.toString(), 0)
-      notifyObservers("Puntkte von Bot " + bot + ": " + bot.Punkte.toString(), 0)
-
-    }
-
-
-    if(p1.Punkte > bot.Punkte)
-      notifyObservers(Console.RED + "SPIELER " + p1.toString()+" GEWINNT",0)
-    //println(Console.RED + p1.toString()+" GEWINNT")
-    else if(bot.Punkte > p1.Punkte)
-      notifyObservers(Console.RED + "SPIELER " + bot.toString()+" GEWINNT",0)
-    //println(Console.RED + p2.toString()+" GEWINNT")
-    else{
-      notifyObservers("UNENTSCHIEDEN",0)
-      //println(Console.RED + "UNENTSCHIEDEN")
-
-    }
-  }
   def Calculatebot(bot: KI, card: Card,map:Map): Unit ={
     val data = bot.anlegen(map, card)
 
@@ -169,8 +92,8 @@ class Controller extends Observable{
   }
   */
 
-
-  def Optionen(card: Card, map: Map, player: Player): Unit = {
+//return 1: normaler fall, return -1: fehler fall,  return 2 : spieler darf nocheinmal
+  def Optionen(card: Card, map: Map, player: Player): Int = {
 
     var a = true
     while (a) {
@@ -181,13 +104,15 @@ class Controller extends Observable{
       if (array(0).equals("r")) {
         card.rotateRight()
         printcard(card)
+        return 2
       } else if (array(0).equals("wait")) {
         a = false
-        return
+        return 1
 
       } else if (array(0).equals("l")) {
         card.rotateLeft()
         printcard(card)
+        return 2
 
       } else if (array(0).equals("i")) {
 
@@ -199,17 +124,19 @@ class Controller extends Observable{
           player.addPoints(punkte)
           //println(player.toString() +"  :"+ player.Punkte)
           a = false
-          return
+          return 1
         } else {
-
           notifyObservers("Die Karte passt nicht",0)
           //println("Die Karte passt nicht")
+          return 2
         }
 
       } else if (array(0).equals("tipp")) {
         tipp(card, map)
+        return 2
       }
     }
+    1
   }
 
   def getPoints(player1: Player, player2: Player): (Int,Int) ={
@@ -308,6 +235,14 @@ class Controller extends Observable{
       }
 
     }
+
+  }
+  def printpunkte(p1:Player, p2:Player, bot:KI): Unit ={
+    notifyObservers(Console.RED+"Punkte von Spieler " + p1.toString() +":  "+ p1.Punkte,0 )
+    if(p2 != null)
+      notifyObservers(Console.RED+"Punkte von Spieler " + p2.toString() +":  "+ p2.Punkte,0 )
+    else
+      notifyObservers(Console.RED+"Punkte von BOT " + bot.toString() +":  "+ bot.Punkte,0 )
 
   }
 }

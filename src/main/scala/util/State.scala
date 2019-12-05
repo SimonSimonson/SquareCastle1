@@ -7,6 +7,6 @@ import mainn.scala.model.KI
 trait State {
 
   def state(): Int
-  def handle(state:Boolean,controller:Controller, playerA:Player, playerB:Player, bot:KI, map:Map, card: Card): Unit
+  def handle(state:Boolean,controller:Controller, playerA:Player, playerB:Player, bot:KI, map:Map, card: Card): Int
 
 }

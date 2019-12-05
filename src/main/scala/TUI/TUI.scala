@@ -11,10 +11,6 @@ import supervisor.supervisor
 case class TUI(controller:Controller, supervisor: supervisor) extends Observer {
   controller.add(this)
 
-  def start(): Int = {
-    start(newGame(),botornot(),setMap(),Runden(),setPlayer(1),null)
-    1
-  }
   //false: Ausgabe, true: Reinschreiben der Antwort
   //es fehlen noch die drehungen, die sich grade unendlich drehen
   def settings(int: Int, mode : Boolean) : Int ={
@@ -70,12 +66,11 @@ case class TUI(controller:Controller, supervisor: supervisor) extends Observer {
         }
         else {
           var b = botornot()
-          if (b == null) {
+          supervisor.bot = b
+          if (b == null)
             return 300
-          } else {
-            supervisor.bot = b
+          else
             return 302
-          }
         }
       }
 
@@ -106,45 +101,6 @@ case class TUI(controller:Controller, supervisor: supervisor) extends Observer {
   }
 
 
-  //nur zum testen in 2 Methoden geteilt
-  def start(g :Int, b : KI, map:Map, runden: Int, playerA: Player, playerB: Player): Int = {
-    val g1 = g
-    if(runden == -1){
-      update("Rundenanzahl falsch",0)
-      return -1
-    }
-    if(g1 == 0){
-      update("Goodbye!",0)
-      return -1
-    }
-    val sM = map
-    if(b == null) {
-      val player1 = playerA
-      supervisor.p1 = player1
-      val player2 = setPlayer(2)
-      supervisor.p2 = player2
-      update(Console.WHITE + "Spiel wird gestartet",1)
-      prettyprint(".  .  .  .  .  .  .  .")
-
-      var s = new StateA
-      controller.changeState(s)
-      //s.handle(controller, player1, player2, b, sM, runden)
-      //controller.start(player1, player2, sM ,runden)
-      1
-    }else {
-      val player1 = playerA
-      supervisor.p1 = player1
-      update(Console.WHITE + "Spiel wird gestartet",1)
-      prettyprint(".  .  .  .  .  .  .  .")
-      val player2 = null
-
-      var s = new StateB
-      controller.changeState(s)
-      //s.handle(controller, player1, player2, b, sM, runden)
-      //controller.startbot(player1, bot, sM, runden)
-      1
-    }
-  }
   def newGame(): Int= {
 
     val x = input
@@ -160,8 +116,6 @@ case class TUI(controller:Controller, supervisor: supervisor) extends Observer {
 
   def botornot(): KI = {
     val y = input
-    if(y==null)
-      return null
     if (y.equals("Ja") || y.equals("ja") || y.equals("JA") || y.equals("j") || y.equals("J")) {
       return new KI()
     }
@@ -201,7 +155,7 @@ case class TUI(controller:Controller, supervisor: supervisor) extends Observer {
           return -1
         }
       }
-      supervisor.runden = x.toInt * 2
+      supervisor.runden = anzInt * 2
       x.toInt
     } else {
       var max = (x * y) / 2
