@@ -13,6 +13,7 @@ class Controller extends Observable{
     this.state = state
   }
 
+
   def Calculatebot(bot: KI, card: Card,map:Map): Unit ={
     val data = bot.anlegen(map, card)
 
@@ -91,7 +92,8 @@ class Controller extends Observable{
   }
   */
 
-  def Optionen(card: Card, map: Map, player: Player): Unit = {
+//return 1: normaler fall, return -1: fehler fall,  return 2 : spieler darf nocheinmal
+  def Optionen(card: Card, map: Map, player: Player): Int = {
 
     var a = true
     while (a) {
@@ -102,13 +104,15 @@ class Controller extends Observable{
       if (array(0).equals("r")) {
         card.rotateRight()
         printcard(card)
+        return 2
       } else if (array(0).equals("wait")) {
         a = false
-        return
+        return 1
 
       } else if (array(0).equals("l")) {
         card.rotateLeft()
         printcard(card)
+        return 2
 
       } else if (array(0).equals("i")) {
 
@@ -120,17 +124,19 @@ class Controller extends Observable{
           player.addPoints(punkte)
           //println(player.toString() +"  :"+ player.Punkte)
           a = false
-          return
+          return 1
         } else {
-
           notifyObservers("Die Karte passt nicht",0)
           //println("Die Karte passt nicht")
+          return 2
         }
 
       } else if (array(0).equals("tipp")) {
         tipp(card, map)
+        return 2
       }
     }
+    1
   }
 
   def getPoints(player1: Player, player2: Player): (Int,Int) ={
@@ -229,6 +235,14 @@ class Controller extends Observable{
       }
 
     }
+
+  }
+  def printpunkte(p1:Player, p2:Player, bot:KI): Unit ={
+    notifyObservers(Console.RED+"Punkte von Spieler " + p1.toString() +":  "+ p1.Punkte,0 )
+    if(p2 != null)
+      notifyObservers(Console.RED+"Punkte von Spieler " + p2.toString() +":  "+ p2.Punkte,0 )
+    else
+      notifyObservers(Console.RED+"Punkte von BOT " + bot.toString() +":  "+ bot.Punkte,0 )
 
   }
 }

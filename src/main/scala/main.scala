@@ -9,7 +9,8 @@ object main {
     val supervisor = new supervisor(Controller)
 
     val tui = new TUI.TUI(Controller, supervisor)
-    //tui.start() //initialisiert die Variablen
+
+//////////////////////////////////////////////////INITIALISIERUNG\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
     var mode = false
     var s = ""
@@ -32,7 +33,13 @@ object main {
       }
       mode= !mode
     }
+
+
     tui.update(Console.WHITE + "Spiel wird gestartet", 1)
+
+
+///////////////////////////////////////////////////////SPIEL\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
 
     //state sagt ob spieler1 oder2 dran ist bzw spieler1 oder bot
     var state = false
@@ -44,9 +51,13 @@ object main {
         tui.update(print, 0)
         return
       }
+      supervisor.showPoints()
       s = scala.io.StdIn.readLine().toString
       tui.input(s)
-      supervisor.newRoundactive(state)
+      while(supervisor.newRoundactive(state)==2){
+        s = scala.io.StdIn.readLine().toString
+        tui.input(s)
+      }
 
       if(s == "exit")
         return

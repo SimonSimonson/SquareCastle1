@@ -25,18 +25,15 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
     var x = l
     kind match{
       case 0 =>  {
-        println("ich bin in case 0!")
         for(y <- 0 to 3 if none(y) != null && none(y) != prev) {
           x = none(y).getAngelegteR(kind, l + 1, this)
         }
       }
       case 1 =>  {
-        //println("ich bin in case 1!")
         for(y <- 0 to 3 if roads(y) != null && roads(y) != prev)
            x = roads(y).getAngelegteR(kind, l + 1, this)
       }
       case 2 =>  {
-        //println("ich bin in case 2!")
         for(y <- 0 to 3 if castle(y) != null && castle(y) !=prev)
            x = castle(y).getAngelegteR(kind, l + 1, this)
       }

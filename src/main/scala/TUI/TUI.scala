@@ -65,12 +65,11 @@ case class TUI(controller:Controller, supervisor: supervisor) extends Observer {
         }
         else {
           var b = botornot()
-          if (b == null) {
+          supervisor.bot = b
+          if (b == null)
             return 300
-          } else {
-            supervisor.bot = b
+          else
             return 302
-          }
         }
       }
 
@@ -113,8 +112,6 @@ case class TUI(controller:Controller, supervisor: supervisor) extends Observer {
 
   def botornot(): KI = {
     val y = input
-    if(y==null)
-      return null
     if (y.equals("Ja") || y.equals("ja") || y.equals("JA") || y.equals("j") || y.equals("J")) {
       return new KI()
     }
@@ -154,7 +151,7 @@ case class TUI(controller:Controller, supervisor: supervisor) extends Observer {
           return -1
         }
       }
-      supervisor.runden = x.toInt * 2
+      supervisor.runden = anzInt * 2
       x.toInt
     } else {
       var max = (x * y) / 2
