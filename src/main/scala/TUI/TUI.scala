@@ -4,17 +4,13 @@ import controller.{Controller, StateA, StateB}
 import main.scala.model.Player
 import mainn.scala.model.KI
 import main.scala.model.Map
-import util.playerFactory
 import supervisor.supervisor
+import util.playerFactory
 
 
 case class TUI(controller:Controller, supervisor: supervisor) extends Observer {
   controller.add(this)
 
-  def start(): Int = {
-    start(newGame(),botornot(),setMap(),Runden(),setPlayer(1),null)
-    1
-  }
   //false: Ausgabe, true: Reinschreiben der Antwort
   //es fehlen noch die drehungen, die sich grade unendlich drehen
   def settings(int: Int, mode : Boolean) : Int ={
@@ -30,7 +26,6 @@ case class TUI(controller:Controller, supervisor: supervisor) extends Observer {
         return 1
       }
 
-
       case 1 => {
         if(!mode)
           prettyprint(Console.RED + "Gib die Map Größe ein (Bsp.: 2x2)")
@@ -38,7 +33,6 @@ case class TUI(controller:Controller, supervisor: supervisor) extends Observer {
           setMap()
         1
       }
-
 
       case 2 => {
         if(!mode)
@@ -63,6 +57,7 @@ case class TUI(controller:Controller, supervisor: supervisor) extends Observer {
           1
         }
       }
+
       case 4 => {
         if (!mode) {
           update("Willst du gegen einen Bot spielen?", 0)
@@ -78,9 +73,6 @@ case class TUI(controller:Controller, supervisor: supervisor) extends Observer {
           }
         }
       }
-
-
-        //spieler oder bot setzen
 
       case 5 => {
         if (!mode) {
@@ -106,45 +98,6 @@ case class TUI(controller:Controller, supervisor: supervisor) extends Observer {
   }
 
 
-  //nur zum testen in 2 Methoden geteilt
-  def start(g :Int, b : KI, map:Map, runden: Int, playerA: Player, playerB: Player): Int = {
-    val g1 = g
-    if(runden == -1){
-      update("Rundenanzahl falsch",0)
-      return -1
-    }
-    if(g1 == 0){
-      update("Goodbye!",0)
-      return -1
-    }
-    val sM = map
-    if(b == null) {
-      val player1 = playerA
-      supervisor.p1 = player1
-      val player2 = setPlayer(2)
-      supervisor.p2 = player2
-      update(Console.WHITE + "Spiel wird gestartet",1)
-      prettyprint(".  .  .  .  .  .  .  .")
-
-      var s = new StateA
-      controller.changeState(s)
-      //s.handle(controller, player1, player2, b, sM, runden)
-      //controller.start(player1, player2, sM ,runden)
-      1
-    }else {
-      val player1 = playerA
-      supervisor.p1 = player1
-      update(Console.WHITE + "Spiel wird gestartet",1)
-      prettyprint(".  .  .  .  .  .  .  .")
-      val player2 = null
-
-      var s = new StateB
-      controller.changeState(s)
-      //s.handle(controller, player1, player2, b, sM, runden)
-      //controller.startbot(player1, bot, sM, runden)
-      1
-    }
-  }
   def newGame(): Int= {
 
     val x = input

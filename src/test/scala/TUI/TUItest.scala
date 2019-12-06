@@ -5,9 +5,8 @@ import main.scala.model.Player
 import mainn.scala.model.KI
 import main.scala.model.Map
 import main.scala.TUI.TUI
-import supervisor.supervisor
-
 import org.scalatest.{Matchers, WordSpec}
+import supervisor.supervisor
 class TUItest extends WordSpec with Matchers {
 
 
