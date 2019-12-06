@@ -1,15 +1,17 @@
 package main.scala.TUI
+import controller.commands.{botornotCommand, mapCommand, playerCommand, rundenCommand}
 import main.scala.util.{Observable, Observer}
 import controller.{Controller, StateA, StateB}
 import main.scala.model.Player
 import mainn.scala.model.KI
 import main.scala.model.Map
+import util.{Invoker, playerFactory}
 import supervisor.supervisor
-import util.playerFactory
 
 
 case class TUI(controller:Controller, supervisor: supervisor) extends Observer {
-  controller.add(this)
+  //controller.add(this)
+  val invoker = new Invoker(controller,supervisor)
 
   //false: Ausgabe, true: Reinschreiben der Antwort
   //es fehlen noch die drehungen, die sich grade unendlich drehen
@@ -26,24 +28,21 @@ case class TUI(controller:Controller, supervisor: supervisor) extends Observer {
         return 1
       }
 
+
       case 1 => {
         if(!mode)
           prettyprint(Console.RED + "Gib die Map Größe ein (Bsp.: 2x2)")
         else
-          setMap()
+          invoker.ExecuteCommand(new mapCommand(),input)
         1
       }
+
 
       case 2 => {
         if(!mode)
           prettyprint(Console.RED + "Rundenanzahl?")
-        else {
-          val r = Runden()
-          if (r == -1) {
-            update("Rundenanzahl falsch", 0)
-            return -1
-          }
-        }
+        else
+          invoker.ExecuteCommand(new rundenCommand(),input)
         1
       }
 
@@ -52,34 +51,32 @@ case class TUI(controller:Controller, supervisor: supervisor) extends Observer {
           prettyprint(Console.RED + "Gib deinen Namen ein Spieler " + 1)
           1
         }else {
-          val player1 = setPlayer(1)
-          supervisor.p1 = player1
+          invoker.ExecuteCommand(new playerCommand(1),input)
           1
         }
       }
-
       case 4 => {
         if (!mode) {
           update("Willst du gegen einen Bot spielen?", 0)
-          return 1
+          1
         }
         else {
-          var b = botornot()
-          supervisor.bot = b
-          if (b == null)
+          if (invoker.ExecuteCommand(new botornotCommand(),input))
             return 300
           else
             return 302
         }
       }
 
+
+        //spieler oder bot setzen
+
       case 5 => {
         if (!mode) {
           prettyprint(Console.RED + "Gib deinen Namen ein Spieler " + 2)
           1
         } else {
-          val player2 = setPlayer(2)
-          supervisor.p2 = player2
+          invoker.ExecuteCommand(new playerCommand(2),input)
           1
         }
       }

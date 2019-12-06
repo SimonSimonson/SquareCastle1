@@ -14,7 +14,7 @@ class Controller extends Observable{
   }
 
 
-  def Calculatebot(bot: KI, card: Card,map:Map): Unit ={
+  def Calculatebot(bot: KI, card: Card,map:Map):Unit ={
     val data = bot.anlegen(map, card)
 
     for(i <- 0 until data._3){
@@ -144,9 +144,6 @@ class Controller extends Observable{
     //println(points1)
     val points2 = player2.getPoints()
     //println(points2)
-
-
-
     return (points1,points2)
   }
 

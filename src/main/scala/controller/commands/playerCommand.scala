@@ -13,6 +13,7 @@ case class playerCommand(int:Int) extends Command{
       supervisor.p1 = player._1
       true
     } else if(int == 2){
+
       supervisor.p2 = player._1
       true
     }

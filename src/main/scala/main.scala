@@ -2,18 +2,19 @@ package main.scala
 import controller.{Controller, StateA, StateB}
 import supervisor.supervisor
 
+
 object main {
   def main(args: Array[String]): Unit = {
 
     val Controller = new Controller
     val supervisor = new supervisor(Controller)
-
     val tui = new TUI.TUI(Controller, supervisor)
 
 //////////////////////////////////////////////////INITIALISIERUNG\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
     var mode = false
     var s = ""
+
     for(i <- 0 to 4) {
       tui.settings(i, mode)
       mode = !mode
@@ -51,7 +52,7 @@ object main {
         tui.update(print, 0)
         return
       }
-      supervisor.showPoints()
+      //supervisor.showPoints()
       s = scala.io.StdIn.readLine().toString
       tui.input(s)
       while(supervisor.newRoundactive(state)==2){
@@ -61,7 +62,6 @@ object main {
 
       if(s == "exit")
         return
-
     }
 
     //Bot testen die methoden
