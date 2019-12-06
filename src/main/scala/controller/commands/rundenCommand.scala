@@ -5,7 +5,7 @@ import supervisor.supervisor
 import util.Command
 
 case class rundenCommand() extends Command{
-  override def execute(i: String, supervisor:supervisor): Unit ={
+  override def execute(i: String, supervisor:supervisor): Boolean ={
     ???
   }
 

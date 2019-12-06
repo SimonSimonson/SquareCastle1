@@ -5,7 +5,7 @@ import util.Command
 import supervisor.supervisor
 
 case class mapCommand() extends Command{
-  override def execute(i: String, supervisor:supervisor): Unit ={
+  override def execute(i: String, supervisor:supervisor): Boolean ={
     val array = i.split("x")
     val x = array(0).toInt
     val y = array(1).toInt
@@ -22,7 +22,7 @@ case class mapCommand() extends Command{
 
     val mapSize = new Map(array(0).toInt, array(1).toInt)
     supervisor.map = mapSize
-    return mapSize
+    true
   }
 
   override def undo(supervisor:supervisor): Unit ={

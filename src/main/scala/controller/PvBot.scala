@@ -7,16 +7,14 @@ import util.State
 
 case class StateB() extends State(){
 
-  override def handle(state:Boolean,controller:Controller, playerA:Player, playerB:Player, bot:KI, map:Map, card: Card): Int = {
-    if (state) {
-      return controller.Optionen(card, map, playerA) //kann erstmal nur einen Player
-    }
+  override def handle(state:Boolean,controller:Controller, playerA:Player, playerB:Player, bot:KI, map:Map, card: Card): Unit ={
+    if(state)
+      controller.Optionen(card,map,playerA)
     else
-      controller.Calculatebot(bot, card, map)
-    1
+      controller.Calculatebot(bot,card,map)
   }
 
-  override def state(): Int ={
+  override def state(): Int={
     return 1
   }
 
