@@ -1,17 +1,15 @@
 package main.scala.TUI
-import controller.commands.{botornotCommand, mapCommand, playerCommand, rundenCommand}
 import main.scala.util.{Observable, Observer}
 import controller.{Controller, StateA, StateB}
 import main.scala.model.Player
 import mainn.scala.model.KI
 import main.scala.model.Map
-import util.{Invoker, playerFactory}
+import util.playerFactory
 import supervisor.supervisor
 
 
 case class TUI(controller:Controller, supervisor: supervisor) extends Observer {
-  //controller.add(this)
-  val invoker = new Invoker(controller,supervisor)
+  controller.add(this)
 
   //false: Ausgabe, true: Reinschreiben der Antwort
   //es fehlen noch die drehungen, die sich grade unendlich drehen
@@ -33,7 +31,7 @@ case class TUI(controller:Controller, supervisor: supervisor) extends Observer {
         if(!mode)
           prettyprint(Console.RED + "Gib die Map Größe ein (Bsp.: 2x2)")
         else
-          invoker.ExecuteCommand(new mapCommand(),input)
+          setMap()
         1
       }
 
@@ -41,8 +39,13 @@ case class TUI(controller:Controller, supervisor: supervisor) extends Observer {
       case 2 => {
         if(!mode)
           prettyprint(Console.RED + "Rundenanzahl?")
-        else
-          invoker.ExecuteCommand(new rundenCommand(),input)
+        else {
+          val r = Runden()
+          if (r == -1) {
+            update("Rundenanzahl falsch", 0)
+            return -1
+          }
+        }
         1
       }
 
@@ -51,17 +54,20 @@ case class TUI(controller:Controller, supervisor: supervisor) extends Observer {
           prettyprint(Console.RED + "Gib deinen Namen ein Spieler " + 1)
           1
         }else {
-          invoker.ExecuteCommand(new playerCommand(1),input)
+          val player1 = setPlayer(1)
+          supervisor.p1 = player1
           1
         }
       }
       case 4 => {
         if (!mode) {
           update("Willst du gegen einen Bot spielen?", 0)
-          1
+          return 1
         }
         else {
-          if (invoker.ExecuteCommand(new botornotCommand(),input))
+          var b = botornot()
+          supervisor.bot = b
+          if (b == null)
             return 300
           else
             return 302
@@ -76,12 +82,20 @@ case class TUI(controller:Controller, supervisor: supervisor) extends Observer {
           prettyprint(Console.RED + "Gib deinen Namen ein Spieler " + 2)
           1
         } else {
-          invoker.ExecuteCommand(new playerCommand(2),input)
+          val player2 = setPlayer(2)
+          supervisor.p2 = player2
           1
         }
       }
       0
     }
+  }
+  def testfall(): Unit ={
+    supervisor.map = new Map(3,3)
+    supervisor.p1 = new Player("Peter")
+    supervisor.p2 = new Player("Kurt")
+    controller.changeState(new StateA)
+    supervisor.runden = 4
   }
 
 

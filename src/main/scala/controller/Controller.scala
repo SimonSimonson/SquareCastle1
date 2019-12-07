@@ -1,16 +1,21 @@
 package controller
+import controller.commands.layCommand
 import main.scala.model.{Card, Map, Player}
 import main.scala.util.Observable
 import mainn.scala.model.KI
-import util.State
+import util.{Invoker, State}
 
 class Controller extends Observable{
 
   var state:State = _
   var befehl:String = _
+  val invoker:Invoker = new Invoker(this)
 
-  def changeState(state: State):Unit={
+  def changeState(state: State):Boolean={
+    if(state== null)
+      return false
     this.state = state
+    true
   }
 
 
@@ -95,8 +100,6 @@ class Controller extends Observable{
 //return 1: normaler fall, return -1: fehler fall,  return 2 : spieler darf nocheinmal
   def Optionen(card: Card, map: Map, player: Player): Int = {
 
-    var a = true
-    while (a) {
       //auslagern durch neuen parameter der String
       val x = befehl
       val array = x.split(" +")
@@ -106,8 +109,8 @@ class Controller extends Observable{
         printcard(card)
         return 2
       } else if (array(0).equals("wait")) {
-        a = false
-        return 1
+        //muss implementiert werden
+        return 2
 
       } else if (array(0).equals("l")) {
         card.rotateLeft()
@@ -115,28 +118,30 @@ class Controller extends Observable{
         return 2
 
       } else if (array(0).equals("i")) {
-
-        if (map.Setcard(card, array(1).toInt, array(2).toInt) == 1) {
+        if (invoker.ExecuteCommand(new layCommand,array(1).toInt,array(2).toInt,card,map) == 1) {
 
           val punkte = card.getAngelegte()
           notifyObservers("Spieler "+ player.toString()+ " erhält "+ punkte + " Punkte",0)
           //println("Spieler "+ player.toString()+ " erhält "+ punkte + " Punkte")
           player.addPoints(punkte)
           //println(player.toString() +"  :"+ player.Punkte)
-          a = false
           return 1
         } else {
           notifyObservers("Die Karte passt nicht",0)
           //println("Die Karte passt nicht")
           return 2
         }
-
+      } else if (array(0).equals("undo")) {
+        invoker.Undo(card,map)
+        print(map)
+        return 2
       } else if (array(0).equals("tipp")) {
         tipp(card, map)
         return 2
       }
-    }
-    1
+
+    notifyObservers("BEFEHL NICHT ERKANNT",0)
+    2
   }
 
   def getPoints(player1: Player, player2: Player): (Int,Int) ={

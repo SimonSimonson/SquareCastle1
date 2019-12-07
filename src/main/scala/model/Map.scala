@@ -102,7 +102,22 @@ class Map(mx: Int, my: Int){
 
     return 1
   }
+  def cleanaround(x:Int,y:Int){
+    if(x+1 < mx && field(x+1)(y) != null ) {
+     field(x+1)(y).cleansides(3)
+    }
+    if(x-1 >= 0 && field(x-1)(y) != null) {
+      field(x+1)(y).cleansides(1)
+    }
 
+    if(y+1 < my && field(x)(y+1) != null) {
+      field(x+1)(y).cleansides(0)
+    }
+
+    if(y-1 >= 0 && field(x)(y-1) != null ) {
+      field(x+1)(y).cleansides(2)
+    }
+  }
 
 
 }

@@ -2,20 +2,19 @@ package main.scala
 import controller.{Controller, StateA, StateB}
 import supervisor.supervisor
 
-
 object main {
   def main(args: Array[String]): Unit = {
 
     val Controller = new Controller
     val supervisor = new supervisor(Controller)
+
     val tui = new TUI.TUI(Controller, supervisor)
 
-//////////////////////////////////////////////////INITIALISIERUNG\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    //////////////////////////////////////////////////INITIALISIERUNG\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
     var mode = false
     var s = ""
-
-    for(i <- 0 to 4) {
+    /*for(i <- 0 to 4) {
       tui.settings(i, mode)
       mode = !mode
       s = scala.io.StdIn.readLine().toString
@@ -34,12 +33,12 @@ object main {
       }
       mode= !mode
     }
-
-
+*/
+    tui.testfall()
     tui.update(Console.WHITE + "Spiel wird gestartet", 1)
 
 
-///////////////////////////////////////////////////////SPIEL\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    ///////////////////////////////////////////////////////SPIEL\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 
     //state sagt ob spieler1 oder2 dran ist bzw spieler1 oder bot
@@ -62,6 +61,7 @@ object main {
 
       if(s == "exit")
         return
+
     }
 
     //Bot testen die methoden
