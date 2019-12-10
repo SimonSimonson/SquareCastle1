@@ -18,7 +18,6 @@ class Controller extends Observable{
     true
   }
 
-
   def Calculatebot(bot: KI, card: Card,map:Map):Unit ={
     val data = bot.anlegen(map, card)
 

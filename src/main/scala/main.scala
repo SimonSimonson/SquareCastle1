@@ -1,4 +1,5 @@
 package main.scala
+import GUI.GUI
 import controller.{Controller, StateA, StateB}
 import supervisor.supervisor
 
@@ -9,6 +10,8 @@ object main {
     val supervisor = new supervisor(Controller)
 
     val tui = new TUI.TUI(Controller, supervisor)
+
+    val gui = new GUI()
 
     //////////////////////////////////////////////////INITIALISIERUNG\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -21,13 +24,16 @@ object main {
       tui.input(s)
       val er = tui.settings(i, mode)
       if (er == 300) {
+
         tui.settings(i + 1, false)
         s = scala.io.StdIn.readLine().toString
         tui.input(s)
         tui.settings(i + 1, true)
+        //stateA = PvP
         Controller.changeState(new StateA)
       }
       if (er == 302) {
+        //stateB = PvBot
         Controller.changeState(new StateB)
 
       }
@@ -38,10 +44,12 @@ object main {
     tui.update(Console.WHITE + "Spiel wird gestartet", 1)
 
 
+
+
     ///////////////////////////////////////////////////////SPIEL\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 
-    //state sagt ob spieler1 oder2 dran ist bzw spieler1 oder bot
+    //state sagt ob spieler1 oder 2 dran ist bzw spieler1 oder bot
     var state = false
     while(true){
       state = !state
