@@ -3,18 +3,22 @@ package GUI
 import java.awt.Graphics2D
 import java.awt.image.BufferedImage
 import java.io.File
+
 import controller.Controller
 import javax.imageio.ImageIO
 import main.scala.model.Card
+
 import scala.swing.Swing.LineBorder
 import scala.swing.event.MouseClicked
 import scala.swing.{BorderPanel, Dimension, Font, GridPanel, Label}
 import java.awt.geom.AffineTransform
 import java.awt.image.AffineTransformOp
 
+import supervisor.supervisor
 
 
-case class GuiCell(x: Int, y: Int, supervisor: supervisor.supervisor, controller: Controller) extends GridPanel(1, 1) {
+
+case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controller) extends GridPanel(1, 1) {
   preferredSize = new Dimension(50, 150)
   background = java.awt.Color.WHITE
   var myCard: Card = _
@@ -28,6 +32,8 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor.supervisor, controller
       font = new Font("Verdana", 1, 10)
       //horizontalAlignment = Alignment.Center
     }
+
+
   val cell: BorderPanel = new BorderPanel() {
     add(label, BorderPanel.Position.Center)
     //contents += label
@@ -40,23 +46,32 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor.supervisor, controller
     reactions += {
       case MouseClicked(src, pt, mod, clicks, pops) =>
         //controller.showCandidates(row, column)
-        supervisor.map.Setcard(supervisor.card, x, y)
+        //supervisor.map.Setcard(supervisor.card, x, y)
         myCard = supervisor.card
+        setCellPicture
         border = LineBorder(java.awt.Color.GREEN.darker(), 4)
+        redrawCell
     }
   }
+
+
 
   def redrawCell: Unit = {
     contents.clear()
     contents += cell
-    cell.background = java.awt.Color.WHITE
+    cell.background = java.awt.Color.RED
     cell.border = LineBorder(java.awt.Color.BLACK, 1)
     setCellPicture
+    //BILD IST ZWAR GESPEICHERT ABER NICHT IN DER ZELLE
     //label.text = getCellText
     repaint
   }
 
   def setCellPicture: Unit = {
+    if(supervisor.card == null){
+      myPicture = ImageIO.read(new File(path + "Empty.png"))
+      return
+    }
     //CODE DER DIE BILDER ZUORDNET
     val numbers = (myCard.side0, myCard.side1, myCard.side2, myCard.side3)
     var tmp = findImage(numbers)

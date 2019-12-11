@@ -83,7 +83,7 @@ case class TUI(controller:Controller, supervisor: supervisor) extends Observer {
     }
   }
   def testfall(): Unit ={
-    supervisor.map = new Map(3,3)
+    supervisor.map = new Map(10,10)
     supervisor.p1 = new Player("Peter")
     supervisor.p2 = new Player("Kurt")
     controller.changeState(new StateA)

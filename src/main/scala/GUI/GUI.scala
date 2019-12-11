@@ -13,22 +13,22 @@ import javax.imageio.ImageIO
 import javax.swing.ImageIcon
 import java.awt.Image
 
+import controller.Controller
 import supervisor.supervisor
 
 
-class GUI(supervisor:supervisor) extends MainFrame {
+class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
 
   title = "Square Castle"
   background = java.awt.Color.WHITE
   preferredSize = new Dimension(1000, 700)
-  val castleIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ2.png"))
-  var cells: Array[Array[GuiCell]] = Array.ofDim[GuiCell](supervisor.map.getmx(), supervisor.map.getmy())
-
-  val panel = new Panel {
+  //val castleIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ2.png"))
+  var cells: Array[Array[GuiCell]] = Array.ofDim[GuiCell](10, 10)
+  /*val panel = new Panel {
     override def paint(g: Graphics2D): Unit = {
       g.drawImage(castleIMG, 200, 225, null)
     }
-  }
+  }*/
 
   val actionPanel = new GridBagPanel() {
     preferredSize = new Dimension(110, 400)
@@ -96,18 +96,8 @@ class GUI(supervisor:supervisor) extends MainFrame {
     pause.text = "wait"
      */
 
-
-
     listenTo(rotateRight, rotateLeft, tipp, pause)
     //code
-
-
-
-
-
-
-
-
 
     // Quelle : http://otfried.org/scala/index_42.html
     def constraints(x: Int, y: Int,
@@ -130,8 +120,31 @@ class GUI(supervisor:supervisor) extends MainFrame {
     }
   }
 
+  def grid: GridPanel = new GridPanel(cells.length, cells.length) {
+    //border = LineBorder(java.awt.Color.GREEN.darker(), 3)
+    background = java.awt.Color.BLACK
+    for {
+      line <- cells.indices
+      row <- cells.indices
+    } {
+      val guicell = new GuiCell(line, row, supervisor, controller)
+      cells(line)(row) = guicell
+      listenTo(guicell)
+      contents += guicell
+    }
+  }
 
+  println(cells(1)(1))
+  draw()
+  visible = true
 
+  def draw(): Unit = {
+    for {
+      line <- cells.indices
+      row <- cells.indices
+    } cells(line)(row).redrawCell
+    repaint
+  }
 
 
   var statusPanel = new GridPanel(1, 1) {
@@ -175,11 +188,6 @@ class GUI(supervisor:supervisor) extends MainFrame {
   }
 
 
-
-
-
-
-
   menuBar = new MenuBar {
     contents += new Menu("Menu") {
       contents += new MenuItem(scala.swing.Action("PvP") {
@@ -210,16 +218,68 @@ class GUI(supervisor:supervisor) extends MainFrame {
 
 
   contents = new BorderPanel {
-
     add(actionPanel, BorderPanel.Position.West)
     add(statusPanel, BorderPanel.Position.East)
-    //add(gridPanel, BorderPanel.Position.Center)
+    add(grid, BorderPanel.Position.Center)
     add(menuBar, BorderPanel.Position.North)
   }
-
-
   centerOnScreen
   visible = true
+  /*
+  reactions += {
+    case event: GladChanged => redraw()
+    case event: PlayingFieldChanged => redraw()
+    case event: GameStatusChanged => refreshStatus
+    case event: GameOver =>
+      val string = controller.players(controller.gameStatus.id)
+      JOptionPane.showMessageDialog(
+        null,
+        controller.players(controller.gameStatus.id) + " won",
+        "Game Over",
+        JOptionPane.INFORMATION_MESSAGE
+      )
+      redraw()
+    case event: CellClicked =>
+      redraw()
+      if (controller.checkGladiator(controller.selectedCell._1, controller.selectedCell._2)) {
+        val selectedGlad: Gladiator = controller.getGladiator(controller.selectedCell._1, controller.selectedCell._2)
+        if (!selectedGlad.moved && selectedGlad.player == controller.players(controller.gameStatus.id)) {
+          for {
+            i <- 0 until controller.playingField.size
+            j <- 0 until controller.playingField.size
+          } {
+            if (controller.checkMovementPoints(selectedGlad, selectedGlad.line, selectedGlad.row, i, j)
+              && controller.checkforPalm(selectedGlad.line, selectedGlad.row, i, j)) {
+              if (controller.checkCellEmpty(i, j)) {
+                cells(i)(j).setHighlightedSand()
+              }
+            }
+            if (controller.checkMovementPointsAttack(selectedGlad, selectedGlad.line, selectedGlad.row, i, j)) {
+              if //(cells(i)(j).myCell.cellType != CellType.PALM &&
+              (!(i == selectedGlad.line && j == selectedGlad.row)) {
+                // && !((i, j) == controller.getBase(controller.players(controller.gameStatus.id)))) {
+                cells(i)(j).cell.border = LineBorder(java.awt.Color.RED.darker(), 4)
+              }
+            }
+
+          }
+        }
+      }*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   def getCardIcon(): Unit = {
 
