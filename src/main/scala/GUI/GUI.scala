@@ -8,14 +8,15 @@ import java.awt.image.BufferedImage
 
 import javax.swing.{JFrame, JPanel, JScrollPane}
 import java.io.File
+
 import javax.imageio.ImageIO
 import javax.swing.ImageIcon
 import java.awt.Image
 
+import controller.Controller
 import javax.swing.JOptionPane
 import javax.swing.JPasswordField
 import javax.swing.JTextField
-
 import supervisor.supervisor
 
 
@@ -137,7 +138,7 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
   }
 
   println(cells(1)(1))
-  draw()
+  //draw()
   visible = true
 
   def draw(): Unit = {
@@ -188,7 +189,7 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
     contents += cardField
 
   }
-   */
+
 
 
 
@@ -373,6 +374,9 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
   }
   centerOnScreen
   visible = true
+
+
+
   /*
   reactions += {
     case event: GladChanged => redraw()
@@ -413,21 +417,5 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
           }
         }
       }*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

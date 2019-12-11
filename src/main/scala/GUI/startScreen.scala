@@ -21,14 +21,14 @@ import javax.swing.JPasswordField
 import javax.swing.JTextField
 import supervisor.supervisor
 
-class startScreen(supervisor: supervisor) extends MainFrame {
+class startScreen(supervisor: supervisor, controller: Controller) extends MainFrame {
 
   title = "Square Castle"
   background = java.awt.Color.WHITE
   preferredSize = new Dimension(1500, 800)
 
 
-  val schriftIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ.png"))
+  val schriftIMG = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/graphics/SQ.png"))
   //var cells: Array[Array[GuiCell]] = Array.ofDim[GuiCell](supervisor.map.getmx(), supervisor.map.getmy())
 
   val schrift = new Panel {
@@ -37,7 +37,7 @@ class startScreen(supervisor: supervisor) extends MainFrame {
     }
   }
 
-  val castleIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ2.png"))
+  val castleIMG = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/graphics/SQ2.png"))
   //var cells: Array[Array[GuiCell]] = Array.ofDim[GuiCell](supervisor.map.getmx(), supervisor.map.getmy())
 
   val castle = new Panel {
@@ -159,7 +159,7 @@ class startScreen(supervisor: supervisor) extends MainFrame {
       })
       contents += new Separator()
       contents += new MenuItem(scala.swing.Action("Exit") {
-        val gui = new GUI(supervisor)
+        val gui = new GUI(supervisor, controller)
       })
     }
   }

@@ -1,5 +1,5 @@
 package main.scala
-import GUI.GUI
+import GUI.{GUI, startScreen}
 import controller.{Controller, StateA, StateB}
 import supervisor.supervisor
 
@@ -11,7 +11,7 @@ object main {
 
     val tui = new TUI.TUI(Controller, supervisor)
 
-    val start = new startScreen(supervisor)
+    val start = new startScreen(supervisor,Controller)
 
     //val gui = new GUI(supervisor)
 
