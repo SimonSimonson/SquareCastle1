@@ -24,7 +24,6 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
   var myCard: Card = _
   var myPicture: BufferedImage =_
   val path =  "/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/"
-
   val label: Label =
     new Label {
       // text = getCellText
@@ -59,7 +58,7 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
   def redrawCell: Unit = {
     contents.clear()
     contents += cell
-    cell.background = java.awt.Color.RED
+    cell.background = java.awt.Color.WHITE
     cell.border = LineBorder(java.awt.Color.BLACK, 1)
     setCellPicture
     //BILD IST ZWAR GESPEICHERT ABER NICHT IN DER ZELLE
@@ -68,7 +67,7 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
   }
 
   def setCellPicture: Unit = {
-    if(supervisor.card == null){
+    if(supervisor.card == null || myCard == null){
       myPicture = ImageIO.read(new File(path + "Empty.png"))
       return
     }

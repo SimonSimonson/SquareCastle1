@@ -25,7 +25,6 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
   title = "Square Castle"
   background = java.awt.Color.WHITE
   preferredSize = new Dimension(1000, 700)
-  //val castleIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ2.png"))
   var cells: Array[Array[GuiCell]] = Array.ofDim[GuiCell](10, 10)
   /*val panel = new Panel {
     override def paint(g: Graphics2D): Unit = {
@@ -122,33 +121,6 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
 
     }
   }
-
-  def grid: GridPanel = new GridPanel(cells.length, cells.length) {
-    //border = LineBorder(java.awt.Color.GREEN.darker(), 3)
-    background = java.awt.Color.BLACK
-    for {
-      line <- cells.indices
-      row <- cells.indices
-    } {
-      val guicell = new GuiCell(line, row, supervisor, controller)
-      cells(line)(row) = guicell
-      listenTo(guicell)
-      contents += guicell
-    }
-  }
-
-  println(cells(1)(1))
-  //draw()
-  visible = true
-
-  def draw(): Unit = {
-    for {
-      line <- cells.indices
-      row <- cells.indices
-    } cells(line)(row).redrawCell
-    repaint
-  }
-
 
   var statusPanel = new GridPanel(1, 1) {
 
@@ -297,23 +269,46 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
     }
   }
 
-
-
-
-
-
-
   contents = new BorderPanel {
 
     add(menuBar, BorderPanel.Position.North)
     //add(statusPanel, BorderPanel.Position.East)
     add(actionPanel, BorderPanel.Position.West)
-    //add(gridPanel, BorderPanel.Position.Center)
+    add(grid, BorderPanel.Position.Center)
     add(rightPanel, BorderPanel.Position.East)
 
   }
   centerOnScreen
   visible = true
+
+  def grid = new GridPanel(cells.length, cells.length) {
+    //border = LineBorder(java.awt.Color.GREEN.darker(), 3)
+    background = java.awt.Color.BLACK
+    // var grid =
+    for {
+      line <- cells.indices
+      row <- cells.indices
+    } {
+      var guicell = GuiCell(line, row, supervisor, controller)
+      //KLAPPT ALLES BIS DATO
+      cells(line)(row) = guicell
+      listenTo(guicell)
+      contents += guicell
+      //println(guicell)
+      //speichert daten nicht in array warum auch immer
+    }
+  }
+  draw()
+  visible = true
+
+  def draw(): Unit = {
+    for {
+      line <- cells.indices
+      row <- cells.indices
+    } cells(line)(row).redrawCell
+    repaint
+  }
+
 
 
 
