@@ -25,7 +25,7 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
 
   title = "Square Castle"
   background = java.awt.Color.WHITE
-  preferredSize = new Dimension(1500, 800)
+  preferredSize = new Dimension(1000, 700)
 
 
   val schriftIMG = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/graphics/SQ.png"))
@@ -60,14 +60,38 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
 
 
     schriftLabel.background = java.awt.Color.GRAY.brighter().brighter()
-    schriftLabel.preferredSize = new Dimension(100, 90)
-    schriftLabel.verticalAlignment = Alignment.Center
+    schriftLabel.preferredSize = new Dimension(800, 151)
+    schriftLabel.verticalAlignment = Alignment.Top
     schriftLabel.verticalTextPosition = Alignment.Bottom
 
     castleLabel.background = java.awt.Color.WHITE
-    castleLabel.preferredSize = new Dimension(100, 90)
+    castleLabel.preferredSize = new Dimension(300, 249)
     castleLabel.verticalAlignment = Alignment.Center
     castleLabel.verticalTextPosition = Alignment.Bottom
+
+    add(schriftLabel, constraints(0, 10))
+    add(castleLabel, constraints(0, 11))
+
+
+    // Quelle : http://otfried.org/scala/index_42.html
+    def constraints(x: Int, y: Int,
+                    gridwidth: Int = 1, gridheight: Int = 1,
+                    weightx: Double = 0.0, weighty: Double = 0.0,
+                    fill: GridBagPanel.Fill.Value = GridBagPanel.Fill.None)
+    : Constraints = {
+
+      val c = new Constraints
+      c.gridx = x
+      c.gridy = y
+      c.gridwidth = gridwidth
+      c.gridheight = gridheight
+      c.weightx = weightx
+      c.weighty = weighty
+      c.fill = fill
+      c.anchor = GridBagPanel.Anchor.North
+      c
+
+    }
 
     schriftLabel.icon = new ImageIcon(ImageIO.read(getClass.getResource("graphics/SQ.png")))
     castleLabel.icon = new ImageIcon(ImageIO.read(getClass.getResource("graphics/SQ2.png")))
@@ -91,7 +115,6 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
     pvbot.verticalTextPosition = Alignment.Bottom
     pvbot.font = new Font("Verdana", 1, 40)
 
-    /*
     add(pvp, constraints(2, 2))
     add(pvbot, constraints(12, 2))
 
@@ -115,8 +138,7 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
       c
 
     }
-    
-     */
+
   }
 
 
