@@ -138,33 +138,44 @@ class GUI extends MainFrame {
 
 
 
-  var statusPanel = new GridPanel(1,3) {
+  var statusPanel = new GridPanel(1, 1) {
+
+    var n = new JFrame()
+    n.setSize(new Dimension(30, 30))
 
     //var statusline = new TextField(controller.gameStatus.toString, 1)
-    var nameField = new TextField("Name", 1)
+    var nameField = new TextField("Name")
+    //nameField.preferredSize = new Dimension(45, 30)
     nameField.font = new Font("Verdana", 1, 35)
+    //nameField.columns = 45
     nameField.horizontalAlignment = Alignment.Center
     nameField.editable = false
     nameField.background = java.awt.Color.WHITE
 
+
     //var credits = new TextField(controller.players("Punkte: " + controller.gameStatus.id).credits.toString, 1)
-    var pointField = new TextField("Punkte: ", 1)
+    var pointField = new TextField("Punkte: ")
+    //pointField.preferredSize = new Dimension(45, 30)
     pointField.font = new Font("Dialog", 1, 35)
+    //pointField.columns = 45
     pointField.foreground = java.awt.Color.GREEN.darker().darker()
     pointField.editable = false
     pointField.horizontalAlignment = Alignment.Center
     pointField.background = java.awt.Color.WHITE
 
 
-    var next = new Button("NEXT")
-    next.font = new Font("Verdana", 1, 35)
-    next.horizontalAlignment = Alignment.Center
-    next.background = java.awt.Color.BLACK
-    listenTo(next)
+    var cardField = new TextField("CARD")
+    //cardField.preferredSize = new Dimension(45, 30)
+    cardField.font = new Font("Verdana", 1, 35)
+    //cardField.columns = 45
+    cardField.horizontalAlignment = Alignment.Center
+    cardField.background = java.awt.Color.WHITE
+    cardField.maximumSize
 
     contents += nameField
     contents += pointField
-    contents += next
+    contents += cardField
+
   }
 
 
