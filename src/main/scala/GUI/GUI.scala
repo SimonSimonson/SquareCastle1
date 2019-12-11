@@ -8,31 +8,27 @@ import java.awt.image.BufferedImage
 
 import javax.swing.{JFrame, JOptionPane, JPanel, JScrollPane}
 import java.io.File
+
 import javax.imageio.ImageIO
 import javax.swing.ImageIcon
 import java.awt.Image
 
+import supervisor.supervisor
 
-class GUI extends MainFrame {
+
+class GUI(supervisor:supervisor) extends MainFrame {
 
   title = "Square Castle"
   background = java.awt.Color.WHITE
   preferredSize = new Dimension(1000, 700)
-
   val castleIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ2.png"))
+  var cells: Array[Array[GuiCell]] = Array.ofDim[GuiCell](supervisor.map.getmx(), supervisor.map.getmy())
 
   val panel = new Panel {
     override def paint(g: Graphics2D): Unit = {
       g.drawImage(castleIMG, 200, 225, null)
     }
   }
-
-
-
-
-
-
-
 
   val actionPanel = new GridBagPanel() {
     preferredSize = new Dimension(110, 400)
