@@ -11,6 +11,9 @@ object main {
 
     val tui = new TUI.TUI(Controller, supervisor)
 
+    val start = new startScreen(supervisor)
+
+    //val gui = new GUI(supervisor)
 
     //////////////////////////////////////////////////INITIALISIERUNG\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -41,7 +44,6 @@ object main {
 */
     tui.testfall()
     tui.update(Console.WHITE + "Spiel wird gestartet", 1)
-    val gui = new GUI(supervisor,Controller)
 
 
 
