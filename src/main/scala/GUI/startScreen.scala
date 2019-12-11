@@ -1,5 +1,7 @@
 package GUI
 
+import java.awt
+
 import scala.swing._
 import scala.swing.Swing.LineBorder
 import scala.swing.event._
@@ -14,12 +16,12 @@ import javax.swing.ImageIcon
 import java.awt.Image
 
 import controller.Controller
-
-
 import javax.swing.JOptionPane
 import javax.swing.JPasswordField
 import javax.swing.JTextField
 import supervisor.supervisor
+import java.awt.event.ActionListener
+
 import scala.swing.event.{ButtonClicked, MouseClicked}
 
 
@@ -30,7 +32,8 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
   preferredSize = new Dimension(1000, 700)
 
 
-  val schriftIMG = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/graphics/SQ.png"))
+  val schriftIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ.png"))
+  //val schriftIMG = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/graphics/SQ.png"))
   //var cells: Array[Array[GuiCell]] = Array.ofDim[GuiCell](supervisor.map.getmx(), supervisor.map.getmy())
 
   val schrift = new Panel {
@@ -39,7 +42,8 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
     }
   }
 
-  val castleIMG = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/graphics/SQ2.png"))
+  val castleIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ2.png"))
+  //val castleIMG = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/graphics/SQ2.png"))
   //var cells: Array[Array[GuiCell]] = Array.ofDim[GuiCell](supervisor.map.getmx(), supervisor.map.getmy())
 
   val castle = new Panel {
@@ -73,7 +77,6 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
 
     add(schriftLabel, constraints(0, 10))
     add(castleLabel, constraints(0, 11))
-
 
     // Quelle : http://otfried.org/scala/index_42.html
     def constraints(x: Int, y: Int,
@@ -120,6 +123,31 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
     add(pvp, constraints(2, 2))
     add(pvbot, constraints(12, 2))
 
+    listenTo(pvp, pvbot)
+
+    val buttons: List[Button] = List(pvp, pvbot)
+    reactions += {
+      case ButtonClicked(b) =>
+
+        if (b == pvp) {
+          //methode settings
+          //controller.status = new StatusA
+          choosePVP
+          val gui = new GUI(supervisor, controller)
+          startScreen.this.visible = false
+        }
+        if (b == pvbot) {
+          //methode settings
+          //controller.status = new StatusA
+          choosePVBOT
+          val gui = new GUI(supervisor, controller)
+          startScreen.this.visible = false
+        }
+    }
+
+
+
+
 
     // Quelle : http://otfried.org/scala/index_42.html
     def constraints(x: Int, y: Int,
@@ -143,51 +171,39 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
 
   }
 
-
-  menuBar = new MenuBar {
-    contents += new Menu("Menu") {
-      contents += new MenuItem(scala.swing.Action("PvP") {
-        val mapX = new JTextField
-        val mapY = new JTextField
-        val rundenAnzahl = new JTextField
-        val player1 = new JTextField
-        val player2 = new JTextField
-
-        val message = Array(" Set mapsize (Bsp: X*Y): ", " x", mapX, " y", mapY, "   ", " Set number of Rounds:", rundenAnzahl, "   ", " Player 1:", player1, "   ", " Player 2:", player2)
-        val option: Int = JOptionPane.showConfirmDialog(null, message, "SquareCastle", JOptionPane.OK_CANCEL_OPTION)
-
-        val intX = mapX.getText().toInt
-        val intY = mapY.getText().toInt
-        //supervisor.map = new Map(intX, intY)
-      })
-      contents += new MenuItem(scala.swing.Action("PvBot") {
-        val mapSize = new JTextField
-        val rundenAnzahl = new JTextField
-        val player1 = new JTextField
-        val message = Array(" Set mapsize (Bsp: 2x5): ", mapSize, " Set number of Rounds:", rundenAnzahl, " Player:", player1)
-        val option: Int = JOptionPane.showConfirmDialog(null, message, "SquareCastle", JOptionPane.OK_CANCEL_OPTION)
-      })
-      contents += new MenuItem(scala.swing.Action("Change Playernames") {
-        var input = JOptionPane.showInputDialog(
-          null,
-          "Player One",
-          "Change Names",
-          JOptionPane.QUESTION_MESSAGE
-        )
-        input = JOptionPane.showInputDialog(
-          null,
-          "Player Two",
-          "Change Names",
-          JOptionPane.QUESTION_MESSAGE
-        )
-      })
-      contents += new Separator()
-      contents += new MenuItem(scala.swing.Action("Exit") {
-        val gui = new GUI(supervisor, controller)
-      })
-    }
+  def choosePVBOT: Unit = {
+    val mapX = new JTextField
+    val mapY = new JTextField
+    val rundenAnzahl = new JTextField
+    val player1 = new JTextField
+    val message = Array(" Set mapsize (Bsp: 2x5): ", " x", mapX, " y", mapY, " "," Set number of Rounds:", rundenAnzahl, " ", " Player:", player1)
+    val option: Int = JOptionPane.showConfirmDialog(null, message, "SquareCastle", JOptionPane.OK_CANCEL_OPTION)
   }
 
+  def choosePVP: Unit = {
+    val mapX = new JTextField
+    val mapY = new JTextField
+    val rundenAnzahl = new JTextField
+    val player1 = new JTextField
+    val player2 = new JTextField
+
+    val message = Array(" Set mapsize (Bsp: X*Y): ", " x", mapX, " y", mapY, " ", " Set number of Rounds:", rundenAnzahl, " ", " Player 1:", player1, "   ", " Player 2:", player2)
+    val option: Int = JOptionPane.showConfirmDialog(null, message, "SquareCastle", JOptionPane.OK_CANCEL_OPTION)
+
+    //val intX = mapX.getText().toInt
+    //val intY = mapY.getText().toInt
+    //supervisor.map = new Map(intX, intY)
+  }
+
+
+  menuBar = new MenuBar {
+    contents += new Menu("") {
+      contents += new Separator()
+      contents += new MenuItem(scala.swing.Action("made by Julian and Simon") {
+      })
+      contents += new Separator()
+    }
+  }
 
   contents = new BorderPanel {
     //add(menuBar, BorderPanel.Position.North)

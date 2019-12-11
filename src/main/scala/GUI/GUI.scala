@@ -269,46 +269,13 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   menuBar = new MenuBar {
     contents += new Menu("Menu") {
-      contents += new MenuItem(scala.swing.Action("PvP") {
-        val mapX = new JTextField
-        val mapY = new JTextField
-        val rundenAnzahl = new JTextField
-        val player1 = new JTextField
-        val player2 = new JTextField
-
-        val message = Array(" Set mapsize (Bsp: X*Y): ", " x", mapX, " y", mapY , "   ", " Set number of Rounds:", rundenAnzahl, "   ", " Player 1:", player1, "   ", " Player 2:", player2)
-        val option: Int = JOptionPane.showConfirmDialog(null, message, "SquareCastle", JOptionPane.OK_CANCEL_OPTION)
-
-        val intX = mapX.getText().toInt
-        val intY = mapY.getText().toInt
-        //supervisor.map = new Map(intX, intY)
+      contents += new MenuItem(scala.swing.Action("New Game") {
+        val start = new startScreen(supervisor, controller)
+        GUI.this.visible = false
       })
-      contents += new MenuItem(scala.swing.Action("PvBot") {
-        val mapSize = new JTextField
-        val rundenAnzahl = new JTextField
-        val player1 = new JTextField
-        val message = Array(" Set mapsize (Bsp: 2x5): ", mapSize, " Set number of Rounds:", rundenAnzahl, " Player:", player1)
-        val option: Int = JOptionPane.showConfirmDialog(null, message, "SquareCastle", JOptionPane.OK_CANCEL_OPTION)
-      })
+
       contents += new MenuItem(scala.swing.Action("Change Playernames") {
         var input = JOptionPane.showInputDialog(
           null,
@@ -320,33 +287,6 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
           null,
           "Player Two",
           "Change Names",
-          JOptionPane.QUESTION_MESSAGE
-        )
-      })
-      contents += new MenuItem(scala.swing.Action("Test"){
-
-        var input = JOptionPane.showInputDialog(
-          null,
-          "Set Mapsize (Bsp.: 2x5)",
-          "SquareCastle",
-          JOptionPane.QUESTION_MESSAGE
-        )
-        input = JOptionPane.showInputDialog(
-          null,
-          "Set name for Player 1",
-          "SquareCastle",
-          JOptionPane.QUESTION_MESSAGE
-        )
-        input = JOptionPane.showInputDialog(
-          null,
-          "Set name for Player 2",
-          "SquareCastle",
-          JOptionPane.QUESTION_MESSAGE
-        )
-        input = JOptionPane.showInputDialog(
-          null,
-          "Set number of rounds",
-          "SquareCastle",
           JOptionPane.QUESTION_MESSAGE
         )
       })

@@ -130,4 +130,5 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
       tmp = rotatePic(image)
     return tmp
   }
+
 }
