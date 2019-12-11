@@ -3,18 +3,22 @@ package GUI
 import java.awt.Graphics2D
 import java.awt.image.BufferedImage
 import java.io.File
+
 import controller.Controller
 import javax.imageio.ImageIO
 import main.scala.model.Card
+
 import scala.swing.Swing.LineBorder
 import scala.swing.event.MouseClicked
 import scala.swing.{BorderPanel, Dimension, Font, GridPanel, Label}
 import java.awt.geom.AffineTransform
 import java.awt.image.AffineTransformOp
 
+import supervisor.supervisor
 
 
-case class GuiCell(x: Int, y: Int, supervisor: supervisor.supervisor, controller: Controller) extends GridPanel(1, 1) {
+
+case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controller) extends GridPanel(1, 1) {
   preferredSize = new Dimension(50, 150)
   background = java.awt.Color.WHITE
   var myCard: Card = _

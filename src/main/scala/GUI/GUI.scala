@@ -6,12 +6,15 @@ import scala.swing.event._
 import scala.io.Source._
 import java.awt.image.BufferedImage
 
-import javax.swing.{JFrame, JOptionPane, JPanel, JScrollPane}
+import javax.swing.{JFrame, JPanel, JScrollPane}
 import java.io.File
-
 import javax.imageio.ImageIO
 import javax.swing.ImageIcon
 import java.awt.Image
+
+import javax.swing.JOptionPane
+import javax.swing.JPasswordField
+import javax.swing.JTextField
 
 import supervisor.supervisor
 
@@ -21,14 +24,22 @@ class GUI(supervisor:supervisor) extends MainFrame {
   title = "Square Castle"
   background = java.awt.Color.WHITE
   preferredSize = new Dimension(1000, 700)
+
   val castleIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ2.png"))
-  var cells: Array[Array[GuiCell]] = Array.ofDim[GuiCell](supervisor.map.getmx(), supervisor.map.getmy())
+  //var cells: Array[Array[GuiCell]] = Array.ofDim[GuiCell](supervisor.map.getmx(), supervisor.map.getmy())
 
   val panel = new Panel {
     override def paint(g: Graphics2D): Unit = {
       g.drawImage(castleIMG, 200, 225, null)
     }
   }
+
+
+
+
+
+
+
 
   val actionPanel = new GridBagPanel() {
     preferredSize = new Dimension(110, 400)
@@ -133,15 +144,13 @@ class GUI(supervisor:supervisor) extends MainFrame {
 
 
 
-
+  /*
   var statusPanel = new GridPanel(1, 1) {
 
-    var n = new JFrame()
-    n.setSize(new Dimension(30, 30))
 
     //var statusline = new TextField(controller.gameStatus.toString, 1)
     var nameField = new TextField("Name")
-    //nameField.preferredSize = new Dimension(45, 30)
+    nameField.preferredSize = new Dimension(45, 30)
     nameField.font = new Font("Verdana", 1, 35)
     //nameField.columns = 45
     nameField.horizontalAlignment = Alignment.Center
@@ -173,6 +182,96 @@ class GUI(supervisor:supervisor) extends MainFrame {
     contents += cardField
 
   }
+   */
+
+
+
+  val rightPanel = new GridBagPanel() {
+    preferredSize = new Dimension(150, 400)
+    background = java.awt.Color.WHITE
+
+    val nameLabel = new Label("Player Name")
+    val pointsName = new Label("Points:")
+    val points = new Label("88")
+    val cardLabel = new Label("Your card:")
+
+    val imgPanel = new JPanel()
+    imgPanel.setAlignmentX(4)
+    imgPanel.setAlignmentY(4)
+
+
+    nameLabel.background = java.awt.Color.GRAY.brighter().brighter()
+    nameLabel.preferredSize = new Dimension(100, 90)
+    nameLabel.verticalAlignment = Alignment.Center
+    nameLabel.verticalTextPosition = Alignment.Bottom
+
+    pointsName.background = java.awt.Color.WHITE
+    //pointsName.preferredSize = new Dimension(100, 90)
+    pointsName.verticalAlignment = Alignment.Center
+    pointsName.verticalTextPosition = Alignment.Bottom
+
+    points.background = java.awt.Color.WHITE
+    points.preferredSize = new Dimension(100, 90)
+    points.verticalAlignment = Alignment.Center
+    points.verticalTextPosition = Alignment.Bottom
+
+    cardLabel.background = java.awt.Color.WHITE
+    cardLabel.preferredSize = new Dimension(100, 90)
+    cardLabel.verticalAlignment = Alignment.Center
+    cardLabel.verticalTextPosition = Alignment.Bottom
+
+    nameLabel.verticalAlignment = Alignment.Top
+    nameLabel.font = new Font("Verdana", 1, 20)
+    pointsName.font = new Font("Verdana", 1, 20)
+    points.font = new Font("Verdana", 1, 15)
+    cardLabel.font = new Font("Verdana", 1, 20)
+
+
+    add(nameLabel, constraints(0, 2, 1, 1, 0, 0.1))
+
+    add(points, constraints(0, 5, 1, 1, 0, 0.1))
+
+    add(pointsName, constraints(0, 5, 1, 1, 0, 0.1))
+
+    add(cardLabel, constraints(0, 8, 1, 1, 0, 0.1))
+
+
+    // Quelle : http://otfried.org/scala/index_42.html
+    def constraints(x: Int, y: Int,
+                    gridwidth: Int = 1, gridheight: Int = 1,
+                    weightx: Double = 0.0, weighty: Double = 0.0,
+                    fill: GridBagPanel.Fill.Value = GridBagPanel.Fill.None)
+    : Constraints = {
+
+      val c = new Constraints
+      c.gridx = x
+      c.gridy = y
+      c.gridwidth = gridwidth
+      c.gridheight = gridheight
+      c.weightx = weightx
+      c.weighty = weighty
+      c.fill = fill
+      c.anchor = GridBagPanel.Anchor.North
+      c
+
+    }
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -183,23 +282,66 @@ class GUI(supervisor:supervisor) extends MainFrame {
   menuBar = new MenuBar {
     contents += new Menu("Menu") {
       contents += new MenuItem(scala.swing.Action("PvP") {
+        val mapX = new JTextField
+        val mapY = new JTextField
+        val rundenAnzahl = new JTextField
+        val player1 = new JTextField
+        val player2 = new JTextField
+
+        val message = Array(" Set mapsize (Bsp: X*Y): ", " x", mapX, " y", mapY , "   ", " Set number of Rounds:", rundenAnzahl, "   ", " Player 1:", player1, "   ", " Player 2:", player2)
+        val option: Int = JOptionPane.showConfirmDialog(null, message, "SquareCastle", JOptionPane.OK_CANCEL_OPTION)
+
+        val intX = mapX.getText().toInt
+        val intY = mapY.getText().toInt
+        //supervisor.map = new Map(intX, intY)
       })
       contents += new MenuItem(scala.swing.Action("PvBot") {
+        val mapSize = new JTextField
+        val rundenAnzahl = new JTextField
+        val player1 = new JTextField
+        val message = Array(" Set mapsize (Bsp: 2x5): ", mapSize, " Set number of Rounds:", rundenAnzahl, " Player:", player1)
+        val option: Int = JOptionPane.showConfirmDialog(null, message, "SquareCastle", JOptionPane.OK_CANCEL_OPTION)
       })
       contents += new MenuItem(scala.swing.Action("Change Playernames") {
-        var nameInput = JOptionPane.showInputDialog(
+        var input = JOptionPane.showInputDialog(
           null,
           "Player One",
           "Change Names",
           JOptionPane.QUESTION_MESSAGE
         )
-        nameInput = JOptionPane.showInputDialog(
+        input = JOptionPane.showInputDialog(
           null,
           "Player Two",
           "Change Names",
           JOptionPane.QUESTION_MESSAGE
         )
+      })
+      contents += new MenuItem(scala.swing.Action("Test"){
 
+        var input = JOptionPane.showInputDialog(
+          null,
+          "Set Mapsize (Bsp.: 2x5)",
+          "SquareCastle",
+          JOptionPane.QUESTION_MESSAGE
+        )
+        input = JOptionPane.showInputDialog(
+          null,
+          "Set name for Player 1",
+          "SquareCastle",
+          JOptionPane.QUESTION_MESSAGE
+        )
+        input = JOptionPane.showInputDialog(
+          null,
+          "Set name for Player 2",
+          "SquareCastle",
+          JOptionPane.QUESTION_MESSAGE
+        )
+        input = JOptionPane.showInputDialog(
+          null,
+          "Set number of rounds",
+          "SquareCastle",
+          JOptionPane.QUESTION_MESSAGE
+        )
       })
       contents += new Separator()
       contents += new MenuItem(scala.swing.Action("Exit") {
@@ -209,24 +351,24 @@ class GUI(supervisor:supervisor) extends MainFrame {
   }
 
 
+
+
+
+
+
   contents = new BorderPanel {
 
-    add(actionPanel, BorderPanel.Position.West)
-    add(statusPanel, BorderPanel.Position.East)
-    //add(gridPanel, BorderPanel.Position.Center)
     add(menuBar, BorderPanel.Position.North)
+    //add(statusPanel, BorderPanel.Position.East)
+    add(actionPanel, BorderPanel.Position.West)
+    //add(gridPanel, BorderPanel.Position.Center)
+    add(rightPanel, BorderPanel.Position.East)
+
   }
 
 
   centerOnScreen
   visible = true
 
-  def getCardIcon(): Unit = {
-
-  }
-
-  def changePlayerName(): Unit = {
-
-  }
 
 }
