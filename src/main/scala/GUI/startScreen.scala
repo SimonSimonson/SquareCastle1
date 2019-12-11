@@ -91,6 +91,7 @@ class startScreen(supervisor: supervisor) extends MainFrame {
     pvbot.verticalTextPosition = Alignment.Bottom
     pvbot.font = new Font("Verdana", 1, 40)
 
+    /*
     add(pvp, constraints(2, 2))
     add(pvbot, constraints(12, 2))
 
@@ -114,6 +115,8 @@ class startScreen(supervisor: supervisor) extends MainFrame {
       c
 
     }
+    
+     */
   }
 
 
