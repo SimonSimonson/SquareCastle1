@@ -138,14 +138,32 @@ class GUI extends MainFrame {
 
 
 
-  var statusPanel = new GridPanel(1, 4) {
+  var statusPanel = new GridPanel(1,3) {
+
+    //var statusline = new TextField(controller.gameStatus.toString, 1)
+    var nameField = new TextField("Name", 1)
+    nameField.font = new Font("Verdana", 1, 35)
+    nameField.horizontalAlignment = Alignment.Center
+    nameField.editable = false
+    nameField.background = java.awt.Color.WHITE
+
+    //var credits = new TextField(controller.players("Punkte: " + controller.gameStatus.id).credits.toString, 1)
+    var pointField = new TextField("Punkte: ", 1)
+    pointField.font = new Font("Dialog", 1, 35)
+    pointField.foreground = java.awt.Color.GREEN.darker().darker()
+    pointField.editable = false
+    pointField.horizontalAlignment = Alignment.Center
+    pointField.background = java.awt.Color.WHITE
+
 
     var next = new Button("NEXT")
-    next.font = new Font("Verdana", 1, 30)
+    next.font = new Font("Verdana", 1, 35)
+    next.horizontalAlignment = Alignment.Center
     next.background = java.awt.Color.BLACK
     listenTo(next)
 
-
+    contents += nameField
+    contents += pointField
     contents += next
   }
 
