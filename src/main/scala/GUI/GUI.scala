@@ -157,7 +157,9 @@ class GUI extends MainFrame {
 
   menuBar = new MenuBar {
     contents += new Menu("Menu") {
-      contents += new MenuItem(scala.swing.Action("New Game") {
+      contents += new MenuItem(scala.swing.Action("PvP") {
+      })
+      contents += new MenuItem(scala.swing.Action("PvBot") {
       })
       contents += new MenuItem(scala.swing.Action("Change Playernames") {
         var nameInput = JOptionPane.showInputDialog(
@@ -185,7 +187,7 @@ class GUI extends MainFrame {
   contents = new BorderPanel {
 
     add(actionPanel, BorderPanel.Position.West)
-    add(statusPanel, BorderPanel.Position.North)
+    add(statusPanel, BorderPanel.Position.East)
     //add(gridPanel, BorderPanel.Position.Center)
     add(menuBar, BorderPanel.Position.North)
   }
