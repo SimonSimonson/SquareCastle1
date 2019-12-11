@@ -20,6 +20,8 @@ import javax.swing.JOptionPane
 import javax.swing.JPasswordField
 import javax.swing.JTextField
 import supervisor.supervisor
+import scala.swing.event.{ButtonClicked, MouseClicked}
+
 
 class startScreen(supervisor: supervisor, controller: Controller) extends MainFrame {
 
@@ -104,13 +106,13 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
     val pvbot = new Button("PvBot")
 
     pvp.background = java.awt.Color.GRAY.brighter().brighter()
-    pvp.preferredSize = new Dimension(150, 100)
+    pvp.preferredSize = new Dimension(200, 150)
     pvp.verticalAlignment = Alignment.Center
     pvp.verticalTextPosition = Alignment.Bottom
     pvp.font = new Font("Verdana", 1, 40)
 
     pvbot.background = java.awt.Color.GRAY.brighter().brighter()
-    pvbot.preferredSize = new Dimension(150, 100)
+    pvbot.preferredSize = new Dimension(200, 150)
     pvbot.verticalAlignment = Alignment.Center
     pvbot.verticalTextPosition = Alignment.Bottom
     pvbot.font = new Font("Verdana", 1, 40)
