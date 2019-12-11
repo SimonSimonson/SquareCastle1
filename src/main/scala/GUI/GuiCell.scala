@@ -18,7 +18,8 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor.supervisor, controller
   preferredSize = new Dimension(50, 150)
   background = java.awt.Color.WHITE
   var myCard: Card = _
-  var myPicture: BufferedImage = _
+  var myPicture: BufferedImage =_
+  val path =  "/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/"
 
   val label: Label =
     new Label {
@@ -71,30 +72,30 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor.supervisor, controller
 
   def findImage(x: (Int, Int, Int, Int)): BufferedImage = {
     x match {
-      case (0, 0, 0, 0) => ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/0000.png"))
-      case (0, 0, 1, 0) => ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/0010.png"))
-      case (0, 0, 1, 1) => ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/0011.png"))
-      case (0, 0, 1, 2) => ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/0012.png"))
-      case (0, 0, 2, 1) => ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/0021.png"))
-      case (0, 1, 0, 1) => ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/0101.png"))
-      case (0, 1, 1, 1) => ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/0111.png"))
-      case (0, 1, 2, 2) => ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/0122.png"))
-      case (0, 2, 0, 1) => ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/0201.png"))
-      case (0, 2, 0, 2) => ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/0202.png"))
-      case (0, 2, 1, 2) => ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/0212.png"))
-      case (0, 2, 2, 1) => ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/0221.png"))
-      case (1, 1, 1, 1) => ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/1111.png"))
-      case (1, 2, 1, 2) => ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/1212.png"))
-      case (2, 0, 0, 0) => ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/2000.png"))
-      case (2, 0, 0, 2) => ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/2002.png"))
-      case (2, 0, 1, 1) => ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/2011.png"))
-      case (2, 1, 0, 1) => ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/2101.png"))
-      case (2, 1, 1, 0) => ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/2110.png"))
-      case (2, 1, 1, 1) => ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/2111.png"))
-      case (2, 1, 1, 2) => ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/2112.png"))
-      case (2, 2, 0, 2) => ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/2202.png"))
-      case (2, 2, 1, 2) => ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/2212.png"))
-      case (2, 2, 2, 2) => ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/2222.png"))
+      case (0, 0, 0, 0) => ImageIO.read(new File(path + "0000.png"))
+      case (0, 0, 1, 0) => ImageIO.read(new File(path + "0010.png"))
+      case (0, 0, 1, 1) => ImageIO.read(new File(path + "0011.png"))
+      case (0, 0, 1, 2) => ImageIO.read(new File(path + "0012.png"))
+      case (0, 0, 2, 1) => ImageIO.read(new File(path + "0021.png"))
+      case (0, 1, 0, 1) => ImageIO.read(new File(path + "0101.png"))
+      case (0, 1, 1, 1) => ImageIO.read(new File(path + "0111.png"))
+      case (0, 1, 2, 2) => ImageIO.read(new File(path + "0122.png"))
+      case (0, 2, 0, 1) => ImageIO.read(new File(path + "0201.png"))
+      case (0, 2, 0, 2) => ImageIO.read(new File(path + "0202.png"))
+      case (0, 2, 1, 2) => ImageIO.read(new File(path + "0212.png"))
+      case (0, 2, 2, 1) => ImageIO.read(new File(path + "0221.png"))
+      case (1, 1, 1, 1) => ImageIO.read(new File(path + "1111.png"))
+      case (1, 2, 1, 2) => ImageIO.read(new File(path + "1212.png"))
+      case (2, 0, 0, 0) => ImageIO.read(new File(path + "2000.png"))
+      case (2, 0, 0, 2) => ImageIO.read(new File(path + "2002.png"))
+      case (2, 0, 1, 1) => ImageIO.read(new File(path + "2011.png"))
+      case (2, 1, 0, 1) => ImageIO.read(new File(path + "2101.png"))
+      case (2, 1, 1, 0) => ImageIO.read(new File(path + "2110.png"))
+      case (2, 1, 1, 1) => ImageIO.read(new File(path + "2111.png"))
+      case (2, 1, 1, 2) => ImageIO.read(new File(path + "2112.png"))
+      case (2, 2, 0, 2) => ImageIO.read(new File(path + "2202.png"))
+      case (2, 2, 1, 2) => ImageIO.read(new File(path + "2212.png"))
+      case (2, 2, 2, 2) => ImageIO.read(new File(path + "2222.png"))
     }
   }
 
@@ -109,7 +110,7 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor.supervisor, controller
     return op.filter(image, null)
   }
   def rotatePic(rot: Int, image: BufferedImage): BufferedImage = {
-    var tmp: BufferedImage =_
+    var tmp: BufferedImage = null
     for (i <- 0 to rot)
       tmp = rotatePic(image)
     return tmp
