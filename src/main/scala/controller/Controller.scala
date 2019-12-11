@@ -4,6 +4,7 @@ import main.scala.model.{Card, Map, Player}
 import main.scala.util.Observable
 import mainn.scala.model.KI
 import util.{Invoker, State}
+import scala.util.{Try, Success, Failure}
 
 class Controller extends Observable{
 
@@ -18,22 +19,23 @@ class Controller extends Observable{
     true
   }
 
+
   def Calculatebot(bot: KI, card: Card,map:Map):Unit ={
     val data = bot.anlegen(map, card)
 
-    for(i <- 0 until data._3){
-      notifyObservers("rotieren",0)
+    for (i <- 0 until data._3) {
+      notifyObservers("rotieren", 0)
       card.rotateRight()
     }
-    if(data._1 < 0 || data._2 < 0 || data._3 < 0) {
+    if (data._1 < 0 || data._2 < 0 || data._3 < 0) {
       //map.setRandom(card)
-      notifyObservers("beep boop ich kann nicht anlegen",0);
+      notifyObservers("beep boop ich kann nicht anlegen", 0);
       return
     }
-      notifyObservers("Bot legt auf " +data._1 +" "+ data._2,0)
-      card.cleanall()
-      map.Setcard(card,data._1,data._2)
-      bot.addPoints(card.getAngelegte())
+    notifyObservers("Bot legt auf " + data._1 + " " + data._2, 0)
+    card.cleanall()
+    map.Setcard(card, data._1, data._2)
+    bot.addPoints(card.getAngelegte())
   }
 
   def RandomCard(): Card= {
@@ -45,25 +47,28 @@ class Controller extends Observable{
 
     return Card(s1,s2,s3,s4)
   }
-
-  def Kartezeigen(player: Player): Card ={
+  def Kartezeigen(player:Player): Card ={
     val card = RandomCard()
+    if(Kartezeigen(player,card))
+      return card
+    else
+      return null
+  }
+  def Kartezeigen(player: Player, card: Card): Boolean ={
+    if(card == null)
+      return false
     if(player == null)
       notifyObservers(Console.RED + "BOT ist an der Reihe",0)
     else
       notifyObservers(Console.RED + "Spieler " + player.toString() + " ist an der Reihe",0)
-    //println(Console.RED + "Spieler " + player.toString() + " ist an der Reihe")
-
     notifyObservers(Console.WHITE,0)
-    //print(Console.WHITE)
-
     printcard(card)
+
     if(player!= null)
       notifyObservers(Console.BLUE + "r.... rechts rum rotieren"+ Console.CYAN + "  l.... links rum rotieren"+
         Console.MAGENTA + "  i x y.... Einfügen bei (x,y)"+ Console.YELLOW + "  wait.... eine runde aussetzen"+
         Console.BLACK + "  tipp .... zeigt wo man anlegen kann"+ Console.RED + "  exit .... beenden",0)
-
-    return card
+    true
   }
   /*
   def selectCard(player:Player): Card ={
@@ -117,7 +122,7 @@ class Controller extends Observable{
         return 2
 
       } else if (array(0).equals("i")) {
-        if (invoker.ExecuteCommand(new layCommand,array(1).toInt,array(2).toInt,card,map) == 1) {
+        if (invoker.ExecuteCommand(new layCommand,array(1).toInt,array(2).toInt,card,map).get == 1) {
 
           val punkte = card.getAngelegte()
           notifyObservers("Spieler "+ player.toString()+ " erhält "+ punkte + " Punkte",0)
@@ -152,7 +157,8 @@ class Controller extends Observable{
   }
 
   def tipp(card: Card, map: Map): Boolean = {
-
+    if(map == null || card == null)
+      false
     println(Console.WHITE)
     for (iy <- 0 until map.getmy()) {
       for (zeile <- 0 to 5) {
@@ -172,7 +178,9 @@ class Controller extends Observable{
     }
     true
   }
-  def printline(zeile: Int, card: Card): Unit={
+  def printline(zeile: Int, card: Card): Boolean={
+    if(zeile < 0 || card == null)
+      return false
     zeile match{
       case 0 => notifyObservers(" _________ ",1)
       case 1 => notifyObservers("|         |",1)
@@ -182,9 +190,12 @@ class Controller extends Observable{
       case 5 => notifyObservers("|_________|",1)
 
     }
+    true
   }
 
-  def printcard(card: Card): Null ={
+  def printcard(card: Card): Boolean ={
+    if(card == null)
+      return false
     notifyObservers(" _________", 0)
     notifyObservers("|         |",0)
     notifyObservers("|    " + card.mysides(0) + "    |",0)
@@ -192,11 +203,12 @@ class Controller extends Observable{
     notifyObservers("|    " + card.mysides(2) + "    |",0)
     notifyObservers("|_________|",0)
 
-    null
+    true
   }
-  def nullprint(zeile: Int): Unit = {
+  def nullprint(zeile: Int): Boolean = {
+    if(zeile < 0)
+      return false
     zeile match {
-
       case 0 => notifyObservers(" _________ ",1)
       case 1 => notifyObservers("|         |",1)
       case 2 => notifyObservers("|         |",1)
@@ -205,23 +217,27 @@ class Controller extends Observable{
       case 5 => notifyObservers("|_________|",1)
 
     }
+    true
   }
 
-  def highlight(zeile: Int): Unit = {
+  def highlight(zeile: Int): Boolean = {
+    if(zeile < 0)
+      return false
     zeile match {
-
       case 0 => notifyObservers(Console.YELLOW + " _________ ",1)
       case 1 => notifyObservers(Console.YELLOW + "|         |",1)
       case 2 => notifyObservers(Console.YELLOW + "|         |",1)
       case 3 => notifyObservers(Console.YELLOW + "|         |",1)
       case 4 => notifyObservers(Console.YELLOW + "|         |",1)
       case 5 => notifyObservers(Console.YELLOW + "|_________|",1)
-
     }
     printf(Console.WHITE)
+    true
   }
 
-  def print(map: Map): Unit ={
+  def print(map: Map): Boolean ={
+    if(map == null)
+      return false
     notifyObservers(Console.WHITE,0)
     for(iy <- 0 until map.getmy()){
       for(zeile <- 0 to 5){
@@ -236,14 +252,16 @@ class Controller extends Observable{
       }
 
     }
-
+    true
   }
-  def printpunkte(p1:Player, p2:Player, bot:KI): Unit ={
+  def printpunkte(p1:Player, p2:Player, bot:KI): Boolean ={
+    if(p1 == null)
+      return false
     notifyObservers(Console.RED+"Punkte von Spieler " + p1.toString() +":  "+ p1.Punkte,0 )
     if(p2 != null)
       notifyObservers(Console.RED+"Punkte von Spieler " + p2.toString() +":  "+ p2.Punkte,0 )
     else
       notifyObservers(Console.RED+"Punkte von BOT " + bot.toString() +":  "+ bot.Punkte,0 )
-
+    true
   }
 }

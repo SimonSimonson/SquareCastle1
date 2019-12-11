@@ -25,8 +25,6 @@ case class TUI(controller:Controller, supervisor: supervisor) extends Observer {
         }
         return 1
       }
-
-
       case 1 => {
         if(!mode)
           prettyprint(Console.RED + "Gib die Map Größe ein (Bsp.: 2x2)")
@@ -34,8 +32,6 @@ case class TUI(controller:Controller, supervisor: supervisor) extends Observer {
           setMap()
         1
       }
-
-
       case 2 => {
         if(!mode)
           prettyprint(Console.RED + "Rundenanzahl?")
@@ -48,7 +44,6 @@ case class TUI(controller:Controller, supervisor: supervisor) extends Observer {
         }
         1
       }
-
       case 3 => {
         if(!mode){
           prettyprint(Console.RED + "Gib deinen Namen ein Spieler " + 1)
@@ -73,10 +68,7 @@ case class TUI(controller:Controller, supervisor: supervisor) extends Observer {
             return 302
         }
       }
-
-
         //spieler oder bot setzen
-
       case 5 => {
         if (!mode) {
           prettyprint(Console.RED + "Gib deinen Namen ein Spieler " + 2)

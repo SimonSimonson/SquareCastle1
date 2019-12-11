@@ -1,6 +1,9 @@
 
 package main.scala.model
 
+
+import scala.util.{Failure, Success, Try}
+
 class Map(mx: Int, my: Int){
   val field = Array.ofDim[Card](mx,my)
   val mid = (mx/2,my/2)
@@ -43,7 +46,7 @@ class Map(mx: Int, my: Int){
 
   //gibt die Punkte an der Stelle ohne wirklich anzulegen(für den bot)
   def getpunkteohneanlegen(card: Card,x:Int, y:Int): Int ={
-    if(Setcard(card,x,y) > 0){
+    if(Setcard(card,x,y).isSuccess){
 
       val points = card.getAngelegte()
       card.cleanall()
@@ -62,24 +65,23 @@ class Map(mx: Int, my: Int){
     var a = r.nextInt(field(0).length)
 
     var b = r.nextInt(field(1).length)
-    while(Setcard(card,a,b) < 0)
+    while(Setcard(card,a,b).get == -1)
       a = r.nextInt(field(2).length)
       b = r.nextInt(field(1).length)
     return true
   }
 
 
-
   var x = 0
   var y = 0
 
 //Setzt die Karte nach dem Prüfen auf das Spielfeld.
-  def Setcard(card : Card, x:Int , y : Int): Int ={
+  def Setcard(card : Card, x:Int , y : Int): Try[Int] ={
     if(x > mx-1 || y > my-1)
-      return -1
+      return new Success[Int](-1)
 
     if(field(x)(y) != null)
-      return -1
+      return new Success[Int](-1)
 
 
     //methode prüfen aufrufen!
@@ -93,14 +95,14 @@ class Map(mx: Int, my: Int){
         card.anlegen(2,field(x)(y+1))
       if(x-1 >= 0)
         card.anlegen(3,field(x-1)(y))
-      return 1
+      return Success(1)
     } else {
       //println("Die Karte passt nicht!")
       card.cleanall()
-      return -1
+      return new Success[Int](-1)
     }
 
-    return 1
+    return Success(1)
   }
   def cleanaround(x:Int,y:Int){
     if(x+1 < mx && field(x+1)(y) != null ) {

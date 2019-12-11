@@ -4,15 +4,15 @@ import main.scala.model.Card
 import main.scala.model.Map
 import supervisor.supervisor
 import util.Command
+import scala.util.{Try, Success, Failure}
 
 case class layCommand() extends Command{
   override var x: Int = _
   override var y: Int = _
-  override def execute(xpos:Int, ypos:Int,card: Card,map: Map): Int ={
+  override def execute(xpos:Int, ypos:Int,card: Card,map: Map): Try[Int] ={
     x = xpos
     y = ypos
     return map.Setcard(card,x,y)
-
   }
 
   override def undo(card: Card,map: Map): Unit ={
@@ -20,6 +20,5 @@ case class layCommand() extends Command{
     map.field(x)(y) = null
     card.cleanall()
     map.cleanaround(x,y)
-
   }
 }
