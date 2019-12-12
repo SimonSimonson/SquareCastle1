@@ -24,8 +24,8 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
   background = java.awt.Color.WHITE
   var myCard: Card = _
   var myPicture: BufferedImage =_
-  val path = "/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/cardIMG/"
-  //val path =  "/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/"
+  //val path = "/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/cardIMG/"
+  val path =  "/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/"
   val label: Label =
     new Label {
       // text = getCellText
@@ -52,7 +52,9 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
     }
   }
 
-
+  def setCard(card:Card): Unit ={
+    myCard=card
+  }
 
   def redrawCell: Unit = {
     //setCellPicture
@@ -84,6 +86,7 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
     }
     if(tmp != null) {
       tmp = rotatePic(numrotates, tmp)
+      println("Drehe Bild "+ numrotates)
       myPicture = tmp
       var dimg = myPicture.getScaledInstance(label.size.width, label.size.height, Image.SCALE_SMOOTH)
       label.icon= new ImageIcon(dimg)
@@ -127,6 +130,7 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
   }
 
   def rotatePic(image:BufferedImage): BufferedImage={
+    println("DREHE BILD")
     val transform = new AffineTransform
     transform.rotate(1.5708, image.getWidth / 2, image.getHeight / 2)
     val op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR)
@@ -134,11 +138,10 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
   }
   def rotatePic(rot: Int, image: BufferedImage): BufferedImage = {
     var tmp: BufferedImage = null
-    if(rot == 0)
-      return image
+    tmp = image
     for (i <- 0 until rot)
-      tmp = rotatePic(image)
+      tmp = rotatePic(tmp)
     return tmp
-  }
+  }// 0100 , 1000, 0001, 0010
 
 }
