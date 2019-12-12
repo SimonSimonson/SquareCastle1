@@ -1,6 +1,6 @@
 package test.scala.TUI
 import main.scala.util.{Observable, Observer}
-import controller.Controller
+import controller.ControllerTui
 import main.scala.model.Player
 import mainn.scala.model.KI
 import main.scala.model.Map
@@ -13,7 +13,7 @@ class TUItest extends WordSpec with Matchers {
   "A TUI" when {
     "new" should {
 
-      val controller = new Controller
+      val controller = new ControllerTui
       val supervisor = new supervisor(controller)
       val tui = new TUI(controller, supervisor)
       /*

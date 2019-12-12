@@ -1,7 +1,7 @@
 
 package model
 
-import controller.Controller
+import controller.ControllerTui
 import main.scala.model.{Card, Map}
 import org.scalatest._
 
@@ -32,7 +32,7 @@ class MapTest extends WordSpec with Matchers {
 
     }
     "have tipp" in {
-      val Controller = new Controller
+      val Controller = new ControllerTui
       val card = new Card(0,1,2,1)
       val map = new Map(3,3)
 

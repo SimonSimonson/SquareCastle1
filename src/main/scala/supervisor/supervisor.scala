@@ -1,11 +1,11 @@
 package supervisor
 
-import controller.Controller
+import controller.ControllerTui
 import main.scala.model.{Card, Map, Player}
 import main.scala.util.{Observable, Observer}
 import mainn.scala.model.KI
 
-class supervisor(controller: Controller) extends Observable{
+class supervisor(controller: ControllerTui) extends Observable{
   var p1:Player = _
   var p2:Player = _
   var bot:KI = _

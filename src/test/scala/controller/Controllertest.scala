@@ -8,7 +8,7 @@ import scala.Some
 
 class Controllertest extends WordSpec with Matchers{
   "A Controller" when { "new" should {
-    val c = new Controller
+    val c = new ControllerTui
     val state = new StateA
     val map = new Map(4,4)
     val p1 = new Player("Peter")

@@ -1,6 +1,6 @@
 package main.scala.TUI
 import main.scala.util.{Observable, Observer}
-import controller.{Controller, StateA, StateB}
+import controller.{ControllerTui, StateA, StateB}
 import main.scala.model.Player
 import mainn.scala.model.KI
 import main.scala.model.Map
@@ -8,7 +8,7 @@ import util.playerFactory
 import supervisor.supervisor
 
 
-case class TUI(controller:Controller, supervisor: supervisor) extends Observer {
+case class TUI(controller:ControllerTui, supervisor: supervisor) extends Observer {
   controller.add(this)
 
   //false: Ausgabe, true: Reinschreiben der Antwort

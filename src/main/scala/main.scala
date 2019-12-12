@@ -1,12 +1,12 @@
 package main.scala
 import GUI.{GUI, startScreen}
-import controller.{Controller, StateA, StateB}
+import controller.{ControllerTui, StateA, StateB}
 import supervisor.supervisor
 
 object main {
   def main(args: Array[String]): Unit = {
 
-    val Controller = new Controller
+    val Controller = new ControllerTui
     val supervisor = new supervisor(Controller)
 
     val tui = new TUI.TUI(Controller, supervisor)

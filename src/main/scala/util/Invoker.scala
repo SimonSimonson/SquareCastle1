@@ -1,14 +1,15 @@
 package util
 
-import controller.Controller
+import controller.{Controller, ControllerTui}
 import main.scala.model.Map
 import main.scala.model.Card
-import scala.util.{Try, Success, Failure}
+
+import scala.util.{Failure, Success, Try}
 import supervisor.supervisor
 
 import scala.collection.mutable
 
-case class Invoker(controller: Controller){
+case class Invoker(controller: ControllerTui){
 
     private var stack: List[Command] = Nil
 

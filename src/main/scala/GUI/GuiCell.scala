@@ -1,10 +1,10 @@
 package GUI
 
-import java.awt.Graphics2D
+import java.awt.{Graphics2D, Image}
 import java.awt.image.BufferedImage
 import java.io.File
 
-import controller.Controller
+import controller.ControllerTui
 import javax.imageio.ImageIO
 import main.scala.model.Card
 
@@ -19,14 +19,12 @@ import supervisor.supervisor
 
 
 
-case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controller) extends GridPanel(1, 1) {
+case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: ControllerTui) extends GridPanel(1, 1) {
   preferredSize = new Dimension(50, 150)
   background = java.awt.Color.WHITE
   var myCard: Card = _
   var myPicture: BufferedImage =_
-  //val path =  "/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/"
-  val path =  "/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/cardIMG/"
-
+  val path =  "/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/"
   val label: Label =
     new Label {
       // text = getCellText
@@ -38,16 +36,12 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
 
   val cell: BorderPanel = new BorderPanel() {
     add(label, BorderPanel.Position.Center)
-
-    //contents += label
-    //contents += hp
     preferredSize = new Dimension(80, 80)
-
     listenTo(mouse.clicks)
     //listenTo(controller)
 
     reactions += {
-      case MouseClicked(src, pt, mod, clicks, pops) =>
+      case MouseClicked(src, pt, mod, clicks, pops) => println("X:   "+ x + " |Y:   "+y)
         //controller.showCandidates(row, column)
         //supervisor.map.Setcard(supervisor.card, x, y)
         myCard = supervisor.card
@@ -60,8 +54,7 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
 
 
   def redrawCell: Unit = {
-    setCellPicture
-
+    //setCellPicture
     contents.clear()
     contents += cell
     cell.background = java.awt.Color.WHITE
@@ -74,62 +67,46 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
   def setCellPicture: Unit = {
     if(supervisor.card == null || myCard == null){
       myPicture = ImageIO.read(new File(path + "Empty.png"))
+      label.icon= new ImageIcon(myPicture)
+      println("KEINE KARTE GEFUNDEN")
       return
     }
     //CODE DER DIE BILDER ZUORDNET
     val numbers = (myCard.side0, myCard.side1, myCard.side2, myCard.side3)
     var tmp = findImage(numbers)
     var numrotates = 0
-    while (tmp == null) {
-      rotateNumbers(numbers)
-      tmp = findImage(numbers)
+    var num = numbers
+    while (tmp == null && numrotates < 3) {
+      num = rotateNumbers(num)
+      tmp = findImage(num)
       numrotates += 1
     }
-    tmp = rotatePic(numrotates, tmp)
-    myPicture = tmp
-    val img = new ImageIcon (myPicture)
-    label.icon = img
-  }
-
-
-/*
-  def setCellTexture: Unit = {
-    myCell.cellType.id match {
-      case 0 => label.icon = TEXTURE_SAND
-      case 1 => label.icon = TEXTURE_PALM
-      case 2 =>
-        if (line == 0)
-          label.icon = resizedTexture("textures/sandcolloseum_small.png", dimWidth, dimHeight - 10)
-        else
-          label.icon = resizedTexture("textures/sandtemple_small.png", dimWidth, dimHeight - 10)
-      case 3 => label.icon = TEXTURE_GOLD
+    if(tmp != null) {
+      tmp = rotatePic(numrotates, tmp)
+      println("ich drehe das Bild "+ numrotates+ "mal")
+      myPicture = tmp
+      var dimg = myPicture.getScaledInstance(label.size.width, label.size.height, Image.SCALE_SMOOTH)
+      label.icon= new ImageIcon(dimg)
+      println("BILD GEFUNDEN YESSS")
+      return
     }
+    println("kein passendes Bild")
   }
- */
-
-
-
-
-
-
-
-
-  new ImageIcon(ImageIO.read(getClass.getResource("graphics/rechts.png")))
 
   def findImage(x: (Int, Int, Int, Int)): BufferedImage = {
     x match {
       case (0, 0, 0, 0) => ImageIO.read(new File(path + "0000.png"))
       case (0, 0, 1, 0) => ImageIO.read(new File(path + "0010.png"))
       case (0, 0, 1, 1) => ImageIO.read(new File(path + "0011.png"))
-      case (0, 0, 1, 2) => ImageIO.read(new File(path + "0012.png"))
-      case (0, 0, 2, 1) => ImageIO.read(new File(path + "0021.png"))
-      case (0, 1, 0, 1) => ImageIO.read(new File(path + "0101.png"))
+      case (2, 0, 0, 1) => ImageIO.read(new File(path + "2001.png"))
+      case (2, 1, 0, 0) => ImageIO.read(new File(path + "2100.png"))
+      case (1, 0, 1, 0) => ImageIO.read(new File(path + "1010.png"))
       case (0, 1, 1, 1) => ImageIO.read(new File(path + "0111.png"))
-      case (0, 1, 2, 2) => ImageIO.read(new File(path + "0122.png"))
+      case (2, 0, 1, 2) => ImageIO.read(new File(path + "2012.png"))
       case (0, 2, 0, 1) => ImageIO.read(new File(path + "0201.png"))
       case (0, 2, 0, 2) => ImageIO.read(new File(path + "0202.png"))
       case (0, 2, 1, 2) => ImageIO.read(new File(path + "0212.png"))
-      case (0, 2, 2, 1) => ImageIO.read(new File(path + "0221.png"))
+      case (2, 1, 0, 2) => ImageIO.read(new File(path + "2102.png"))
       case (1, 1, 1, 1) => ImageIO.read(new File(path + "1111.png"))
       case (1, 2, 1, 2) => ImageIO.read(new File(path + "1212.png"))
       case (2, 0, 0, 0) => ImageIO.read(new File(path + "2000.png"))
@@ -142,6 +119,7 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
       case (2, 2, 0, 2) => ImageIO.read(new File(path + "2202.png"))
       case (2, 2, 1, 2) => ImageIO.read(new File(path + "2212.png"))
       case (2, 2, 2, 2) => ImageIO.read(new File(path + "2222.png"))
+      case _ => null
     }
   }
 
@@ -150,6 +128,7 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
   }
 
   def rotatePic(image:BufferedImage): BufferedImage={
+    println("BILD WIRD GEDREHT")
     val transform = new AffineTransform
     transform.rotate(1.5708, image.getWidth / 2, image.getHeight / 2)
     val op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR)
@@ -157,7 +136,9 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
   }
   def rotatePic(rot: Int, image: BufferedImage): BufferedImage = {
     var tmp: BufferedImage = null
-    for (i <- 0 to rot)
+    if(rot == 0)
+      return image
+    for (i <- 0 until rot)
       tmp = rotatePic(image)
     return tmp
   }

@@ -1,11 +1,6 @@
 package GUI
 
 import scala.swing._
-import scala.swing.Swing.LineBorder
-import scala.swing.event._
-import scala.io.Source._
-import java.awt.image.BufferedImage
-
 import javax.swing.{JFrame, JPanel, JScrollPane}
 import java.io.File
 
@@ -13,14 +8,14 @@ import javax.imageio.ImageIO
 import javax.swing.ImageIcon
 import java.awt.Image
 
-import controller.Controller
+import controller.ControllerTui
 import javax.swing.JOptionPane
 import javax.swing.JPasswordField
 import javax.swing.JTextField
 import supervisor.supervisor
 
 
-class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
+class GUI(supervisor:supervisor, controller: ControllerTui) extends MainFrame {
 
   title = "Square Castle"
   background = java.awt.Color.WHITE
@@ -238,9 +233,6 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
   }
 
 
-
-
-
   menuBar = new MenuBar {
     contents += new Menu("Menu") {
       contents += new MenuItem(scala.swing.Action("New Game") {
@@ -289,7 +281,7 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
       line <- cells.indices
       row <- cells.indices
     } {
-      var guicell = GuiCell(line, row, supervisor, controller)
+      var guicell = GuiCell(row, line, supervisor, controller)
       //KLAPPT ALLES BIS DATO
       cells(line)(row) = guicell
       listenTo(guicell)
@@ -300,6 +292,7 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
   }
   draw()
   visible = true
+
 
   def draw(): Unit = {
     for {
