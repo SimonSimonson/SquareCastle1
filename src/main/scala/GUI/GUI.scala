@@ -13,6 +13,7 @@ import javax.swing.JOptionPane
 import javax.swing.JPasswordField
 import javax.swing.JTextField
 import supervisor.supervisor
+import main.scala.model.{Map, Player}
 
 
 class GUI(supervisor:supervisor, controller: ControllerTui) extends MainFrame {

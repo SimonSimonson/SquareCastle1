@@ -23,7 +23,7 @@ import supervisor.supervisor
 import java.awt.event.ActionListener
 
 import scala.swing.event.{ButtonClicked, MouseClicked}
-import main.scala.model.Map
+import main.scala.model.{Map, Player}
 
 class startScreen(supervisor: supervisor, controller: ControllerTui) extends MainFrame {
 
@@ -32,8 +32,8 @@ class startScreen(supervisor: supervisor, controller: ControllerTui) extends Mai
   preferredSize = new Dimension(1000, 700)
 
 
-  //val schriftIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ.png"))
-  val schriftIMG = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/graphics/SQ.png"))
+  val schriftIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ.png"))
+  //val schriftIMG = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/graphics/SQ.png"))
   //var cells: Array[Array[GuiCell]] = Array.ofDim[GuiCell](supervisor.map.getmx(), supervisor.map.getmy())
 
   val schrift = new Panel {
@@ -42,8 +42,8 @@ class startScreen(supervisor: supervisor, controller: ControllerTui) extends Mai
     }
   }
 
-  //val castleIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ2.png"))
-  val castleIMG = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/graphics/SQ2.png"))
+  val castleIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ2.png"))
+  //val castleIMG = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/graphics/SQ2.png"))
   //var cells: Array[Array[GuiCell]] = Array.ofDim[GuiCell](supervisor.map.getmx(), supervisor.map.getmy())
 
   val castle = new Panel {
@@ -172,38 +172,35 @@ class startScreen(supervisor: supervisor, controller: ControllerTui) extends Mai
   }
 
   def choosePVBOT: Unit = {
-    val mapX = new JTextField
-    val mapY = new JTextField
+    val map = new JTextField
     val rundenAnzahl = new JTextField
     val player1 = new JTextField
-    val message = Array(" Set mapsize (Bsp: 2x5): ", " x", mapX, " y", mapY, " "," Set number of Rounds:", rundenAnzahl, " ", " Player:", player1)
+    val message = Array(" Set mapsize (Bsp: ZxZ): ", " z", map, " "," Set number of Rounds:", rundenAnzahl, " ", " Player:", player1)
     val option: Int = JOptionPane.showConfirmDialog(null, message, "SquareCastle", JOptionPane.OK_CANCEL_OPTION)
-    setMap(mapX.getText(), mapY.getText(), 2)
+    setMap(map.getText(), 2)
+    setRound(rundenAnzahl.getText(), 2)
   }
 
   def choosePVP: Unit = {
-    val mapX = new JTextField
-    val mapY = new JTextField
+    val map = new JTextField
     val rundenAnzahl = new JTextField
     val player1 = new JTextField
     val player2 = new JTextField
-    val message = Array(" Set mapsize (Bsp: X*Y): ", " x", mapX, " y", mapY, " ", " Set number of Rounds:", rundenAnzahl, " ", " Player 1:", player1, "   ", " Player 2:", player2)
+    val message = Array(" Set mapsize (Bsp: ZxZ): ", " z", map, " ", " Set number of Rounds:", rundenAnzahl, " ", " Player 1:", player1, "   ", " Player 2:", player2)
     val option: Int = JOptionPane.showConfirmDialog(null, message, "SquareCastle", JOptionPane.OK_CANCEL_OPTION)
 
-    setMap(mapX.getText(), mapY.getText(), 1)
+
+    setMap(map.getText(), 1)
+    setRound(rundenAnzahl.getText(), 1)
     //supervisor.map = new Map(intX, intY)
   }
 
 
 
-  def setMap(x:String, y:String, z:Int): Boolean = {
+  def setMap(x:String, z:Int): Boolean = {
     try{
       val intX = x.toInt
-      val intY = y.toInt
-
-      supervisor.map = new Map(intX, intY)
-      true
-
+      supervisor.map = new Map(intX, intX)
       true
     }catch{
       case e =>
@@ -219,8 +216,38 @@ class startScreen(supervisor: supervisor, controller: ControllerTui) extends Mai
     }
   }
 
+  def setPlayer(player:String, player2:String, z:Int): Boolean ={
+    if(z == 1){
+      supervisor.p1 = new Player(player)
+      supervisor.p2 = new Player(player2)
+      return true
+    } else if(z == 2){
+      supervisor.p1 = new Player(player)
+      return true
+    } else {
+      return false
+    }
+  }
 
-
+  def setRound(x:String, z:Int): Boolean ={
+    try {
+     val int = x.toInt
+     supervisor.runden = int
+    return true
+    } catch{
+      case e =>
+        println("keine Zahl")
+        if(z == 1) {
+          choosePVP
+          return false
+        } else if(z == 2){
+          choosePVBOT
+          return false
+        }
+        return false
+    }
+  true
+  }
 
 
 
