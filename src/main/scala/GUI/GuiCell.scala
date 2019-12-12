@@ -14,6 +14,7 @@ import scala.swing.{BorderPanel, Dimension, Font, GridPanel, Label}
 import java.awt.geom.AffineTransform
 import java.awt.image.AffineTransformOp
 
+import javax.swing.ImageIcon
 import supervisor.supervisor
 
 
@@ -23,7 +24,9 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
   background = java.awt.Color.WHITE
   var myCard: Card = _
   var myPicture: BufferedImage =_
-  val path =  "/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/"
+  //val path =  "/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/"
+  val path =  "/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/cardIMG/"
+
   val label: Label =
     new Label {
       // text = getCellText
@@ -35,6 +38,7 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
 
   val cell: BorderPanel = new BorderPanel() {
     add(label, BorderPanel.Position.Center)
+
     //contents += label
     //contents += hp
     preferredSize = new Dimension(80, 80)
@@ -56,11 +60,12 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
 
 
   def redrawCell: Unit = {
+    setCellPicture
+
     contents.clear()
     contents += cell
     cell.background = java.awt.Color.WHITE
     cell.border = LineBorder(java.awt.Color.BLACK, 1)
-    setCellPicture
     //BILD IST ZWAR GESPEICHERT ABER NICHT IN DER ZELLE
     //label.text = getCellText
     repaint
@@ -82,7 +87,34 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
     }
     tmp = rotatePic(numrotates, tmp)
     myPicture = tmp
+    val img = new ImageIcon (myPicture)
+    label.icon = img
   }
+
+
+/*
+  def setCellTexture: Unit = {
+    myCell.cellType.id match {
+      case 0 => label.icon = TEXTURE_SAND
+      case 1 => label.icon = TEXTURE_PALM
+      case 2 =>
+        if (line == 0)
+          label.icon = resizedTexture("textures/sandcolloseum_small.png", dimWidth, dimHeight - 10)
+        else
+          label.icon = resizedTexture("textures/sandtemple_small.png", dimWidth, dimHeight - 10)
+      case 3 => label.icon = TEXTURE_GOLD
+    }
+  }
+ */
+
+
+
+
+
+
+
+
+  new ImageIcon(ImageIO.read(getClass.getResource("graphics/rechts.png")))
 
   def findImage(x: (Int, Int, Int, Int)): BufferedImage = {
     x match {

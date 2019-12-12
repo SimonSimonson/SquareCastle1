@@ -23,7 +23,7 @@ import supervisor.supervisor
 import java.awt.event.ActionListener
 
 import scala.swing.event.{ButtonClicked, MouseClicked}
-
+import main.scala.model.Map
 
 class startScreen(supervisor: supervisor, controller: Controller) extends MainFrame {
 
@@ -32,8 +32,8 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
   preferredSize = new Dimension(1000, 700)
 
 
- // val schriftIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ.png"))
-  val schriftIMG = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/graphics/SQ.png"))
+  val schriftIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ.png"))
+  //val schriftIMG = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/graphics/SQ.png"))
   //var cells: Array[Array[GuiCell]] = Array.ofDim[GuiCell](supervisor.map.getmx(), supervisor.map.getmy())
 
   val schrift = new Panel {
@@ -42,8 +42,8 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
     }
   }
 
-  //val castleIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ2.png"))
-  val castleIMG = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/graphics/SQ2.png"))
+  val castleIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ2.png"))
+  //val castleIMG = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/graphics/SQ2.png"))
   //var cells: Array[Array[GuiCell]] = Array.ofDim[GuiCell](supervisor.map.getmx(), supervisor.map.getmy())
 
   val castle = new Panel {
@@ -190,10 +190,24 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
     val message = Array(" Set mapsize (Bsp: X*Y): ", " x", mapX, " y", mapY, " ", " Set number of Rounds:", rundenAnzahl, " ", " Player 1:", player1, "   ", " Player 2:", player2)
     val option: Int = JOptionPane.showConfirmDialog(null, message, "SquareCastle", JOptionPane.OK_CANCEL_OPTION)
 
-    //val intX = mapX.getText().toInt
-    //val intY = mapY.getText().toInt
+    val intX = mapX.getText().toInt
+    val intY = mapY.getText().toInt
+    setMap(intX, intY)
     //supervisor.map = new Map(intX, intY)
   }
+
+
+
+  def setMap(x:Int, y:Int): Boolean = {
+    supervisor.map = new Map(x, y)
+    true
+  }
+
+
+
+
+
+
 
 
   menuBar = new MenuBar {
@@ -202,8 +216,10 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
       contents += new MenuItem(scala.swing.Action("made by Julian and Simon") {
       })
       contents += new Separator()
+
     }
   }
+
 
   contents = new BorderPanel {
     //add(menuBar, BorderPanel.Position.North)
