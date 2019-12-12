@@ -202,7 +202,6 @@ class startScreen(supervisor: supervisor, controller: ControllerTui) extends Mai
       val intY = y.toInt
 
       supervisor.map = new Map(intX, intY)
-      println(supervisor.map.getmx() + "      PIMMEL    " + supervisor.map.getmy())
       true
 
       true

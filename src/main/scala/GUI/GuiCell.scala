@@ -83,11 +83,9 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
     }
     if(tmp != null) {
       tmp = rotatePic(numrotates, tmp)
-      println("ich drehe das Bild "+ numrotates+ "mal")
       myPicture = tmp
       var dimg = myPicture.getScaledInstance(label.size.width, label.size.height, Image.SCALE_SMOOTH)
       label.icon= new ImageIcon(dimg)
-      println("BILD GEFUNDEN YESSS")
       return
     }
     println("kein passendes Bild")
@@ -124,11 +122,10 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
   }
 
   def rotateNumbers(x: (Int, Int, Int, Int)): (Int, Int, Int, Int) = {
-    (x._4, x._1, x._2, x._3)
+    (x._2, x._3, x._4, x._1)
   }
 
   def rotatePic(image:BufferedImage): BufferedImage={
-    println("BILD WIRD GEDREHT")
     val transform = new AffineTransform
     transform.rotate(1.5708, image.getWidth / 2, image.getHeight / 2)
     val op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR)
