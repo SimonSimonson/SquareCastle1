@@ -25,7 +25,7 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
   title = "Square Castle"
   background = java.awt.Color.WHITE
   preferredSize = new Dimension(1000, 700)
-  var cells: Array[Array[GuiCell]] = Array.ofDim[GuiCell](10, 10)
+  var cells: Array[Array[GuiCell]] = Array.ofDim[GuiCell](supervisor.map.getmx(), supervisor.map.getmy())
   /*val panel = new Panel {
     override def paint(g: Graphics2D): Unit = {
       g.drawImage(castleIMG, 200, 225, null)

@@ -25,6 +25,8 @@ import java.awt.event.ActionListener
 import scala.swing.event.{ButtonClicked, MouseClicked}
 import main.scala.model.Map
 
+import scala.util.control.Exception
+
 class startScreen(supervisor: supervisor, controller: Controller) extends MainFrame {
 
   title = "Square Castle"
@@ -176,8 +178,10 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
     val mapY = new JTextField
     val rundenAnzahl = new JTextField
     val player1 = new JTextField
+    val z = 2
     val message = Array(" Set mapsize (Bsp: 2x5): ", " x", mapX, " y", mapY, " "," Set number of Rounds:", rundenAnzahl, " ", " Player:", player1)
     val option: Int = JOptionPane.showConfirmDialog(null, message, "SquareCastle", JOptionPane.OK_CANCEL_OPTION)
+    setMap(mapX.getText(), mapY.getText(), z)
   }
 
   def choosePVP: Unit = {
@@ -186,25 +190,45 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
     val rundenAnzahl = new JTextField
     val player1 = new JTextField
     val player2 = new JTextField
-
+    val z = 1
     val message = Array(" Set mapsize (Bsp: X*Y): ", " x", mapX, " y", mapY, " ", " Set number of Rounds:", rundenAnzahl, " ", " Player 1:", player1, "   ", " Player 2:", player2)
     val option: Int = JOptionPane.showConfirmDialog(null, message, "SquareCastle", JOptionPane.OK_CANCEL_OPTION)
 
-    val intX = mapX.getText().toInt
-    val intY = mapY.getText().toInt
-    setMap(intX, intY)
+
+    setMap(mapX.getText(), mapY.getText(), z)
     //supervisor.map = new Map(intX, intY)
   }
 
 
 
-  def setMap(x:Int, y:Int): Boolean = {
-    supervisor.map = new Map(x, y)
-    true
+  def setMap(x:String, y:String, z:Int): Boolean = {
+    try{
+      val intX = x.toInt
+      val intY = y.toInt
+
+      supervisor.map = new Map(intX, intY)
+      println(supervisor.map.getmx() + "      PIMMEL    " + supervisor.map.getmy())
+      true
+
+      true
+    }catch{
+      case e =>
+      println("keine Zahl")
+      if(z == 1) {
+        choosePVP
+        return false
+      } else if(z == 2){
+        choosePVBOT
+        return false
+      }
+      return false
+    }
   }
 
 
+  def setPlayer(player:String): Unit ={
 
+  }
 
 
 
