@@ -26,6 +26,7 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
   var myPicture: BufferedImage =_
   //val path = "/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/cardIMG/"
   val path =  "/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/"
+
   val label: Label =
     new Label {
       // text = getCellText
