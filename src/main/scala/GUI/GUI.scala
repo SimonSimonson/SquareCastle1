@@ -8,10 +8,8 @@ import javax.imageio.ImageIO
 import javax.swing.ImageIcon
 import java.awt.Image
 
-import controller.{CardChangedEvent, Controller, DoesntFitEvent, GameOverEvent, InsertedEvent, NewRoundEvent, TippEvent}
+import controller.{CardChangedEvent, Controller, DoesntFitEvent, GameOverEvent, InsertedEvent, NewRoundEvent, TippEvent, WaitEvent}
 import javax.swing.JOptionPane
-import javax.swing.JPasswordField
-import javax.swing.JTextField
 import supervisor.supervisor
 import main.scala.model.{Card, Map, Player}
 
@@ -29,6 +27,8 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
       g.drawImage(castleIMG, 200, 225, null)
     }
   }*/
+  listenTo(controller)
+  listenTo(supervisor)
 
   val actionPanel = new GridBagPanel() {
     preferredSize = new Dimension(110, 400)
@@ -102,18 +102,21 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
       case ButtonClicked(b) =>
           if(b == rotateRight){
             controller.befehl = "r"
-            controller.Optionen(supervisor.card,supervisor.map,supervisor.playersturn)
+            supervisor.newRoundactive()
           }
           if(b == rotateLeft){
             controller.befehl = "l"
-            controller.Optionen(supervisor.card,supervisor.map,supervisor.playersturn)
+            supervisor.newRoundactive()
           }
           if(b == tipp){
-
+            controller.befehl = "tipp"
+            supervisor.newRoundactive()
           }
-
-
-
+          if(b == pause){
+            controller.befehl = "wait"
+            supervisor.newRoundactive()
+          }
+        draw()
         }
 
 
@@ -217,38 +220,10 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
 
     cardLabel.background = java.awt.Color.WHITE
     cardLabel.preferredSize = new Dimension(100, 90)
-    /*val cardPanel = new GridPanel(1,1){
-      preferredSize = new Dimension(100,100)
-      var guicell = GuiCell(1, 1, supervisor, controller)
-      guicell.setCard(supervisor.card)//aktuelle karte einfügen
-      contents += guicell
-      ///guicell.redrawCell
-      guicell.setCellPicture
-      add(cardLabel,constraints(0,2,1,1,0,0.1))
 
-    }*/
     var guicell = new GuiCell(0,0, supervisor,controller)
     guicell.setCellPicture
     cardLabel.icon = new ImageIcon(guicell.myPicture)
-
-
-
-
-
-
-
-
-/*
-    listenTo(controllerTui)
-    reactions += {
-      case NewRoundEvent(card: Card) => guicell.setCard(card)
-
-    }*/
-    //___________________________________________________________________________________________________________
-
-
-
-
 
     nameLabel.verticalAlignment = Alignment.Top
     nameLabel.font = new Font("Verdana", 1, 20)
@@ -287,7 +262,8 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
     }
 
   }
-
+//NACH ENDE DER RUNDENZAHL GAMEENDEVENT
+//UNTEN DAS BILD ANPASSEN
 
   menuBar = new MenuBar {
     contents += new Menu("Menu") {
@@ -358,8 +334,11 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
     repaint
   }
   def updateCard(): Unit ={
-
-
+    var guicell = new GuiCell(0,0, supervisor,controller)
+    guicell.setCellPicture
+    rightPanel.cardLabel.icon = new ImageIcon(guicell.myPicture)
+    println("Karte aktualisieren")
+    rightPanel.repaint()
   }
   def doesntFit(): Unit= {
     JOptionPane.showMessageDialog(
@@ -374,14 +353,21 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
   }
 
 
-
-
-
   reactions += {
-    case event: NewRoundEvent => draw()
-    case event: InsertedEvent => draw()
-    case event: DoesntFitEvent => doesntFit()
+    case event: NewRoundEvent => //ALLES NEU MALEN(neue spieler gesetzt, neue Karte
+      println("NewRoundEvent")
+      draw()
+    case event: InsertedEvent =>
+      println("InsertedEvent")
+      draw()
+    case event: DoesntFitEvent =>
+      println("PasstNichtEvent")
+      doesntFit()
+    case event: CardChangedEvent =>
+      println("CardChangedEvent")
+      updateCard()
     case event: GameOverEvent =>
+      println("GameOver")
       JOptionPane.showMessageDialog(
         null,
         supervisor.endgame(),
@@ -389,41 +375,19 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
         JOptionPane.INFORMATION_MESSAGE
       )
       draw()
-    case event: CardChangedEvent => updateCard()
+      System.exit(1)
+
     case event: TippEvent =>
-      val nums = controller.tipp(supervisor.card,supervisor.map)
+      val nums = controller.tipp(supervisor.card, supervisor.map)
       for {
         i <- cells.indices
         j <- cells.indices
-      }{
-        if(nums(i)(j) == 1)
-          highlightCell(i,j)
+      } {
+        if (nums(i)(j) == 1)
+          highlightCell(i, j)
       }
-    case event: CellClicked =>
-      redraw()
-      if (controller.checkGladiator(controller.selectedCell._1, controller.selectedCell._2)) {
-        val selectedGlad: Gladiator = controller.getGladiator(controller.selectedCell._1, controller.selectedCell._2)
-        if (!selectedGlad.moved && selectedGlad.player == controller.players(controller.gameStatus.id)) {
-          for {
-            i <- 0 until controller.playingField.size
-            j <- 0 until controller.playingField.size
-          } {
-            if (controller.checkMovementPoints(selectedGlad, selectedGlad.line, selectedGlad.row, i, j)
-              && controller.checkforPalm(selectedGlad.line, selectedGlad.row, i, j)) {
-              if (controller.checkCellEmpty(i, j)) {
-                cells(i)(j).setHighlightedSand()
-              }
-            }
-            if (controller.checkMovementPointsAttack(selectedGlad, selectedGlad.line, selectedGlad.row, i, j)) {
-              if //(cells(i)(j).myCell.cellType != CellType.PALM &&
-              (!(i == selectedGlad.line && j == selectedGlad.row)) {
-                // && !((i, j) == controller.getBase(controller.players(controller.gameStatus.id)))) {
-                cells(i)(j).cell.border = LineBorder(java.awt.Color.RED.darker(), 4)
-              }
-            }
+    case event: WaitEvent =>
+      supervisor.newRound()
 
-          }
-        }
-      }
-
+  }
 }

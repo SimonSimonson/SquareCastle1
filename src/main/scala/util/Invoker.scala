@@ -1,6 +1,6 @@
 package util
 
-import controller.{Controller, ControllerTui}
+import controller.Controller
 import main.scala.model.Map
 import main.scala.model.Card
 
@@ -9,7 +9,7 @@ import supervisor.supervisor
 
 import scala.collection.mutable
 
-case class Invoker(controller: ControllerTui){
+case class Invoker(controller: Controller){
 
     private var stack: List[Command] = Nil
 

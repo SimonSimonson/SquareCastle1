@@ -1,11 +1,13 @@
 package supervisor
 
-import controller.ControllerTui
+import controller.{CardChangedEvent, Controller, GameOverEvent, NewRoundEvent}
 import main.scala.model.{Card, Map, Player}
 import main.scala.util.{Observable, Observer}
-import mainn.scala.model.KI
+import main.scala.model.KI
 
-class supervisor(controller: ControllerTui) extends Observable{
+import scala.swing.Publisher
+
+class supervisor(controller: Controller) extends Publisher{
   var p1:Player = _
   var p2:Player = _
   var bot:KI = _
@@ -13,26 +15,42 @@ class supervisor(controller: ControllerTui) extends Observable{
   var runden = 0
   var botyesno = false
   var card:Card =_
-
+  var playersturn:Player =_
+  var state:Boolean =_
   //state wechselt zwischen spieler1 und 2 / spieler1 und bot
-  def newRound(state : Boolean): Int = {
-    if (runden <= 0)
+
+  def otherplayer():Unit={
+    state = !state
+  }
+
+
+  def newRound(): Int = {
+    if (runden <= 0) {
+      publish(new GameOverEvent)
       return -1
+    }
     runden = runden - 1
     controller.print(map)
     if (state) {
       card = controller.Kartezeigen(p1)
+      playersturn = p1
     } else {
       card = controller.Kartezeigen(p2)
+      playersturn = p2
     }
+    publish(new NewRoundEvent)
+    publish(new CardChangedEvent)
     return 1
   }
-  //wie oben
-  def newRoundactive(state: Boolean): Int = {
+  def newRoundactive(): Int = {
     if (state) {
-      return controller.state.handle(state,controller,p1 ,p2 ,bot ,map, card)
+      var i = controller.state.handle(state,controller,p1 ,p2 ,bot ,map, card)
+      //publish(new NewRoundEvent)
+      return i
     } else {
-      return controller.state.handle(state,controller,p1, p2, bot, map, card)
+      var i = controller.state.handle(state,controller,p1 ,p2 ,bot ,map, card)
+      //publish(new NewRoundEvent)
+      return i
     }
   }
   def showPoints(): Unit ={

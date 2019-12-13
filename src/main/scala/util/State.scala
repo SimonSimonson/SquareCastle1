@@ -1,12 +1,12 @@
 package util
 
-import controller.ControllerTui
+import controller.Controller
 import main.scala.model.{Card, Map, Player}
-import mainn.scala.model.KI
+import main.scala.model.KI
 
 trait State {
 
   def state(): Int
-  def handle(state:Boolean, controller:ControllerTui, playerA:Player, playerB:Player, bot:KI, map:Map, card: Card): Int
+  def handle(state:Boolean, controller:Controller, playerA:Player, playerB:Player, bot:KI, map:Map, card: Card): Int
 
 }

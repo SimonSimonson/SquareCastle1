@@ -2,7 +2,7 @@ package test.model
 import main.scala.model
 import main.scala.model.Card
 import main.scala.model.Map
-import mainn.scala.model.KI
+import main.scala.model.KI
 import org.scalatest.
 _
 class KITest extends WordSpec with Matchers {

@@ -1,16 +1,25 @@
 package main.scala.TUI
 import main.scala.util.{Observable, Observer}
-import controller.{ControllerTui, StateA, StateB}
+import controller.{Controller, StateA, StateB, updateEvent}
 import main.scala.model.Player
-import mainn.scala.model.KI
+import main.scala.model.KI
 import main.scala.model.Map
 import util.playerFactory
 import supervisor.supervisor
 
+import scala.swing.Reactor
 
-case class TUI(controller:ControllerTui, supervisor: supervisor) extends Observer {
-  controller.add(this)
 
+case class TUI(controller:Controller, supervisor: supervisor) extends Reactor {
+  //controller.add(this)
+  this.listenTo(controller)
+    reactions += {
+    case event: updateEvent =>
+      if(event.code == 0)
+        println(event.word)
+      if(event.code == 1)
+        print(event.word)
+  }
   //false: Ausgabe, true: Reinschreiben der Antwort
   //es fehlen noch die drehungen, die sich grade unendlich drehen
   def settings(int: Int, mode : Boolean) : Int ={
@@ -181,7 +190,7 @@ case class TUI(controller:ControllerTui, supervisor: supervisor) extends Observe
     input = string
   }
 
-  override def update(string: String, i: Int): Unit ={
+  def update(string: String, i: Int): Unit ={
 
     if(i == 0)
       println(string)

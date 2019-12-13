@@ -140,6 +140,7 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
           //methode settings
           //controller.status = new StatusA
           choosePVBOT
+          supervisor.newRound()
           val gui = new GUI(supervisor, controller)
           startScreen.this.visible = false
         }
@@ -232,7 +233,7 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
   def setRound(x:String, z:Int): Boolean ={
     try {
      val int = x.toInt
-     supervisor.runden = int
+     supervisor.runden = int*2
     return true
     } catch{
       case e =>

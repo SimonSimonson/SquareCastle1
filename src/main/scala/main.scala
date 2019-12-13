@@ -1,12 +1,12 @@
 package main.scala
 import GUI.{GUI, startScreen}
-import controller.{ControllerTui, StateA, StateB}
+import controller.{Controller, StateA, StateB}
 import supervisor.supervisor
 
 object main {
   def main(args: Array[String]): Unit = {
 
-    val Controller = new ControllerTui
+    val Controller = new Controller
     val supervisor = new supervisor(Controller)
 
     val tui = new TUI.TUI(Controller, supervisor)
@@ -44,7 +44,7 @@ object main {
 */
     tui.testfall()
     tui.update(Console.WHITE + "Spiel wird gestartet", 1)
-
+    supervisor.state = true
 
 
 
@@ -52,23 +52,22 @@ object main {
 
 
     //state sagt ob spieler1 oder 2 dran ist bzw spieler1 oder bot
-    var state = false
     while(true){
-      state = !state
-      if(supervisor.newRound(state) == -1){
+      /*if(supervisor.newRound(state) == -1){
         tui.update("Spiel beendet",0)
         val print = supervisor.endgame()
         tui.update(print, 0)
         return
-      }
+      }*/
+      supervisor.newRound()
       //supervisor.showPoints()
       s = scala.io.StdIn.readLine().toString
       tui.input(s)
-      while(supervisor.newRoundactive(state)==2){
+      while(supervisor.newRoundactive()==2){
         s = scala.io.StdIn.readLine().toString
         tui.input(s)
       }
-
+      supervisor.state = !supervisor.state
       if(s == "exit")
         return
 

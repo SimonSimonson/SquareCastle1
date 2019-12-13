@@ -44,12 +44,16 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
 
     reactions += {
       case MouseClicked(src, pt, mod, clicks, pops) => println("X:   "+ x + " |Y:   "+y)
-        //controller.showCandidates(row, column)
-        //supervisor.map.Setcard(supervisor.card, x, y)
-        myCard = supervisor.card
-        setCellPicture
-        border = LineBorder(java.awt.Color.GREEN.darker(), 4)
-        redrawCell
+        controller.befehl = ("i "+x+" "+y)
+        if(supervisor.newRoundactive() != 2){
+          myCard = supervisor.card
+          setCellPicture
+          border = LineBorder(java.awt.Color.GREEN.darker(), 4)
+          supervisor.otherplayer()
+          supervisor.newRound()
+          redrawCell
+        }
+
     }
   }
 
@@ -73,7 +77,7 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
     if(supervisor.card == null || myCard == null){
       myPicture = ImageIO.read(new File(path + "Empty.png"))
       label.icon= new ImageIcon(myPicture)
-      println("KEINE KARTE GEFUNDEN")
+      //println("KEINE KARTE GEFUNDEN")
       return
     }
     //CODE DER DIE BILDER ZUORDNET
@@ -88,9 +92,9 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
     }
     if(tmp != null) {
       tmp = rotatePic(numrotates, tmp)
-      println("Drehe Bild "+ numrotates)
+      //println("Drehe Bild "+ numrotates)
       myPicture = tmp
-      println(label.size.width+ "  BREITE "+ label.size.height + "  HÖHE")
+      //println(label.size.width+ "  BREITE "+ label.size.height + "  HÖHE")
       var dimg = myPicture.getScaledInstance(label.size.width, label.size.height, Image.SCALE_SMOOTH)
       label.icon= new ImageIcon(dimg)
       return
@@ -133,7 +137,7 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
   }
 
   def rotatePic(image:BufferedImage): BufferedImage={
-    println("DREHE BILD")
+    ///println("DREHE BILD")
     val transform = new AffineTransform
     transform.rotate(1.5708, image.getWidth / 2, image.getHeight / 2)
     val op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR)

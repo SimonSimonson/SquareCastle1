@@ -1,7 +1,7 @@
 package util
 
 import main.scala.model.Player
-import mainn.scala.model.KI
+import main.scala.model.KI
 
 case class playerFactory() {
 

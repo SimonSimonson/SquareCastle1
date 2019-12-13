@@ -1,4 +1,4 @@
-package mainn.scala.model
+package main.scala.model
 
 import main.scala.model.{Card, Map, Player}
 import scala.language.postfixOps
