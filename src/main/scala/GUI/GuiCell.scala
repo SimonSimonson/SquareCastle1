@@ -24,8 +24,8 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
   background = java.awt.Color.WHITE
   var myCard: Card = _
   var myPicture: BufferedImage =_
-  val path = "/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/cardIMG/"
-  //val path =  "/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/"
+  //val path = "/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/cardIMG/"
+  val path =  "/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/"
 
   val label: Label =
     new Label {
@@ -45,14 +45,14 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
     reactions += {
       case MouseClicked(src, pt, mod, clicks, pops) => println("X:   "+ x + " |Y:   "+y)
         controller.befehl = ("i "+x+" "+y)
+        myCard = supervisor.card
+        setCellPicture
         if(supervisor.newRoundactive() != 2){
-          myCard = supervisor.card
-          setCellPicture
           border = LineBorder(java.awt.Color.GREEN.darker(), 4)
           supervisor.otherplayer()
           supervisor.newRound()
-          redrawCell
         }
+        redrawCell
 
     }
   }
@@ -91,13 +91,16 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
       numrotates += 1
     }
     if(tmp != null) {
-      tmp = rotatePic(numrotates, tmp)
-      //println("Drehe Bild "+ numrotates)
+      tmp = controller.rotatePic(numrotates, tmp)
       myPicture = tmp
-      //println(label.size.width+ "  BREITE "+ label.size.height + "  HÖHE")
-      var dimg = myPicture.getScaledInstance(label.size.width, label.size.height, Image.SCALE_SMOOTH)
-      label.icon= new ImageIcon(dimg)
-      return
+      try {
+        var dimg = myPicture.getScaledInstance(label.size.width, label.size.height, Image.SCALE_SMOOTH)
+        label.icon= new ImageIcon(dimg)
+        return
+      }catch {
+        case e =>label.icon = new ImageIcon(myPicture)
+      }
+
     }
     println("kein passendes Bild")
   }
@@ -136,19 +139,6 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
     (x._2, x._3, x._4, x._1)
   }
 
-  def rotatePic(image:BufferedImage): BufferedImage={
-    ///println("DREHE BILD")
-    val transform = new AffineTransform
-    transform.rotate(1.5708, image.getWidth / 2, image.getHeight / 2)
-    val op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR)
-    return op.filter(image, null)
-  }
-  def rotatePic(rot: Int, image: BufferedImage): BufferedImage = {
-    var tmp: BufferedImage = null
-    tmp = image
-    for (i <- 0 until rot)
-      tmp = rotatePic(tmp)
-    return tmp
-  }// 0100 , 1000, 0001, 0010
+  // 0100 , 1000, 0001, 0010
 
 }

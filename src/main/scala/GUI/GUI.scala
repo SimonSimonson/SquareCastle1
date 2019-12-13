@@ -8,7 +8,7 @@ import javax.imageio.ImageIO
 import javax.swing.ImageIcon
 import java.awt.Image
 
-import controller.{CardChangedEvent, Controller, DoesntFitEvent, GameOverEvent, InsertedEvent, NewRoundEvent, TippEvent, WaitEvent}
+import controller.{BotEvent, CardChangedEvent, Controller, DoesntFitEvent, GameOverEvent, InsertedEvent, NewRoundEvent, TippEvent, WaitEvent}
 import javax.swing.JOptionPane
 import javax.swing.JPasswordField
 import javax.swing.JTextField
@@ -22,6 +22,10 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
   title = "Square Castle"
   background = java.awt.Color.WHITE
   preferredSize = new Dimension(1000, 700)
+  var turncount = 0
+
+
+
   var cells: Array[Array[GuiCell]] = Array.ofDim[GuiCell](supervisor.map.getmx(), supervisor.map.getmy())
   /*val panel = new Panel {
     override def paint(g: Graphics2D): Unit = {
@@ -104,10 +108,12 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
           if(b == rotateRight){
             controller.befehl = "r"
             supervisor.newRoundactive()
+            turncount += 1
           }
           if(b == rotateLeft){
             controller.befehl = "l"
             supervisor.newRoundactive()
+            turncount = turncount-1
           }
           if(b == tipp){
             controller.befehl = "tipp"
@@ -393,8 +399,9 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
 
   def updateCard(): Unit ={
     var guicell = new GuiCell(0,0, supervisor,controller)
+    guicell.myCard = supervisor.card
     guicell.setCellPicture
-    rightPanel.cardLabel.icon = new ImageIcon(guicell.myPicture)
+    rightPanel.cardLabel.icon = new ImageIcon(controller.rotatePic(turncount,guicell.myPicture))
     println("Karte aktualisieren")
     rightPanel.repaint()
   }
@@ -408,6 +415,7 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
   }
   def highlightCell(x:Int,y:Int): Unit ={
     cells(x)(y).background = java.awt.Color.YELLOW
+    cells(x)(y).redrawCell
   }
 
 
@@ -415,6 +423,7 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
     case event: NewRoundEvent => //ALLES NEU MALEN(neue spieler gesetzt, neue Karte
       println("NewRoundEvent")
       refreshRightPanel()
+      turncount = 0
       draw()
     case event: InsertedEvent =>
       println("InsertedEvent")
@@ -425,6 +434,7 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
     case event: CardChangedEvent =>
       println("CardChangedEvent")
       updateCard()
+    case event: BotEvent => draw()
     case event: GameOverEvent =>
       println("GameOver")
       JOptionPane.showMessageDialog(
@@ -446,6 +456,7 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
           highlightCell(i, j)
       }
     case event: WaitEvent =>
+      supervisor.otherplayer()
       supervisor.newRound()
 
   }

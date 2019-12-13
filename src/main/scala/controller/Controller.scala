@@ -1,4 +1,7 @@
 package controller
+import java.awt.geom.AffineTransform
+import java.awt.image.{AffineTransformOp, BufferedImage}
+
 import controller.commands.layCommand
 import main.scala.model.{Card, Map, Player}
 import main.scala.util.Observable
@@ -35,7 +38,7 @@ class Controller extends Publisher{
       //notifyObservers("beep boop ich kann nicht anlegen", 0);
       return
     }
-    //notifyObservers("Bot legt auf " + data._1 + " " + data._2, 0)
+    publish(new updateEvent("Bot legt auf " + data._1 + " " + data._2, 0))
     card.cleanall()
     map.Setcard(card, data._1, data._2)
     bot.addPoints(card.getAngelegte())
@@ -139,7 +142,6 @@ class Controller extends Publisher{
 
       } else if (array(0).equals("i")) {
         if (invoker.ExecuteCommand(new layCommand,array(1).toInt,array(2).toInt,card,map).get == 1) {
-
           val punkte = card.getAngelegte()
           player.addPoints(punkte)
           publish(new InsertedEvent)
@@ -289,4 +291,29 @@ class Controller extends Publisher{
       publish(new updateEvent(Console.RED+"Punkte von BOT " + bot.toString() +":  "+ bot.Punkte,0 ))
     true
   }
+  def rotatePic(image:BufferedImage): BufferedImage={
+    ///println("DREHE BILD")
+    val transform = new AffineTransform
+    transform.rotate(1.5708, image.getWidth / 2, image.getHeight / 2)
+    val op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR)
+    return op.filter(image, null)
+  }
+
+  def rotatePic(rot: Int, image: BufferedImage): BufferedImage = {
+    var tmp: BufferedImage = null
+    tmp = image
+    var count = rot
+    var x = rot
+
+    if(rot < 0) {
+      x = (rot * -1) % 4
+      x = 4-x
+    }
+    count = x
+    for (i <- 0 until count)
+      tmp = rotatePic(tmp)
+    return tmp
+  }
+
+
 }

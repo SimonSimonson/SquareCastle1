@@ -1,5 +1,6 @@
 package supervisor
 
+
 import controller.{CardChangedEvent, Controller, GameOverEvent, NewRoundEvent}
 import main.scala.model.{Card, Map, Player}
 import main.scala.util.{Observable, Observer}
@@ -36,6 +37,9 @@ class supervisor(controller: Controller) extends Publisher{
       playersturn = p1
     } else {
       card = controller.Kartezeigen(p2)
+      if(p2 == null) {
+        controller.state.handle(false,controller,p1 ,p2 ,bot ,map, card)
+      }
       playersturn = p2
     }
     publish(new NewRoundEvent)
@@ -43,15 +47,10 @@ class supervisor(controller: Controller) extends Publisher{
     return 1
   }
   def newRoundactive(): Int = {
-    if (state) {
-      var i = controller.state.handle(state,controller,p1 ,p2 ,bot ,map, card)
-      //publish(new NewRoundEvent)
-      return i
-    } else {
-      var i = controller.state.handle(state,controller,p1 ,p2 ,bot ,map, card)
-      //publish(new NewRoundEvent)
-      return i
-    }
+    var i = controller.state.handle(state,controller,p1 ,p2 ,bot ,map, card)
+    //publish(new NewRoundEvent)
+    println(this.card)
+    return i
   }
   def showPoints(): Unit ={
     controller.printpunkte(p1,p2,bot)
@@ -80,4 +79,5 @@ class supervisor(controller: Controller) extends Publisher{
     }
     s
   }
+
 }

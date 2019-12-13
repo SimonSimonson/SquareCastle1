@@ -19,7 +19,8 @@ object main {
 
     var mode = false
     var s = ""
-    /*for(i <- 0 to 4) {
+    /*for(i <- 0 to 4) {      println(this.card.side0+this.card.side1+this.card.side2+this.card.side3)
+
       tui.settings(i, mode)
       mode = !mode
       s = scala.io.StdIn.readLine().toString
@@ -43,7 +44,7 @@ object main {
     }
 */
     tui.testfall()
-    tui.update(Console.WHITE + "Spiel wird gestartet", 1)
+    tui.update(Console.WHITE + "Spiel wird gestartet", 0)
     supervisor.state = true
 
 

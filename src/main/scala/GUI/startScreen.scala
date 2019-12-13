@@ -15,7 +15,7 @@ import javax.imageio.ImageIO
 import javax.swing.ImageIcon
 import java.awt.Image
 
-import controller.Controller
+import controller.{Controller, StateB}
 import javax.swing.JOptionPane
 import javax.swing.JPasswordField
 import javax.swing.JTextField
@@ -23,8 +23,7 @@ import supervisor.supervisor
 import java.awt.event.ActionListener
 
 import scala.swing.event.{ButtonClicked, MouseClicked}
-import main.scala.model.{Map, Player}
-import main.scala.model.KI
+import main.scala.model.{KI, Map, Player}
 
 class startScreen(supervisor: supervisor, controller: Controller) extends MainFrame {
 
@@ -33,8 +32,8 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
   preferredSize = new Dimension(1000, 700)
 
 
-  val schriftIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ.png"))
-  //val schriftIMG = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/graphics/SQ.png"))
+  //val schriftIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ.png"))
+  val schriftIMG = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/graphics/SQ.png"))
   //var cells: Array[Array[GuiCell]] = Array.ofDim[GuiCell](supervisor.map.getmx(), supervisor.map.getmy())
 
   val schrift = new Panel {
@@ -43,8 +42,8 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
     }
   }
 
-  val castleIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ2.png"))
-  //val castleIMG = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/graphics/SQ2.png"))
+  //val castleIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ2.png"))
+  val castleIMG = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/graphics/SQ2.png"))
   //var cells: Array[Array[GuiCell]] = Array.ofDim[GuiCell](supervisor.map.getmx(), supervisor.map.getmy())
 
   val castle = new Panel {
@@ -134,15 +133,51 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
           //methode settings
           //controller.status = new StatusA
           choosePVP
+
           //val gui = new GUI(supervisor, controller, supervisor.p1, supervisor.p2, null)
           startScreen.this.visible = false
+
+
+
+
+
+
+
+
+
+          //KARTE SICH MITDREHEN LASSEN...IST KARTE IN SUPERVISOR?
+          //BOT REPARIEREN
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
         if (b == pvbot) {
           //methode settings
           //controller.status = new StatusA
           choosePVBOT
-          supervisor.newRound()
-          //val gui = new GUI(supervisor, controller, supervisor.p1, null, supervisor.bot)
+          //supervisor.newRound()
+          val gui = new GUI(supervisor, controller)
           startScreen.this.visible = false
         }
     }
@@ -170,7 +205,6 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
 
   }
 
-
   def choosePVP: Unit = {
     val map = new JTextField
     val rundenAnzahl = new JTextField
@@ -195,6 +229,9 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
     setMap(map.getText(), 2)
     setRound(rundenAnzahl.getText, 2)
     setPlayer(player1.getText, "", 2)
+    supervisor.bot = new KI
+    supervisor.botyesno =true
+    controller.state = new StateB
   }
 
 
@@ -241,6 +278,7 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
       supervisor.p1 = new Player(player)
       supervisor.bot = new KI()
       val gui = new GUI(supervisor, controller)
+      gui.updateCard()
       return true
     } else {
       return false
@@ -272,8 +310,11 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
         }
         return false
     }
-    true
+  true
   }
+
+
+
 
 
   menuBar = new MenuBar {

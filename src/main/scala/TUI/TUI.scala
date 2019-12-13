@@ -91,7 +91,6 @@ case class TUI(controller:Controller, supervisor: supervisor) extends Reactor {
       0
     }
   }
-
   def testfall(): Unit ={
     //supervisor.map = new Map(10,10)
     //supervisor.p1 = new Player("Peter")
