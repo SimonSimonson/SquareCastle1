@@ -15,7 +15,7 @@ import javax.imageio.ImageIO
 import javax.swing.ImageIcon
 import java.awt.Image
 
-import controller.{Controller, ControllerTui}
+import controller.Controller
 import javax.swing.JOptionPane
 import javax.swing.JPasswordField
 import javax.swing.JTextField
@@ -25,7 +25,7 @@ import java.awt.event.ActionListener
 import scala.swing.event.{ButtonClicked, MouseClicked}
 import main.scala.model.{Map, Player}
 
-class startScreen(supervisor: supervisor, controller: ControllerTui) extends MainFrame {
+class startScreen(supervisor: supervisor, controller: Controller) extends MainFrame {
 
   title = "Square Castle"
   background = java.awt.Color.WHITE

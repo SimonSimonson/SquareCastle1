@@ -8,15 +8,17 @@ import javax.imageio.ImageIO
 import javax.swing.ImageIcon
 import java.awt.Image
 
-import controller.ControllerTui
+import controller.{CardChangedEvent, Controller, DoesntFitEvent, GameOverEvent, InsertedEvent, NewRoundEvent, TippEvent}
 import javax.swing.JOptionPane
 import javax.swing.JPasswordField
 import javax.swing.JTextField
 import supervisor.supervisor
-import main.scala.model.{Map, Player}
+import main.scala.model.{Card, Map, Player}
+
+import scala.swing.event.ButtonClicked
 
 
-class GUI(supervisor:supervisor, controller: ControllerTui) extends MainFrame {
+class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
 
   title = "Square Castle"
   background = java.awt.Color.WHITE
@@ -95,6 +97,27 @@ class GUI(supervisor:supervisor, controller: ControllerTui) extends MainFrame {
      */
 
     listenTo(rotateRight, rotateLeft, tipp, pause)
+    val buttons: List[Button] = List(rotateRight, rotateLeft, tipp, pause)
+    reactions += {
+      case ButtonClicked(b) =>
+          if(b == rotateRight){
+            controller.befehl = "r"
+            controller.Optionen(supervisor.card,supervisor.map,supervisor.playersturn)
+          }
+          if(b == rotateLeft){
+            controller.befehl = "l"
+            controller.Optionen(supervisor.card,supervisor.map,supervisor.playersturn)
+          }
+          if(b == tipp){
+
+          }
+
+
+
+        }
+
+
+
     //code
 
     // Quelle : http://otfried.org/scala/index_42.html
@@ -168,7 +191,7 @@ class GUI(supervisor:supervisor, controller: ControllerTui) extends MainFrame {
     val nameLabel = new Label("Player Name")
     val pointsName = new Label("Points:")
     val points = new Label("88")
-    val cardLabel = new Label("Your card:")
+    val cardLabel =  new Label()
 
     val imgPanel = new JPanel()
     imgPanel.setAlignmentX(4)
@@ -190,10 +213,42 @@ class GUI(supervisor:supervisor, controller: ControllerTui) extends MainFrame {
     points.verticalAlignment = Alignment.Center
     points.verticalTextPosition = Alignment.Bottom
 
+
+
     cardLabel.background = java.awt.Color.WHITE
     cardLabel.preferredSize = new Dimension(100, 90)
-    cardLabel.verticalAlignment = Alignment.Center
-    cardLabel.verticalTextPosition = Alignment.Bottom
+    /*val cardPanel = new GridPanel(1,1){
+      preferredSize = new Dimension(100,100)
+      var guicell = GuiCell(1, 1, supervisor, controller)
+      guicell.setCard(supervisor.card)//aktuelle karte einfügen
+      contents += guicell
+      ///guicell.redrawCell
+      guicell.setCellPicture
+      add(cardLabel,constraints(0,2,1,1,0,0.1))
+
+    }*/
+    var guicell = new GuiCell(0,0, supervisor,controller)
+    guicell.setCellPicture
+    cardLabel.icon = new ImageIcon(guicell.myPicture)
+
+
+
+
+
+
+
+
+/*
+    listenTo(controllerTui)
+    reactions += {
+      case NewRoundEvent(card: Card) => guicell.setCard(card)
+
+    }*/
+    //___________________________________________________________________________________________________________
+
+
+
+
 
     nameLabel.verticalAlignment = Alignment.Top
     nameLabel.font = new Font("Verdana", 1, 20)
@@ -302,24 +357,48 @@ class GUI(supervisor:supervisor, controller: ControllerTui) extends MainFrame {
     } cells(line)(row).redrawCell
     repaint
   }
+  def updateCard(): Unit ={
+
+
+  }
+  def doesntFit(): Unit= {
+    JOptionPane.showMessageDialog(
+      null,
+      "The Card doesnt Fit",
+      "",
+      JOptionPane.INFORMATION_MESSAGE
+    )
+  }
+  def highlightCell(x:Int,y:Int): Unit ={
+    cells(x)(y).background = java.awt.Color.YELLOW
+  }
 
 
 
 
-  /*
+
   reactions += {
-    case event: GladChanged => redraw()
-    case event: PlayingFieldChanged => redraw()
-    case event: GameStatusChanged => refreshStatus
-    case event: GameOver =>
-      val string = controller.players(controller.gameStatus.id)
+    case event: NewRoundEvent => draw()
+    case event: InsertedEvent => draw()
+    case event: DoesntFitEvent => doesntFit()
+    case event: GameOverEvent =>
       JOptionPane.showMessageDialog(
         null,
-        controller.players(controller.gameStatus.id) + " won",
+        supervisor.endgame(),
         "Game Over",
         JOptionPane.INFORMATION_MESSAGE
       )
-      redraw()
+      draw()
+    case event: CardChangedEvent => updateCard()
+    case event: TippEvent =>
+      val nums = controller.tipp(supervisor.card,supervisor.map)
+      for {
+        i <- cells.indices
+        j <- cells.indices
+      }{
+        if(nums(i)(j) == 1)
+          highlightCell(i,j)
+      }
     case event: CellClicked =>
       redraw()
       if (controller.checkGladiator(controller.selectedCell._1, controller.selectedCell._2)) {
@@ -345,6 +424,6 @@ class GUI(supervisor:supervisor, controller: ControllerTui) extends MainFrame {
 
           }
         }
-      }*/
+      }
 
 }

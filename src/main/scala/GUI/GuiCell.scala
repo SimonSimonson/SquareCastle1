@@ -4,7 +4,7 @@ import java.awt.{Graphics2D, Image}
 import java.awt.image.BufferedImage
 import java.io.File
 
-import controller.ControllerTui
+import controller.Controller
 import javax.imageio.ImageIO
 import main.scala.model.Card
 
@@ -19,7 +19,7 @@ import supervisor.supervisor
 
 
 
-case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: ControllerTui) extends GridPanel(1, 1) {
+case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controller) extends GridPanel(1, 1) {
   preferredSize = new Dimension(50, 150)
   background = java.awt.Color.WHITE
   var myCard: Card = _
@@ -55,10 +55,11 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
 
   def setCard(card:Card): Unit ={
     myCard=card
+    //redrawCell
   }
 
   def redrawCell: Unit = {
-    //setCellPicture
+    setCellPicture
     contents.clear()
     contents += cell
     cell.background = java.awt.Color.WHITE
@@ -89,6 +90,7 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
       tmp = rotatePic(numrotates, tmp)
       println("Drehe Bild "+ numrotates)
       myPicture = tmp
+      println(label.size.width+ "  BREITE "+ label.size.height + "  HÖHE")
       var dimg = myPicture.getScaledInstance(label.size.width, label.size.height, Image.SCALE_SMOOTH)
       label.icon= new ImageIcon(dimg)
       return
