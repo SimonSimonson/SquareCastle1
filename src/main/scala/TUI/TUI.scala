@@ -91,10 +91,11 @@ case class TUI(controller:Controller, supervisor: supervisor) extends Reactor {
       0
     }
   }
+
   def testfall(): Unit ={
     //supervisor.map = new Map(10,10)
-    supervisor.p1 = new Player("Peter")
-    supervisor.p2 = new Player("Kurt")
+    //supervisor.p1 = new Player("Peter")
+    //supervisor.p2 = new Player("Kurt")
     controller.changeState(new StateA)
     supervisor.runden = 4
   }

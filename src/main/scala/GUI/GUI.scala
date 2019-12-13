@@ -10,11 +10,12 @@ import java.awt.Image
 
 import controller.{CardChangedEvent, Controller, DoesntFitEvent, GameOverEvent, InsertedEvent, NewRoundEvent, TippEvent, WaitEvent}
 import javax.swing.JOptionPane
+import javax.swing.JPasswordField
+import javax.swing.JTextField
 import supervisor.supervisor
-import main.scala.model.{Card, Map, Player}
+import main.scala.model.{KI, Map, Player}
 
 import scala.swing.event.ButtonClicked
-
 
 class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
 
@@ -191,54 +192,84 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
     preferredSize = new Dimension(150, 400)
     background = java.awt.Color.WHITE
 
-    val nameLabel = new Label("Player Name")
-    val pointsName = new Label("Points:")
-    val points = new Label("88")
-    val cardLabel =  new Label()
+    //var playerName = supervisor.playersturn.toString()
+    //var playerPoints = supervisor.playersturn.Punkte.toString
+    val playerLabel = new TextField("Players turn:")
+    val nameLabel = new TextField(supervisor.p1.toString())
+    val pp1 = new TextField(supervisor.p1.toString() + "'s Points:")
+    val pointsLabel = new TextField(supervisor.p1.getPoints().toString)
+    val pp2 = new TextField(supervisor.p2.toString() + "'s Points:")
+    val pointsLabel2 = new TextField(supervisor.p2.getPoints().toString)
+    val cardLabel = new Label()
 
     val imgPanel = new JPanel()
     imgPanel.setAlignmentX(4)
     imgPanel.setAlignmentY(4)
 
+    playerLabel.background = java.awt.Color.WHITE
+    playerLabel.horizontalAlignment = Alignment.Center
+    playerLabel.editable = false
 
-    nameLabel.background = java.awt.Color.GRAY.brighter().brighter()
-    nameLabel.preferredSize = new Dimension(100, 90)
-    nameLabel.verticalAlignment = Alignment.Center
-    nameLabel.verticalTextPosition = Alignment.Bottom
+    nameLabel.background = java.awt.Color.WHITE
+    nameLabel.foreground = java.awt.Color.BLUE
+    nameLabel.preferredSize = new Dimension(150, 100)
+    nameLabel.horizontalAlignment = Alignment.Center
+    nameLabel.editable = false
+    //nameLabel.verticalAlignment = Alignment.Center
+    //nameLabel.verticalTextPosition = Alignment.Bottom
 
-    pointsName.background = java.awt.Color.WHITE
-    //pointsName.preferredSize = new Dimension(100, 90)
-    pointsName.verticalAlignment = Alignment.Center
-    pointsName.verticalTextPosition = Alignment.Bottom
+    pp1.background = java.awt.Color.WHITE
+    pp1.horizontalAlignment = Alignment.Center
+    pp1.editable = false
 
-    points.background = java.awt.Color.WHITE
-    points.preferredSize = new Dimension(100, 90)
-    points.verticalAlignment = Alignment.Center
-    points.verticalTextPosition = Alignment.Bottom
+    pointsLabel.background = java.awt.Color.WHITE
+    //pointsLabel.preferredSize = new Dimension(150, 100)
+    pointsLabel.horizontalAlignment = Alignment.Center
+    pointsLabel.editable = false
+    //points.verticalAlignment = Alignment.Center
+    //points.verticalTextPosition = Alignment.Bottom
 
+    pp2.background = java.awt.Color.WHITE
+    pp2.horizontalAlignment = Alignment.Center
+    pp2.editable = false
 
+    pointsLabel2.background = java.awt.Color.WHITE
+    //pointsLabel2.preferredSize = new Dimension(150, 100)
+    pointsLabel2.horizontalAlignment = Alignment.Center
+    pointsLabel2.editable = false
+    //points.verticalAlignment = Alignment.Center
+    //points.verticalTextPosition = Alignment.Bottom
 
     cardLabel.background = java.awt.Color.WHITE
-    cardLabel.preferredSize = new Dimension(100, 90)
+    cardLabel.preferredSize = new Dimension(150, 190)
+    cardLabel.verticalAlignment = Alignment.Center
 
-    var guicell = new GuiCell(0,0, supervisor,controller)
+    //nameLabel.verticalAlignment = Alignment.Top
+    playerLabel.font = new Font("Verdana", 1, 15)
+    nameLabel.font = new Font("Verdana", 1, 20)
+    pp1.font = new Font("Verdana", 1, 15)
+    pointsLabel.font = new Font("Verdana", 1, 12)
+    pp2.font = new Font("Verdana", 1, 15)
+    pointsLabel2.font = new Font("Verdana", 1, 12)
+    cardLabel.font = new Font("Verdana", 1, 20)
+
+    var guicell = new GuiCell(0, 0, supervisor, controller)
     guicell.setCellPicture
     cardLabel.icon = new ImageIcon(guicell.myPicture)
 
-    nameLabel.verticalAlignment = Alignment.Top
-    nameLabel.font = new Font("Verdana", 1, 20)
-    pointsName.font = new Font("Verdana", 1, 20)
-    points.font = new Font("Verdana", 1, 15)
-    cardLabel.font = new Font("Verdana", 1, 20)
-
+    add(playerLabel, constraints(0, 1, 1, 1, 0, 0.1))
 
     add(nameLabel, constraints(0, 2, 1, 1, 0, 0.1))
 
-    add(points, constraints(0, 5, 1, 1, 0, 0.1))
+    add(pp1, constraints(0, 3, 1, 1, 0, 0.1))
 
-    add(pointsName, constraints(0, 5, 1, 1, 0, 0.1))
+    add(pointsLabel, constraints(0, 4, 1, 1, 0, 0.1))
 
-    add(cardLabel, constraints(0, 8, 1, 1, 0, 0.1))
+    add(pp2, constraints(0, 5, 1, 1, 0, 0.1))
+
+    add(pointsLabel2, constraints(0, 6, 1, 1, 0, 0.1))
+
+    add(cardLabel, constraints(0, 9, 1, 1, 0, 0.1))
 
 
     // Quelle : http://otfried.org/scala/index_42.html
@@ -262,14 +293,35 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
     }
 
   }
-//NACH ENDE DER RUNDENZAHL GAMEENDEVENT
-//UNTEN DAS BILD ANPASSEN
+
+
+
+
+  def refreshRightPanel(): Unit = {
+
+    if (supervisor.bot == null && supervisor.playersturn!=null) {
+      rightPanel.pointsLabel.text = supervisor.p1.getPoints() + " Points"
+      rightPanel.pointsLabel2.text = supervisor.p2.getPoints() + " Points"
+      rightPanel.nameLabel.text = "" + supervisor.playersturn
+    } else {
+      rightPanel.pointsLabel2.text = supervisor.bot.getPoints() + " Points"
+      rightPanel.nameLabel.text = "" + supervisor.bot.toString()
+    }
+    if (supervisor.playersturn == supervisor.p1)
+      rightPanel.nameLabel.foreground = java.awt.Color.BLUE.darker()
+    else
+      rightPanel.nameLabel.foreground = java.awt.Color.RED.darker()
+
+  }
+
+
 
   menuBar = new MenuBar {
     contents += new Menu("Menu") {
       contents += new MenuItem(scala.swing.Action("New Game") {
         val start = new startScreen(supervisor, controller)
-        GUI.this.visible = false
+        //GUI.this.visible = false
+        draw()
       })
 
       contents += new MenuItem(scala.swing.Action("Change Playernames") {
@@ -285,6 +337,7 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
           "Change Names",
           JOptionPane.QUESTION_MESSAGE
         )
+        //refreshRightPanel
       })
       contents += new Separator()
       contents += new MenuItem(scala.swing.Action("Exit") {
@@ -332,7 +385,12 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
       row <- cells.indices
     } cells(line)(row).redrawCell
     repaint
+    //refreshRightPanel
   }
+
+
+
+
   def updateCard(): Unit ={
     var guicell = new GuiCell(0,0, supervisor,controller)
     guicell.setCellPicture
@@ -356,6 +414,7 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
   reactions += {
     case event: NewRoundEvent => //ALLES NEU MALEN(neue spieler gesetzt, neue Karte
       println("NewRoundEvent")
+      refreshRightPanel()
       draw()
     case event: InsertedEvent =>
       println("InsertedEvent")
