@@ -13,7 +13,7 @@ import javax.swing.JOptionPane
 import javax.swing.JPasswordField
 import javax.swing.JTextField
 import supervisor.supervisor
-import main.scala.model.{KI, Map, Player}
+import main.scala.model.{Card, KI, Map, Player}
 
 import scala.swing.event.ButtonClicked
 
@@ -22,7 +22,6 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
   title = "Square Castle"
   background = java.awt.Color.WHITE
   preferredSize = new Dimension(1000, 700)
-  var turncount = 0
 
 
 
@@ -108,12 +107,10 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
           if(b == rotateRight){
             controller.befehl = "r"
             supervisor.newRoundactive()
-            turncount += 1
           }
           if(b == rotateLeft){
             controller.befehl = "l"
             supervisor.newRoundactive()
-            turncount = turncount-1
           }
           if(b == tipp){
             controller.befehl = "tipp"
@@ -397,11 +394,11 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
 
 
 
-  def updateCard(): Unit ={
+  def updateCard(card:Card): Unit ={
     var guicell = new GuiCell(0,0, supervisor,controller)
-    guicell.myCard = supervisor.card
+    guicell.myCard = card
     guicell.setCellPicture
-    rightPanel.cardLabel.icon = new ImageIcon(controller.rotatePic(turncount,guicell.myPicture))
+    rightPanel.cardLabel.icon = new ImageIcon(guicell.myPicture)
     println("Karte aktualisieren")
     rightPanel.repaint()
   }
@@ -423,17 +420,17 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
     case event: NewRoundEvent => //ALLES NEU MALEN(neue spieler gesetzt, neue Karte
       println("NewRoundEvent")
       refreshRightPanel()
-      turncount = 0
       draw()
     case event: InsertedEvent =>
       println("InsertedEvent")
       draw()
+
     case event: DoesntFitEvent =>
       println("PasstNichtEvent")
       doesntFit()
     case event: CardChangedEvent =>
       println("CardChangedEvent")
-      updateCard()
+      updateCard(event.newcard)
     case event: BotEvent => draw()
     case event: GameOverEvent =>
       println("GameOver")
