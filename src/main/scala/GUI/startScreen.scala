@@ -273,12 +273,14 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
       supervisor.p1 = new Player(player)
       supervisor.p2 = new Player(player2)
       val gui = new GUI(supervisor, controller)
+      gui.updateCard(supervisor.card)
+
       return true
     } else if (z == 2) {
       supervisor.p1 = new Player(player)
       supervisor.bot = new KI()
       val gui = new GUI(supervisor, controller)
-      gui.updateCard()
+      gui.updateCard(supervisor.card)
       return true
     } else {
       return false

@@ -26,7 +26,8 @@ class supervisor(controller: Controller) extends Publisher{
 
 
   def newRound(): Int = {
-    if (runden <= 0) {
+    println("RUNDEN   " + runden)
+    if (runden <= 1) {
       publish(new GameOverEvent)
       return -1
     }
@@ -43,7 +44,7 @@ class supervisor(controller: Controller) extends Publisher{
       playersturn = p2
     }
     publish(new NewRoundEvent)
-    publish(new CardChangedEvent)
+    publish(new CardChangedEvent(card))
     return 1
   }
   def newRoundactive(): Int = {

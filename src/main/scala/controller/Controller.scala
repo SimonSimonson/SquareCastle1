@@ -127,7 +127,7 @@ class Controller extends Publisher{
       if (array(0).equals("r")) {
         card.rotateRight()
         printcard(card)
-        publish(new CardChangedEvent)
+        publish(new CardChangedEvent(card))
         return 2
       } else if (array(0).equals("wait")) {
         //muss implementiert werden
@@ -137,7 +137,7 @@ class Controller extends Publisher{
       } else if (array(0).equals("l")) {
         card.rotateLeft()
         printcard(card)
-        publish(new CardChangedEvent)
+        publish(new CardChangedEvent(card))
         return 2
 
       } else if (array(0).equals("i")) {

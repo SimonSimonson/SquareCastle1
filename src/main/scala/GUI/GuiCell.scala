@@ -44,18 +44,21 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
 
     reactions += {
       case MouseClicked(src, pt, mod, clicks, pops) => println("X:   "+ x + " |Y:   "+y)
-        controller.befehl = ("i "+x+" "+y)
-        myCard = supervisor.card
-        setCellPicture
+        controller.befehl = ("i " + x + " " + y)
+
         if(supervisor.newRoundactive() != 2){
+          myCard = supervisor.card
+          setCellPicture
           border = LineBorder(java.awt.Color.GREEN.darker(), 4)
           supervisor.otherplayer()
           supervisor.newRound()
         }
         redrawCell
 
+
     }
   }
+  //FALSCHE RUNDENANZAHL, SPIELER DER GEWINNT FALSCH ANGEZEIGT, BOT REPARIEREN
 
   def setCard(card:Card): Unit ={
     myCard=card
@@ -81,7 +84,7 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
       return
     }
     //CODE DER DIE BILDER ZUORDNET
-    val numbers = (myCard.side0, myCard.side1, myCard.side2, myCard.side3)
+    val numbers = (myCard.mysides(0),myCard.mysides(1),myCard.mysides(2),myCard.mysides(3))
     var tmp = findImage(numbers)
     var numrotates = 0
     var num = numbers
