@@ -315,7 +315,6 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
 
 
 
-
   def refreshRightPanel(): Unit = {
 
     if (supervisor.bot == null && supervisor.playersturn!=null) {
