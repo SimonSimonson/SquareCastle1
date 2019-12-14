@@ -207,6 +207,8 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
     val pp2 = new TextField(supervisor.p2.toString() + "'s Points:")
     val pointsLabel2 = new TextField(supervisor.p2.getPoints().toString)
     val cardLabel = new Label()
+    val remaining = new TextField("Remaining rounds:")
+    val rundenLabel = new TextField("" + supervisor.runden / 2)
 
     val imgPanel = new JPanel()
     imgPanel.setAlignmentX(4)
@@ -250,6 +252,14 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
     cardLabel.preferredSize = new Dimension(150, 190)
     cardLabel.verticalAlignment = Alignment.Center
 
+    rundenLabel.background = java.awt.Color.WHITE
+    rundenLabel.horizontalAlignment = Alignment.Center
+    rundenLabel.editable = false
+
+    remaining.background = java.awt.Color.WHITE
+    remaining.horizontalAlignment = Alignment.Center
+    remaining.editable = false
+
     //nameLabel.verticalAlignment = Alignment.Top
     playerLabel.font = new Font("Verdana", 1, 15)
     nameLabel.font = new Font("Verdana", 1, 20)
@@ -258,6 +268,8 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
     pp2.font = new Font("Verdana", 1, 15)
     pointsLabel2.font = new Font("Verdana", 1, 12)
     cardLabel.font = new Font("Verdana", 1, 20)
+    rundenLabel.font = new Font("Verdana", 1, 12)
+    remaining.font = new Font("Verdana", 1, 12)
 
     var guicell = new GuiCell(0, 0, supervisor, controller)
     guicell.setCellPicture
@@ -274,6 +286,10 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
     add(pp2, constraints(0, 5, 1, 1, 0, 0.1))
 
     add(pointsLabel2, constraints(0, 6, 1, 1, 0, 0.1))
+
+    add(remaining, constraints(0, 7, 1, 1, 0, 0.1))
+
+    add(rundenLabel, constraints(0, 8, 1, 1, 0, 0.1))
 
     add(cardLabel, constraints(0, 9, 1, 1, 0, 0.1))
 
@@ -309,6 +325,8 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
       rightPanel.pointsLabel.text = supervisor.p1.getPoints() + " Points"
       rightPanel.pointsLabel2.text = supervisor.p2.getPoints() + " Points"
       rightPanel.nameLabel.text = "" + supervisor.playersturn
+      if (supervisor.runden % 2 == 0)
+      rightPanel.rundenLabel.text = "" + supervisor.runden / 2
     } else {
       rightPanel.pointsLabel2.text = supervisor.bot.getPoints() + " Points"
       rightPanel.nameLabel.text = "" + supervisor.bot.toString()
@@ -326,7 +344,7 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
     contents += new Menu("Menu") {
       contents += new MenuItem(scala.swing.Action("New Game") {
         val start = new startScreen(supervisor, controller)
-        //GUI.this.visible = false
+        GUI.this.visible = false
         draw()
       })
 
