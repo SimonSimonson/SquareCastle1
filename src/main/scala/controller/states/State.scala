@@ -1,8 +1,7 @@
-package util
+package controller.states
 
 import controller.Controller
-import main.scala.model.{Card, Map, Player}
-import main.scala.model.KI
+import main.scala.model.{Card, KI, Map, Player}
 
 trait State {
 

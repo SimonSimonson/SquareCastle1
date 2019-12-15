@@ -1,13 +1,9 @@
-package util
+package controller
 
-import controller.Controller
-import main.scala.model.Map
-import main.scala.model.Card
+import controller.commands.Command
+import main.scala.model.{Card, Map}
 
 import scala.util.{Failure, Success, Try}
-import supervisor.supervisor
-
-import scala.collection.mutable
 
 case class Invoker(controller: Controller){
 

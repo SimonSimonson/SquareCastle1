@@ -1,8 +1,7 @@
-package controller
+package controller.states
 
-import main.scala.model.{Card, Map, Player}
-import main.scala.model.KI
-import util.State
+import controller.Controller
+import main.scala.model.{Card, KI, Map, Player}
 
 
 case class StateA() extends State(){

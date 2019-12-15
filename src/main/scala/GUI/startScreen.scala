@@ -3,24 +3,16 @@ package GUI
 import java.awt
 
 import scala.swing._
-import scala.swing.Swing.LineBorder
-import scala.swing.event._
-import scala.io.Source._
-import java.awt.image.BufferedImage
-
-import javax.swing.{JFrame, JPanel, JScrollPane}
+import javax.swing.JPanel
 import java.io.File
 
+import controller.states.{StateA, StateB}
 import javax.imageio.ImageIO
 import javax.swing.ImageIcon
-import java.awt.Image
-
-import controller.{Controller, StateB}
+import controller.Controller
 import javax.swing.JOptionPane
-import javax.swing.JPasswordField
 import javax.swing.JTextField
 import supervisor.supervisor
-import java.awt.event.ActionListener
 
 import scala.swing.event.{ButtonClicked, MouseClicked}
 import main.scala.model.{KI, Map, Player}
@@ -30,11 +22,10 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
   title = "Square Castle"
   background = java.awt.Color.WHITE
   preferredSize = new Dimension(1000, 700)
+  var startsign = false
 
-
-  val schriftIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ.png"))
-  //val schriftIMG = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/graphics/SQ.png"))
-  //var cells: Array[Array[GuiCell]] = Array.ofDim[GuiCell](supervisor.map.getmx(), supervisor.map.getmy())
+  //val schriftIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ.png"))
+  val schriftIMG = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/graphics/SQ.png"))
 
   val schrift = new Panel {
     override def paint(g: Graphics2D): Unit = {
@@ -42,9 +33,8 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
     }
   }
 
-  val castleIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ2.png"))
-  //val castleIMG = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/graphics/SQ2.png"))
-  //var cells: Array[Array[GuiCell]] = Array.ofDim[GuiCell](supervisor.map.getmx(), supervisor.map.getmy())
+  //val castleIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ2.png"))
+  val castleIMG = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/graphics/SQ2.png"))
 
   val castle = new Panel {
     override def paint(g: Graphics2D): Unit = {
@@ -136,48 +126,13 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
 
           //val gui = new GUI(supervisor, controller, supervisor.p1, supervisor.p2, null)
           startScreen.this.visible = false
-
-
-
-
-
-
-
-
-
-          //KARTE SICH MITDREHEN LASSEN...IST KARTE IN SUPERVISOR?
-          //BOT REPARIEREN
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         }
         if (b == pvbot) {
           //methode settings
           //controller.status = new StatusA
           choosePVBOT
           //supervisor.newRound()
-          val gui = new GUI(supervisor, controller)
+          //val gui = new GUI(supervisor, controller)
           startScreen.this.visible = false
         }
     }
@@ -257,6 +212,7 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
         return false
     }
   }
+  //var cells: Array[Array[GuiCell]] = Array.ofDim[GuiCell](supervisor.map.getmx(), supervisor.map.getmy())
 
   def setPlayer(player: String, player2: String, z: Int): Boolean = {
     if (player == "" && player2 == "" && z == 1) {
@@ -274,13 +230,18 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
       supervisor.p2 = new Player(player2)
       val gui = new GUI(supervisor, controller)
       gui.updateCard(supervisor.card)
-
+      controller.changeState(new StateA)
+      startsign = true
       return true
     } else if (z == 2) {
       supervisor.p1 = new Player(player)
       supervisor.bot = new KI()
       val gui = new GUI(supervisor, controller)
+      //supervisor.newRound()
       gui.updateCard(supervisor.card)
+      controller.changeState(new StateB)
+      startsign = true
+
       return true
     } else {
       return false

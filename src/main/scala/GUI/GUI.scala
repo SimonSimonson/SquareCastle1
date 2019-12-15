@@ -201,13 +201,22 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
     val nameLabel = new TextField(supervisor.p1.toString())
     val pp1 = new TextField(supervisor.p1.toString() + "'s Points:")
     val pointsLabel = new TextField(supervisor.p1.getPoints().toString)
-    val pp2 = new TextField(supervisor.p2.toString() + "'s Points:")
-    val pointsLabel2 = new TextField(supervisor.p2.getPoints().toString)
     val cardLabel = new Label()
     val remaining = new TextField("Remaining rounds:")
     val rundenLabel = new TextField("" + supervisor.runden / 2)
 
+    var pp2:TextField=_
+    var pointsLabel2: TextField =_
+
     val imgPanel = new JPanel()
+
+    if(supervisor.p2 != null) {
+      pp2 = new TextField(supervisor.p2.toString() + "'s Points:")
+      pointsLabel2 = new TextField(supervisor.p2.getPoints().toString)
+    } else {
+      pp2 = new TextField(supervisor.bot.toString() + "'s Points:")
+      pointsLabel2 = new TextField(supervisor.bot.getPoints().toString)
+    }
     imgPanel.setAlignmentX(4)
     imgPanel.setAlignmentY(4)
 
@@ -226,24 +235,20 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
     pp1.background = java.awt.Color.WHITE
     pp1.horizontalAlignment = Alignment.Center
     pp1.editable = false
+    pp2.background = java.awt.Color.WHITE
+    pp2.horizontalAlignment = Alignment.Center
+    pp2.editable = false
 
     pointsLabel.background = java.awt.Color.WHITE
     //pointsLabel.preferredSize = new Dimension(150, 100)
     pointsLabel.horizontalAlignment = Alignment.Center
     pointsLabel.editable = false
-    //points.verticalAlignment = Alignment.Center
-    //points.verticalTextPosition = Alignment.Bottom
-
-    pp2.background = java.awt.Color.WHITE
-    pp2.horizontalAlignment = Alignment.Center
-    pp2.editable = false
 
     pointsLabel2.background = java.awt.Color.WHITE
-    //pointsLabel2.preferredSize = new Dimension(150, 100)
     pointsLabel2.horizontalAlignment = Alignment.Center
     pointsLabel2.editable = false
-    //points.verticalAlignment = Alignment.Center
-    //points.verticalTextPosition = Alignment.Bottom
+
+
 
     cardLabel.background = java.awt.Color.WHITE
     cardLabel.preferredSize = new Dimension(150, 190)
@@ -257,13 +262,14 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
     remaining.horizontalAlignment = Alignment.Center
     remaining.editable = false
 
-    //nameLabel.verticalAlignment = Alignment.Top
     playerLabel.font = new Font("Verdana", 1, 15)
     nameLabel.font = new Font("Verdana", 1, 20)
     pp1.font = new Font("Verdana", 1, 15)
-    pointsLabel.font = new Font("Verdana", 1, 12)
     pp2.font = new Font("Verdana", 1, 15)
+
+    pointsLabel.font = new Font("Verdana", 1, 12)
     pointsLabel2.font = new Font("Verdana", 1, 12)
+
     cardLabel.font = new Font("Verdana", 1, 20)
     rundenLabel.font = new Font("Verdana", 1, 12)
     remaining.font = new Font("Verdana", 1, 12)
@@ -279,7 +285,6 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
     add(pp1, constraints(0, 3, 1, 1, 0, 0.1))
 
     add(pointsLabel, constraints(0, 4, 1, 1, 0, 0.1))
-
     add(pp2, constraints(0, 5, 1, 1, 0, 0.1))
 
     add(pointsLabel2, constraints(0, 6, 1, 1, 0, 0.1))
@@ -391,8 +396,32 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
       cells(line)(row) = guicell
       listenTo(guicell)
       contents += guicell
-      //println(guicell)
-      //speichert daten nicht in array warum auch immer
+
+
+
+
+
+
+
+
+      //PUNKTE ZÄHLEN IMMER NUR DEN ERSTEN ZWEIG, DANACH IST DIE LIST SCHON VOLL MIT DEN ALTEN KARTEN UND ER ÜBERSPRINGT
+      //geht zwar die wege, aber added die werte aus den verschiedenen richtungen nicht zusammen
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
   }
   draw()
@@ -408,6 +437,13 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
     //refreshRightPanel
   }
 
+  def drawhidden(): Unit = {
+    for {
+      line <- cells.indices
+      row <- cells.indices
+    } cells(line)(row).setCard(supervisor.map.field(row)(line))
+    draw()
+  }
 
 
 
@@ -416,7 +452,7 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
     guicell.myCard = card
     guicell.setCellPicture
     rightPanel.cardLabel.icon = new ImageIcon(guicell.myPicture)
-    println("Karte aktualisieren")
+    //println("Karte aktualisieren")
     rightPanel.repaint()
   }
   def doesntFit(): Unit= {
@@ -448,7 +484,14 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
     case event: CardChangedEvent =>
       println("CardChangedEvent")
       updateCard(event.newcard)
-    case event: BotEvent => draw()
+    case event: BotEvent =>
+      //controller.befehl = ""
+      supervisor.newRoundactive()
+      supervisor.otherplayer()
+      drawhidden()
+      supervisor.newRound()
+      //supervisor.newRound()
+
     case event: GameOverEvent =>
       println("GameOver")
       JOptionPane.showMessageDialog(

@@ -46,7 +46,7 @@ class Map(mx: Int, my: Int){
 
   //gibt die Punkte an der Stelle ohne wirklich anzulegen(für den bot)
   def getpunkteohneanlegen(card: Card,x:Int, y:Int): Int ={
-    if(Setcard(card,x,y).isSuccess){
+    if(Setcard(card,x,y).get != -1){
 
       val points = card.getAngelegte()
       card.cleanall()

@@ -3,8 +3,8 @@ package controller.commands
 import main.scala.model.Card
 import main.scala.model.Map
 import supervisor.supervisor
-import util.Command
-import scala.util.{Try, Success, Failure}
+
+import scala.util.{Failure, Success, Try}
 
 case class layCommand() extends Command{
   override var x: Int = _

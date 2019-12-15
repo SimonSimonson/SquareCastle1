@@ -1,10 +1,8 @@
-package util
-
-import scala.util.{Try, Success, Failure}
+package controller.commands
 import main.scala.model.Card
 import main.scala.model.Map
 
-
+import scala.util.Try
 trait Command {
   var x:Int
   var y:Int

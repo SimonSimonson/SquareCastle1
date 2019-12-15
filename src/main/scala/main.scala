@@ -1,6 +1,6 @@
 package main.scala
 import GUI.{GUI, startScreen}
-import controller.{Controller, StateA, StateB}
+import controller.Controller
 import supervisor.supervisor
 
 object main {
@@ -10,6 +10,7 @@ object main {
     val supervisor = new supervisor(Controller)
 
     val tui = new TUI.TUI(Controller, supervisor)
+    tui.testfall()
 
     val start = new startScreen(supervisor,Controller)
 
@@ -19,6 +20,7 @@ object main {
 
     var mode = false
     var s = ""
+
     /*for(i <- 0 to 4) {      println(this.card.side0+this.card.side1+this.card.side2+this.card.side3)
 
       tui.settings(i, mode)
@@ -43,7 +45,6 @@ object main {
       mode= !mode
     }
 */
-    tui.testfall()
     tui.update(Console.WHITE + "Spiel wird gestartet", 0)
     supervisor.state = true
 

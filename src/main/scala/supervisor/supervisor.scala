@@ -1,7 +1,7 @@
 package supervisor
 
 
-import controller.{CardChangedEvent, Controller, GameOverEvent, NewRoundEvent}
+import controller.{BotEvent, CardChangedEvent, Controller, GameOverEvent, NewRoundEvent}
 import main.scala.model.{Card, Map, Player}
 import main.scala.util.{Observable, Observer}
 import main.scala.model.KI
@@ -38,19 +38,22 @@ class supervisor(controller: Controller) extends Publisher{
       playersturn = p1
     } else {
       card = controller.Kartezeigen(p2)
-      if(p2 == null) {
-        controller.state.handle(false,controller,p1 ,p2 ,bot ,map, card)
-      }
+
       playersturn = p2
     }
     publish(new NewRoundEvent)
     publish(new CardChangedEvent(card))
+    if(p2 == null && !state ) {
+      publish(new BotEvent) //man muss nur nach dem spielerzug einmal Newround sagen, dann läuft botzug automatisch ab
+      //controller.state.handle(false,controller,p1 ,p2 ,bot ,map, card)
+    }
     return 1
   }
   def newRoundactive(): Int = {
     var i = controller.state.handle(state,controller,p1 ,p2 ,bot ,map, card)
+    //controller.print(map)
     //publish(new NewRoundEvent)
-    println(this.card)
+    //println(this.card)
     return i
   }
   def showPoints(): Unit ={

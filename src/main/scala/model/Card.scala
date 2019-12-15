@@ -1,5 +1,7 @@
 package main.scala.model
 
+import java.util
+
 case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
 
   if(side0 > 2  || side1 > 2 || side2 > 2 || side3 > 2 ) {
@@ -21,21 +23,29 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
 
 
   //REKTUSIVE METHODE, DIE ALLE ANGELEGTEN KARTEN DER 3 ARRAYS OBEN DURCHLÄUFT UND DIE GLEICHEN ZÄHLT
-  def getAngelegteR(kind: Int, l: Int, prev: Card): Int = {
+  def getAngelegteR(kind: Int, l: Int, prev: Card, list: util.ArrayList[Card]): Int = {
+    list.add(prev)
     var x = l
     kind match{
       case 0 =>  {
-        for(y <- 0 to 3 if none(y) != null && none(y) != prev) {
-          x = none(y).getAngelegteR(kind, l + 1, this)
+        for(y <- 0 to 3 if none(y) != null && !list.contains(none(y))) {
+          //list.add(none(y))
+          x = none(y).getAngelegteR(kind, l + 1, this, list)
         }
       }
       case 1 =>  {
-        for(y <- 0 to 3 if roads(y) != null && roads(y) != prev)
-           x = roads(y).getAngelegteR(kind, l + 1, this)
+        for(y <- 0 to 3 if roads(y) != null && !list.contains(roads(y))) {
+          //list.add(roads(y))
+          println("Untersuche Object " + this.toString + "  Seite "+ y)
+           x = roads(y).getAngelegteR(kind, l + 1, this, list)
+
+        }
       }
       case 2 =>  {
-        for(y <- 0 to 3 if castle(y) != null && castle(y) !=prev)
-           x = castle(y).getAngelegteR(kind, l + 1, this)
+        for(y <- 0 to 3 if castle(y) != null && !list.contains(castle(y))) {
+          //list.add(castle(y))
+          x = castle(y).getAngelegteR(kind, l + 1, this, list)
+        }
       }
     }
     x
@@ -43,10 +53,12 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
 
   def getAngelegte(): Int = {
     //println("Wege angelegt: "+ getAngelegteR(1, 0, this) + " Burgen angelegt: " + getAngelegteR(2, 0,this))
-    var wege = getAngelegteR(1, 0, this)
+    var wege = getAngelegteR(1, 0, this, new util.ArrayList[Card]())
+    println("PUNKTE FÜR WEGE : " + wege)
     if(wege > 0)
       wege += 1
-    var burgen = getAngelegteR(2, 0,this)
+    var burgen = getAngelegteR(2, 0,this, new util.ArrayList[Card]())
+    println("PUNKTE FÜR BURGEN : " + burgen)
     if(burgen > 0)
       burgen += 1
 
@@ -111,7 +123,7 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
 
   //bereinigen einer seite
   def cleansides(pos:Int) :Boolean={
-    var pos2 = getantipos(pos)
+    val pos2 = getantipos(pos)
     if(none(pos)!=null )//&& none(pos).none(pos2)==this)
       none(pos).none(pos2)=null
     if(castle(pos)!=null)// && castle(pos).castle(pos2)==this)
@@ -120,7 +132,7 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
       roads(pos).roads(pos2)=null
     none(pos)=null
     castle(pos)=null
-    none(pos)=null
+    roads(pos)=null
 
     true
   }

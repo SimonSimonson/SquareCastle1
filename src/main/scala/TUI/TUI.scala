@@ -1,6 +1,7 @@
 package main.scala.TUI
+import controller.states.{StateA, StateB}
 import main.scala.util.{Observable, Observer}
-import controller.{Controller, StateA, StateB, updateEvent}
+import controller.{Controller, updateEvent}
 import main.scala.model.Player
 import main.scala.model.KI
 import main.scala.model.Map
@@ -95,7 +96,7 @@ case class TUI(controller:Controller, supervisor: supervisor) extends Reactor {
     //supervisor.map = new Map(10,10)
     //supervisor.p1 = new Player("Peter")
     //supervisor.p2 = new Player("Kurt")
-    controller.changeState(new StateA)
+    controller.changeState(new StateB)
     supervisor.runden = 4
   }
 

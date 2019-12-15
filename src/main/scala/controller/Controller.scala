@@ -3,13 +3,11 @@ import java.awt.geom.AffineTransform
 import java.awt.image.{AffineTransformOp, BufferedImage}
 
 import controller.commands.layCommand
+import controller.states.State
 import main.scala.model.{Card, Map, Player}
-import main.scala.util.Observable
 import main.scala.model.KI
-import util.{Invoker, State}
 
 import scala.swing.Publisher
-import scala.util.{Failure, Success, Try}
 
 class Controller extends Publisher{
 
@@ -27,23 +25,22 @@ class Controller extends Publisher{
 
   def Calculatebot(bot: KI, card: Card,map:Map):Unit ={
     val data = bot.anlegen(map, card)
-
+    println("CALCULATING BOT MOVE")
     for (i <- 0 until data._3) {
-      //notifyObservers("rotieren", 0)
-
       card.rotateRight()
     }
+    //irgendwas mit der if abfrage ist am sack
     if (data._1 < 0 || data._2 < 0 || data._3 < 0) {
-      //map.setRandom(card)
+      map.setRandom(card)
       //notifyObservers("beep boop ich kann nicht anlegen", 0);
       return
     }
     publish(new updateEvent("Bot legt auf " + data._1 + " " + data._2, 0))
-    card.cleanall()
+    //card.cleanall()
     map.Setcard(card, data._1, data._2)
     bot.addPoints(card.getAngelegte())
-    publish(new InsertedEvent)
-    publish(new BotEvent)
+    //publish(new InsertedEvent)
+    //publish(new BotEvent)
   }
 
   def RandomCard(): Card= {
@@ -68,7 +65,7 @@ class Controller extends Publisher{
     if(card == null)
       return false
     if(player == null) {
-      publish(new BotEvent)
+      //publish(new BotEvent)
       publish(new updateEvent(Console.RED + "BOT ist an der Reihe",0))
       true
     } else {
