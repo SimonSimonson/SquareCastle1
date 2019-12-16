@@ -25,43 +25,53 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
   //REKTUSIVE METHODE, DIE ALLE ANGELEGTEN KARTEN DER 3 ARRAYS OBEN DURCHLÄUFT UND DIE GLEICHEN ZÄHLT
   def getAngelegteR(kind: Int, l: Int, prev: Card, list: util.ArrayList[Card]): Int = {
     list.add(prev)
-    var x = l
+    var sum = 0
     kind match{
       case 0 =>  {
+        if(none.isEmpty)
+          return 1
         for(y <- 0 to 3 if none(y) != null && !list.contains(none(y))) {
           //list.add(none(y))
-          x = none(y).getAngelegteR(kind, l + 1, this, list)
+
+          sum += none(y).getAngelegteR(kind, l, this, list)
         }
       }
       case 1 =>  {
+        if(roads.isEmpty)
+          return 1
         for(y <- 0 to 3 if roads(y) != null && !list.contains(roads(y))) {
           //list.add(roads(y))
           println("Untersuche Object " + this.toString + "  Seite "+ y)
-           x = roads(y).getAngelegteR(kind, l + 1, this, list)
+           sum += roads(y).getAngelegteR(kind, l, this, list)
 
         }
       }
       case 2 =>  {
+        if(castle.isEmpty)
+          return 1
         for(y <- 0 to 3 if castle(y) != null && !list.contains(castle(y))) {
           //list.add(castle(y))
-          x = castle(y).getAngelegteR(kind, l + 1, this, list)
+          println("Untersuche Object " + this.toString + "  Seite "+ y)
+          sum += castle(y).getAngelegteR(kind, l, this, list)
         }
       }
     }
-    x
+    sum + 1
   }
 
   def getAngelegte(): Int = {
+    var sum = 0
     //println("Wege angelegt: "+ getAngelegteR(1, 0, this) + " Burgen angelegt: " + getAngelegteR(2, 0,this))
-    var wege = getAngelegteR(1, 0, this, new util.ArrayList[Card]())
+    var wege = getAngelegteR(1, 0, null, new util.ArrayList[Card]())
     println("PUNKTE FÜR WEGE : " + wege)
-    if(wege > 0)
-      wege += 1
-    var burgen = getAngelegteR(2, 0,this, new util.ArrayList[Card]())
-    println("PUNKTE FÜR BURGEN : " + burgen)
-    if(burgen > 0)
-      burgen += 1
 
+    if(roads.isEmpty)
+      wege = 0
+
+    var burgen = getAngelegteR(2, 0,null, new util.ArrayList[Card]())
+    println("PUNKTE FÜR BURGEN : " + burgen)
+    if(castle.isEmpty)
+      burgen = 0
 
     wege + burgen*2
   }
