@@ -3,19 +3,32 @@ package GUI
 import java.awt
 
 import scala.swing._
+import scala.swing.Swing.LineBorder
+import scala.swing.event._
+import scala.io.Source._
+import java.awt.image.BufferedImage
+
+import javax.swing.{JFrame, JPanel, JScrollPane}
+import java.io.{File, FileInputStream}
 import javax.swing.JPanel
 import java.io.File
 
 import controller.states.{StateA, StateB}
 import javax.imageio.ImageIO
 import javax.swing.ImageIcon
+import java.awt.Image
+
 import controller.Controller
 import javax.swing.JOptionPane
+import javax.swing.JPasswordField
 import javax.swing.JTextField
 import supervisor.supervisor
+import java.awt.event.ActionListener
 
 import scala.swing.event.{ButtonClicked, MouseClicked}
 import main.scala.model.{KI, Map, Player}
+import javax.swing.JCheckBox
+
 
 class startScreen(supervisor: supervisor, controller: Controller) extends MainFrame {
 
@@ -24,8 +37,10 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
   preferredSize = new Dimension(1000, 700)
   var startsign = false
 
-  //val schriftIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ.png"))
-  val schriftIMG = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/graphics/SQ.png"))
+
+  val schriftIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ.png"))
+  //val schriftIMG = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/graphics/SQ.png"))
+  //var cells: Array[Array[GuiCell]] = Array.ofDim[GuiCell](supervisor.map.getmx(), supervisor.map.getmy())
 
   val schrift = new Panel {
     override def paint(g: Graphics2D): Unit = {
@@ -33,8 +48,9 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
     }
   }
 
-  //val castleIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ2.png"))
-  val castleIMG = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/graphics/SQ2.png"))
+  val castleIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ2.png"))
+  //val castleIMG = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/graphics/SQ2.png"))
+  //var cells: Array[Array[GuiCell]] = Array.ofDim[GuiCell](supervisor.map.getmx(), supervisor.map.getmy())
 
   val castle = new Panel {
     override def paint(g: Graphics2D): Unit = {
@@ -165,12 +181,13 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
     val rundenAnzahl = new JTextField
     val player1 = new JTextField
     val player2 = new JTextField
-    val message = Array(" Set mapsize (Bsp: ZxZ): ", " z", map, " ", " Set number of Rounds:", rundenAnzahl, " ", " Player 1:", player1, "   ", " Player 2:", player2)
+    val box = new JCheckBox
+    val message = Array(" Set mapsize (Bsp: ZxZ): ", " z", map, " ", " Play until the field is full?" , box," (Or set number of Rounds:)", rundenAnzahl, " ", " Player 1:", player1, "   ", " Player 2:", player2)
     val option: Int = JOptionPane.showConfirmDialog(null, message, "SquareCastle", JOptionPane.OK_CANCEL_OPTION)
 
 
     setMap(map.getText(), 1)
-    setRound(rundenAnzahl.getText(), 1)
+    setRound(rundenAnzahl.getText(), 1, box, map.getText())
     setPlayer(player1.getText, player2.getText, 1)
   }
 
@@ -179,10 +196,12 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
     val map = new JTextField
     val rundenAnzahl = new JTextField
     val player1 = new JTextField
-    val message = Array(" Set mapsize (Bsp: ZxZ): ", " z", map, " ", " Set number of Rounds:", rundenAnzahl, " ", " Player:", player1)
+    val box = new JCheckBox
+    val message = Array(" Set mapsize (Bsp: ZxZ): ", " z", map, " ", " Play until the field is full?" , box, " Set number of Rounds:", rundenAnzahl, " ", " Player:", player1)
     val option: Int = JOptionPane.showConfirmDialog(null, message, "SquareCastle", JOptionPane.OK_CANCEL_OPTION)
+
     setMap(map.getText(), 2)
-    setRound(rundenAnzahl.getText, 2)
+    setRound(rundenAnzahl.getText, 2, box, map.getText())
     setPlayer(player1.getText, "", 2)
     supervisor.bot = new KI
     supervisor.botyesno =true
@@ -248,30 +267,40 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
     }
   }
 
-  def setRound(x: String, z: Int): Boolean = {
-    if(x == ""){
-        supervisor.runden = 4
-        return true
-    }
-    try {
-      if(x == ""){
+  def setRound(x: String, z: Int, box: JCheckBox, map: String): Boolean = {
+    if (box.isSelected){
+      val mapInt = map.toInt * map.toInt
+      println(mapInt)
+      if((mapInt % 2) == true) {
+        supervisor.runden = mapInt
+      } else {
+        supervisor.runden = mapInt - 1
+      }
+    } else {
+      if (x == "") {
         supervisor.runden = 4
         return true
       }
-      val int = x.toInt
-      supervisor.runden = int * 2
-      return true
-    } catch {
-      case e =>
-        println(x + " ist keine Zahl! Bitte gebe eine gültige Rundenzahl ein!")
-        if (z == 1) {
-          choosePVP
-          return false
-        } else if (z == 2) {
-          choosePVBOT
-          return false
+      try {
+        if (x == "") {
+          supervisor.runden = 4
+          return true
         }
-        return false
+        val int = x.toInt
+        supervisor.runden = int * 2
+        return true
+      } catch {
+        case e =>
+          println(x + " ist keine Zahl! Bitte gebe eine gültige Rundenzahl ein!")
+          if (z == 1) {
+            choosePVP
+            return false
+          } else if (z == 2) {
+            choosePVBOT
+            return false
+          }
+          return false
+      }
     }
   true
   }
