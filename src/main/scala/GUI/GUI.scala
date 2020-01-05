@@ -198,17 +198,28 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
     //var playerName = supervisor.playersturn.toString()
     //var playerPoints = supervisor.playersturn.Punkte.toString
     val playerLabel = new TextField("Players turn:")
-    val nameLabel = new TextField(supervisor.p1.toString())
-    val pp1 = new TextField(supervisor.p1.toString() + "'s Points:")
-    val pointsLabel = new TextField(supervisor.p1.getPoints().toString)
     val cardLabel = new Label()
     val remaining = new TextField("Remaining rounds:")
     val rundenLabel = new TextField("" + supervisor.runden / 2)
 
+    var nameLabel:TextField =_
+    var pp1:TextField =_
+    var pointsLabel:TextField =_
     var pp2:TextField=_
     var pointsLabel2: TextField =_
 
     val imgPanel = new JPanel()
+
+    if(supervisor.p1 != null) {
+      nameLabel = new TextField(supervisor.p1.toString())
+      pp1 = new TextField(supervisor.p1.toString() + "'s Points:")
+      pointsLabel = new TextField(supervisor.p1.getPoints().toString)
+    } else {
+      nameLabel = new TextField(supervisor.bot2.toString())
+      pp1 = new TextField(supervisor.bot2.toString() + "'s Points:")
+      pointsLabel = new TextField(supervisor.bot2.getPoints().toString)
+
+    }
 
     if(supervisor.p2 != null) {
       pp2 = new TextField(supervisor.p2.toString() + "'s Points:")
@@ -217,6 +228,7 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
       pp2 = new TextField(supervisor.bot.toString() + "'s Points:")
       pointsLabel2 = new TextField(supervisor.bot.getPoints().toString)
     }
+
     imgPanel.setAlignmentX(4)
     imgPanel.setAlignmentY(4)
 
@@ -318,27 +330,56 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
 
   }
 
-
-
+// runden werden nicht korrekt ausgegebe, methode generel müll
   def refreshRightPanel(): Unit = {
-
-    if (supervisor.bot == null && supervisor.playersturn!=null) {
+    if(supervisor.p1 != null)
       rightPanel.pointsLabel.text = supervisor.p1.getPoints() + " Points"
-      rightPanel.pointsLabel2.text = supervisor.p2.getPoints() + " Points"
-      rightPanel.nameLabel.text = "" + supervisor.playersturn
-      if (supervisor.runden % 2 == 0)
+    else
+      rightPanel.pointsLabel.text = supervisor.bot2.getPoints() + " Points"
+
+    if(supervisor.p2 != null)
+      rightPanel.pointsLabel.text = supervisor.p2.getPoints() + " Points"
+    else
+      rightPanel.pointsLabel.text = supervisor.bot.getPoints() + " Points"
+
+    if (supervisor.runden % 2 == 0)
       rightPanel.rundenLabel.text = "" + supervisor.runden / 2
-    } else {
-      rightPanel.pointsLabel2.text = supervisor.bot.getPoints() + " Points"
-      rightPanel.nameLabel.text = "" + supervisor.bot.toString()
-    }
-    if (supervisor.playersturn == supervisor.p1)
+
+    if (supervisor.state)
       rightPanel.nameLabel.foreground = java.awt.Color.BLUE.darker()
     else
       rightPanel.nameLabel.foreground = java.awt.Color.RED.darker()
 
   }
 
+
+
+  /*
+  def refreshRightPanel(): Unit = {
+    rightPanel.pointsLabel.text = supervisor.p1.getPoints() + " Points"
+
+    if (supervisor.bot == null && supervisor.playersturn != null) {
+      rightPanel.pointsLabel2.text = supervisor.p2.getPoints() + " Points"
+      rightPanel.nameLabel.text = "" + supervisor.playersturn
+      if (supervisor.runden % 2 == 0)
+        rightPanel.rundenLabel.text = "" + supervisor.runden / 2
+    } else {
+      rightPanel.pointsLabel2.text = supervisor.bot.getPoints() + " Points"
+      rightPanel.nameLabel.text = "" + supervisor.bot.toString()
+      rightPanel.nameLabel.text = "" + supervisor.playersturn
+      if (supervisor.runden % 2 == 0)
+        rightPanel.rundenLabel.text = "" + supervisor.runden / 2
+    }
+
+
+
+    if (supervisor.playersturn == supervisor.p1)
+      rightPanel.nameLabel.foreground = java.awt.Color.BLUE.darker()
+    else
+      rightPanel.nameLabel.foreground = java.awt.Color.RED.darker()
+
+  }
+*/
 
 
   menuBar = new MenuBar {
@@ -397,30 +438,8 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
       listenTo(guicell)
       contents += guicell
 
-
-
-
-
-
-
-
       //PUNKTE ZÄHLEN IMMER NUR DEN ERSTEN ZWEIG, DANACH IST DIE LIST SCHON VOLL MIT DEN ALTEN KARTEN UND ER ÜBERSPRINGT
       //geht zwar die wege, aber added die werte aus den verschiedenen richtungen nicht zusammen
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
   }
@@ -471,18 +490,14 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
 
   reactions += {
     case event: NewRoundEvent => //ALLES NEU MALEN(neue spieler gesetzt, neue Karte
-      println("NewRoundEvent")
       refreshRightPanel()
       draw()
     case event: InsertedEvent =>
-      println("InsertedEvent")
       draw()
 
     case event: DoesntFitEvent =>
-      println("PasstNichtEvent")
       doesntFit()
     case event: CardChangedEvent =>
-      println("CardChangedEvent")
       updateCard(event.newcard)
     case event: BotEvent =>
       //controller.befehl = ""

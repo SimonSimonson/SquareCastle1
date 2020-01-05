@@ -25,7 +25,6 @@ class Controller extends Publisher{
 
   def Calculatebot(bot: KI, card: Card,map:Map):Unit ={
     val data = bot.anlegen(map, card)
-    println("CALCULATING BOT MOVE")
     for (i <- 0 until data._3) {
       card.rotateRight()
     }
@@ -140,7 +139,8 @@ class Controller extends Publisher{
       } else if (array(0).equals("i")) {
         if (invoker.ExecuteCommand(new layCommand,array(1).toInt,array(2).toInt,card,map).get == 1) {
           val punkte = card.getAngelegte()
-          player.addPoints(punkte)
+          if(player != null)
+            player.addPoints(punkte)
           publish(new InsertedEvent)
           publish(new updateEvent("Spieler "+ player.toString()+ " erhält "+ punkte + " Punkte",0))
           //println("Spieler "+ player.toString()+ " erhält "+ punkte + " Punkte")
@@ -278,14 +278,15 @@ class Controller extends Publisher{
     }
     true
   }
-  def printpunkte(p1:Player, p2:Player, bot:KI): Boolean ={
-    if(p1 == null)
-      return false
-    publish(new updateEvent(Console.RED+"Punkte von Spieler " + p1.toString() +":  "+ p1.Punkte,0 ))
+  def printpunkte(p1:Player, p2:Player, bot:KI, bot2:KI): Boolean ={
+    if(p1 != null)
+      publish(new updateEvent(Console.RED+"Punkte von Spieler " + p1.toString() +":  "+ p1.Punkte,0 ))
+    else
+      publish(new updateEvent(Console.RED+"Punkte von BOT1 " + bot2.toString() +":  "+ bot2.Punkte,0 ))
     if(p2 != null)
       publish(new updateEvent(Console.RED+"Punkte von Spieler " + p2.toString() +":  "+ p2.Punkte,0 ))
     else
-      publish(new updateEvent(Console.RED+"Punkte von BOT " + bot.toString() +":  "+ bot.Punkte,0 ))
+      publish(new updateEvent(Console.RED+"Punkte von BOT2 " + bot.toString() +":  "+ bot.Punkte,0 ))
     true
   }
   def rotatePic(image:BufferedImage): BufferedImage={

@@ -15,6 +15,7 @@ class Controllertest extends WordSpec with Matchers{
     val p1 = new Player("Peter")
     val p2 = new Player("Gandalf")
     val bot = new KI()
+    val bot2 = new KI()
     val card = new Card(1,2,2,1)
     "change state" in {
       c.changeState(state) should be (true)
@@ -72,8 +73,8 @@ class Controllertest extends WordSpec with Matchers{
       c.print(map) should be (true)
       c.print(null) should be (false)
 
-      c.printpunkte(p1, p2, bot) should be (true)
-      c.printpunkte(null, p2, bot) should be (false)
+      c.printpunkte(p1, p2, bot, bot2) should be (true)
+      c.printpunkte(null, p2, bot, bot2) should be (false)
     }
 
   }}

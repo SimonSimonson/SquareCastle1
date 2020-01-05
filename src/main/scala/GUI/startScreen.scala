@@ -10,10 +10,11 @@ import java.awt.image.BufferedImage
 
 import javax.swing.{JFrame, JPanel, JScrollPane}
 import java.io.{File, FileInputStream}
+
 import javax.swing.JPanel
 import java.io.File
 
-import controller.states.{StateA, StateB}
+import controller.states.{BotvBot, StateA, StateB}
 import javax.imageio.ImageIO
 import javax.swing.ImageIcon
 import java.awt.Image
@@ -38,8 +39,8 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
   var startsign = false
 
 
-  val schriftIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ.png"))
-  //val schriftIMG = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/graphics/SQ.png"))
+  //val schriftIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ.png"))
+  val schriftIMG = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/graphics/SQ.png"))
   //var cells: Array[Array[GuiCell]] = Array.ofDim[GuiCell](supervisor.map.getmx(), supervisor.map.getmy())
 
   val schrift = new Panel {
@@ -48,8 +49,8 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
     }
   }
 
-  val castleIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ2.png"))
-  //val castleIMG = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/graphics/SQ2.png"))
+  //val castleIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ2.png"))
+  val castleIMG = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/graphics/SQ2.png"))
   //var cells: Array[Array[GuiCell]] = Array.ofDim[GuiCell](supervisor.map.getmx(), supervisor.map.getmy())
 
   val castle = new Panel {
@@ -205,13 +206,13 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
     setPlayer(player1.getText, "", 2)
     supervisor.bot = new KI
     supervisor.botyesno =true
-    controller.state = new StateB
+    //controller.changeState(new StateB)
   }
 
 
   def setMap(x: String, z: Int): Boolean = {
     try {
-      if (x == "") {
+      if (x.isBlank) {
         supervisor.map = new Map(10, 10)
         return true
       }
@@ -220,7 +221,7 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
       true
     } catch {
       case e =>
-        println(x + " ist keine Zahl! Bitte gebe eine gültige Mapgrösse ein!")
+        println(x + " ist keine Zahl! Bitte gib eine gültige Mapgrösse ein!")
         if (z == 1) {
           choosePVP
           return false
@@ -232,14 +233,14 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
     }
   }
   //var cells: Array[Array[GuiCell]] = Array.ofDim[GuiCell](supervisor.map.getmx(), supervisor.map.getmy())
-
+// z ausbauen super hässlich
   def setPlayer(player: String, player2: String, z: Int): Boolean = {
-    if (player == "" && player2 == "" && z == 1) {
+    if (player.isBlank && player2.isBlank && z == 1) {
       supervisor.p1 = new Player("Kurt")
       supervisor.p2 = new Player("Franz")
-      return false
+      return true
     }
-    if (player == "" && player2 == "" && z == 2) {
+    if (player.isBlank && player2.isBlank && z == 2) {
       supervisor.p1 = new Player("Klaus")
       supervisor.bot = new KI()
       return true
@@ -253,14 +254,19 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
       startsign = true
       return true
     } else if (z == 2) {
-      supervisor.p1 = new Player(player)
+      if(player  == "bot") {
+        supervisor.bot2 = new KI()
+        controller.changeState(new BotvBot)
+      } else {
+        supervisor.p1 = new Player(player)
+        controller.changeState(new StateB)
+
+      }
       supervisor.bot = new KI()
       val gui = new GUI(supervisor, controller)
       //supervisor.newRound()
       gui.updateCard(supervisor.card)
-      controller.changeState(new StateB)
       startsign = true
-
       return true
     } else {
       return false
@@ -269,29 +275,19 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
 
   def setRound(x: String, z: Int, box: JCheckBox, map: String): Boolean = {
     if (box.isSelected){
-      val mapInt = map.toInt * map.toInt
-      println(mapInt)
-      if((mapInt % 2) == true) {
-        supervisor.runden = mapInt
-      } else {
-        supervisor.runden = mapInt - 1
-      }
+      //im supervisor eine methode schreiben die sagt ob voll ist, runden auf maximalen intwert setzen (abfragen ob runden kleiner 0 sind oder spielfeld voll
+      supervisor.runden = map.toInt * map.toInt
     } else {
-      if (x == "") {
+      if (x.isBlank) {
         supervisor.runden = 4
         return true
       }
       try {
-        if (x == "") {
-          supervisor.runden = 4
-          return true
-        }
         val int = x.toInt
         supervisor.runden = int * 2
         return true
       } catch {
-        case e =>
-          println(x + " ist keine Zahl! Bitte gebe eine gültige Rundenzahl ein!")
+        case e => println(x + " ist keine Zahl! Bitte gb eine gültige Rundenzahl ein!")
           if (z == 1) {
             choosePVP
             return false
@@ -299,7 +295,6 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
             choosePVBOT
             return false
           }
-          return false
       }
     }
   true

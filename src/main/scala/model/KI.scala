@@ -67,9 +67,7 @@ case class KI() {
     var opt = List(all(0).flatten.max, all(1).flatten.max, all(2).flatten.max, all(3).flatten.max)
     //println("LISTE DER PUNKTE : " + opt)
     var tmp = opt.sorted
-    println("LISTE DER PUNKTE : " + tmp)
     var rolls = opt.indexOf(tmp(3))
-    println("ANZAHL ROLLEN IST " + rolls)
     if(opt(0)==0 && opt(3)==0)
       return (-1, -1, -1)
 

@@ -24,8 +24,8 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
   background = java.awt.Color.WHITE
   var myCard: Card = _
   var myPicture: BufferedImage =_
-  val path = "/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/cardIMG/"
-  //val path =  "/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/"
+  //val path = "/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/cardIMG/"
+  val path =  "/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/"
 
   val label: Label =
     new Label {
@@ -43,7 +43,8 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
     //listenTo(controller)
 
     reactions += {
-      case MouseClicked(src, pt, mod, clicks, pops) => println("X:   "+ x + " |Y:   "+y)
+      case MouseClicked(src, pt, mod, clicks, pops) =>
+        //println("X:   "+ x + " |Y:   "+y)
         controller.befehl = ("i " + x + " " + y)
 
         if(supervisor.newRoundactive() != 2){
@@ -105,7 +106,7 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
       }
 
     }
-    println("kein passendes Bild")
+    //println("kein passendes Bild")
   }
 
   def findImage(x: (Int, Int, Int, Int)): BufferedImage = {

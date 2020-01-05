@@ -41,7 +41,7 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
           return 1
         for(y <- 0 to 3 if roads(y) != null && !list.contains(roads(y))) {
           //list.add(roads(y))
-          println("Untersuche Object " + this.toString + "  Seite "+ y)
+          //println("Untersuche Object " + this.toString + "  Seite "+ y)
            sum += roads(y).getAngelegteR(kind, l, this, list)
 
         }
@@ -51,7 +51,7 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
           return 1
         for(y <- 0 to 3 if castle(y) != null && !list.contains(castle(y))) {
           //list.add(castle(y))
-          println("Untersuche Object " + this.toString + "  Seite "+ y)
+          //println("Untersuche Object " + this.toString + "  Seite "+ y)
           sum += castle(y).getAngelegteR(kind, l, this, list)
         }
       }
@@ -63,15 +63,16 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
     var sum = 0
     //println("Wege angelegt: "+ getAngelegteR(1, 0, this) + " Burgen angelegt: " + getAngelegteR(2, 0,this))
     var wege = getAngelegteR(1, 0, null, new util.ArrayList[Card]())
-    println("PUNKTE FÜR WEGE : " + wege)
 
-    if(roads.isEmpty)
+    if(wege == 1)
       wege = 0
+    //println("PUNKTE FÜR WEGE : " + wege)
+
 
     var burgen = getAngelegteR(2, 0,null, new util.ArrayList[Card]())
-    println("PUNKTE FÜR BURGEN : " + burgen)
-    if(castle.isEmpty)
+    if(burgen == 1)
       burgen = 0
+    //println("PUNKTE FÜR BURGEN : " + burgen)
 
     wege + burgen*2
   }

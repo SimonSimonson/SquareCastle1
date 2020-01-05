@@ -5,7 +5,6 @@ import supervisor.supervisor
 
 object main {
   def main(args: Array[String]): Unit = {
-
     val Controller = new Controller
     val supervisor = new supervisor(Controller)
 
