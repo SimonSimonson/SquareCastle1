@@ -111,15 +111,11 @@ case class TUI(controller:Controller, supervisor: supervisor) extends Reactor {
 
 
   def newGame(): Int= {
-
     val x = input
-    if(x =="")
-      return 0
     if (x.equals("Ja")|| x.equals("ja") || x.equals("JA") || x.equals("j") || x.equals("J")) {
       return 1
     }
-
-    1
+    0
   }
 
 

@@ -129,7 +129,6 @@ class Map(mx: Int, my: Int){
       if (field(i)(j) == null)
         return false
     }
-    println("MAP IST VOLL IHR HUREN")
     true
   }
 

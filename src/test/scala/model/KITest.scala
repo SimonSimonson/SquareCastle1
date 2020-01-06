@@ -30,10 +30,10 @@ class KITest extends WordSpec with Matchers {
     val karte1 = Card(0,2,1,2)
     val karte2 = Card(0,1,2,1)
     val m2 = new Map(2,2)
-    bot1.anlegen(m2,karte1) should be (0,0,0)
+    bot1.anlegen(m2,karte1) should be (-1,-1,-1)
 }
   "when toString" in{
-    bot1.toString() should be ("01001101")
+    bot1.toString() should be ("BOT")
 
   }
 }}
