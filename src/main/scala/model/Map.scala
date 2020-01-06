@@ -14,7 +14,7 @@ class Map(mx: Int, my: Int){
     my
   }
 //prüft die Karten, legt aber noch nicht an
-  def pruefen(card : Card, x:Int , y : Int): Boolean ={
+  def check(card : Card, x:Int, y : Int): Boolean ={
     if(x+1 < mx && field(x+1)(y) != null ) {
       if(!card.passt(field(x+1)(y),1,3))
         return false
@@ -45,7 +45,7 @@ class Map(mx: Int, my: Int){
   }
 
   //gibt die Punkte an der Stelle ohne wirklich anzulegen(für den bot)
-  def getpunkteohneanlegen(card: Card,x:Int, y:Int): Int ={
+  def getpointswithoutputting(card: Card, x:Int, y:Int): Int ={
     if(Setcard(card,x,y).get != -1){
 
       val points = card.getAngelegte()
@@ -65,9 +65,10 @@ class Map(mx: Int, my: Int){
     var a = r.nextInt(field(0).length)
 
     var b = r.nextInt(field(1).length)
-    while(Setcard(card,a,b).get == -1)
+    while(Setcard(card,a,b).get == -1) {
       a = r.nextInt(field(2).length)
       b = r.nextInt(field(1).length)
+    }
     return true
   }
 
@@ -85,7 +86,7 @@ class Map(mx: Int, my: Int){
 
 
     //methode prüfen aufrufen!
-    if(pruefen(card, x, y)){
+    if(check(card, x, y)){
       field(x)(y) = card
       if(y-1 >= 0)
         card.anlegen(0,field(x)(y-1))

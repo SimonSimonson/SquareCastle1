@@ -1,5 +1,8 @@
 package controller
-import controller.states.StateA
+import java.io.File
+
+import controller.states.PvP
+import javax.imageio.ImageIO
 import javax.management.ObjectInstance
 import main.scala.model.{Card, Map, Player}
 import main.scala.model.KI
@@ -10,7 +13,7 @@ import scala.Some
 class Controllertest extends WordSpec with Matchers{
   "A Controller" when { "new" should {
     val c = new Controller
-    val state = new StateA
+    val state = new PvP
     val map = new Map(4,4)
     val p1 = new Player("Peter")
     val p2 = new Player("Gandalf")
@@ -28,24 +31,24 @@ class Controllertest extends WordSpec with Matchers{
      c.RandomCard() should not be (null)
     }
     "when card is shown" in {
-      c.Kartezeigen(p1,card) should be (true)
-      c.Kartezeigen(p1,null) should be (false)
+      c.showCard(p1,card) should be (true)
+      c.showCard(p1,null) should be (false)
     }
     "when Options for the Player are called" in {
       c.befehl = "r"
-      c.Optionen(card,map,p1) should be (2)
+      c.Options(card,map,p1) should be (2)
       c.befehl = "wait"
-      c.Optionen(card,map,p1) should be (2)
+      c.Options(card,map,p1) should be (2)
       c.befehl = "l"
-      c.Optionen(card,map,p1) should be (2)
+      c.Options(card,map,p1) should be (2)
       c.befehl = "i 0 0"
-      c.Optionen(card,map,p1) should be (1)
+      c.Options(card,map,p1) should be (1)
       c.befehl = "undo"
-      c.Optionen(card,map,p1) should be (2)
+      c.Options(card,map,p1) should be (2)
       c.befehl = "tipp"
-      c.Optionen(card,map,p1) should be (2)
+      c.Options(card,map,p1) should be (2)
       c.befehl = "x"
-      c.Optionen(card,map,p1) should be (2)
+      c.Options(card,map,p1) should be (2)
     }
     "when getPoints" in {
       p1.addPoints(3)
@@ -53,7 +56,7 @@ class Controllertest extends WordSpec with Matchers{
       c.getPoints(p1,p2) should be (3,2)
     }
     "when tipp is called" in {
-      //c.tipp(card, map) should be (true)
+      c.tipp(card, null) should not be (true)
       //c.tipp(card, null) should not be (true)
     }
     "when print of a card is called" in{
@@ -75,6 +78,15 @@ class Controllertest extends WordSpec with Matchers{
 
       c.printpunkte(p1, p2, bot, bot2) should be (true)
       c.printpunkte(null, p2, bot, bot2) should be (false)
+    }
+    "when rotate is called" in {
+      c.rotatePic(null) should not be (true)
+      c.rotatePic(1,null) should not be (true)
+
+      var tmp = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/0000.png"))
+      c.rotatePic(tmp) should not be (null)
+      c.rotatePic(2, tmp) should not be (null)
+
     }
 
   }}

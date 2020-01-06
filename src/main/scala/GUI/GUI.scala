@@ -15,6 +15,7 @@ import javax.swing.JTextField
 import supervisor.supervisor
 import main.scala.model.{Card, KI, Map, Player}
 
+import scala.swing.Swing.LineBorder
 import scala.swing.event.ButtonClicked
 
 class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
@@ -200,7 +201,7 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
     val playerLabel = new TextField("Players turn:")
     val cardLabel = new Label()
     val remaining = new TextField("Remaining rounds:")
-    val rundenLabel = new TextField("" + supervisor.runden / 2)
+    val rundenLabel = new TextField("" + supervisor.rounds / 2)
 
     var nameLabel:TextField =_
     var pp1:TextField =_
@@ -332,23 +333,35 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
 
 // runden werden nicht korrekt ausgegebe, methode generel müll
   def refreshRightPanel(): Unit = {
+
     if(supervisor.p1 != null)
-      rightPanel.pointsLabel.text = supervisor.p1.getPoints() + " Points"
+      rightPanel.pointsLabel.text = supervisor.p1.getPoints()+ " "
     else
-      rightPanel.pointsLabel.text = supervisor.bot2.getPoints() + " Points"
+      rightPanel.pointsLabel.text = supervisor.bot2.getPoints()+ " "
 
     if(supervisor.p2 != null)
-      rightPanel.pointsLabel.text = supervisor.p2.getPoints() + " Points"
+      rightPanel.pointsLabel2.text = supervisor.p2.getPoints() + " "
     else
-      rightPanel.pointsLabel.text = supervisor.bot.getPoints() + " Points"
+      rightPanel.pointsLabel2.text = supervisor.bot.getPoints()+ " "
 
-    if (supervisor.runden % 2 == 0)
-      rightPanel.rundenLabel.text = "" + supervisor.runden / 2
 
-    if (supervisor.state)
+      rightPanel.rundenLabel.text = "" + (supervisor.rounds / 2 + 1)
+
+    if (supervisor.state) {
       rightPanel.nameLabel.foreground = java.awt.Color.BLUE.darker()
-    else
+      if(supervisor.p1 != null)
+        rightPanel.nameLabel.text = supervisor.p1.toString()
+      else
+        rightPanel.nameLabel.text = "BOT"
+    }
+    else {
       rightPanel.nameLabel.foreground = java.awt.Color.RED.darker()
+      if(supervisor.p2 != null)
+        rightPanel.nameLabel.text = supervisor.p2.toString()
+      else
+        rightPanel.nameLabel.text = "BOT"
+
+    }
 
   }
 
@@ -448,6 +461,7 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
 
 
   def draw(): Unit = {
+    drawhidden()
     for {
       line <- cells.indices
       row <- cells.indices
@@ -461,7 +475,6 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
       line <- cells.indices
       row <- cells.indices
     } cells(line)(row).setCard(supervisor.map.field(row)(line))
-    draw()
   }
 
 
@@ -484,6 +497,8 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
   }
   def highlightCell(x:Int,y:Int): Unit ={
     cells(x)(y).background = java.awt.Color.YELLOW
+    cells(x)(y).border = LineBorder(java.awt.Color.YELLOW, 1)
+
     cells(x)(y).redrawCell
   }
 
@@ -494,7 +509,6 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
       draw()
     case event: InsertedEvent =>
       draw()
-
     case event: DoesntFitEvent =>
       doesntFit()
     case event: CardChangedEvent =>
@@ -503,7 +517,7 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
       //controller.befehl = ""
       supervisor.newRoundactive()
       supervisor.otherplayer()
-      drawhidden()
+      draw
       supervisor.newRound()
       //supervisor.newRound()
 

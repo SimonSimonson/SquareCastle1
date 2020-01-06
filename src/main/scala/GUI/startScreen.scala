@@ -14,7 +14,7 @@ import java.io.{File, FileInputStream}
 import javax.swing.JPanel
 import java.io.File
 
-import controller.states.{BotvBot, StateA, StateB}
+import controller.states.{BotvBot, PvP, PvBot}
 import javax.imageio.ImageIO
 import javax.swing.ImageIcon
 import java.awt.Image
@@ -113,7 +113,7 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
     preferredSize = new Dimension(800, 400)
     background = java.awt.Color.WHITE
     val pvp = new Button("PvP")
-    val pvbot = new Button("PvBot")
+    val pvbot = new Button("PvE")
 
     pvp.background = java.awt.Color.GRAY.brighter().brighter()
     pvp.preferredSize = new Dimension(200, 150)
@@ -249,23 +249,29 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
       supervisor.p1 = new Player(player)
       supervisor.p2 = new Player(player2)
       val gui = new GUI(supervisor, controller)
+      supervisor.newRound()
+
+
       gui.updateCard(supervisor.card)
-      controller.changeState(new StateA)
+      controller.changeState(new PvP)
       startsign = true
       return true
     } else if (z == 2) {
+
       if(player  == "bot") {
         supervisor.bot2 = new KI()
         controller.changeState(new BotvBot)
       } else {
         supervisor.p1 = new Player(player)
-        controller.changeState(new StateB)
-
+        controller.changeState(new PvBot)
       }
       supervisor.bot = new KI()
       val gui = new GUI(supervisor, controller)
+
       //supervisor.newRound()
+      supervisor.newRound()
       gui.updateCard(supervisor.card)
+
       startsign = true
       return true
     } else {
@@ -276,15 +282,15 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
   def setRound(x: String, z: Int, box: JCheckBox, map: String): Boolean = {
     if (box.isSelected){
       //im supervisor eine methode schreiben die sagt ob voll ist, runden auf maximalen intwert setzen (abfragen ob runden kleiner 0 sind oder spielfeld voll
-      supervisor.runden = map.toInt * map.toInt
+      supervisor.rounds = map.toInt * map.toInt
     } else {
       if (x.isBlank) {
-        supervisor.runden = 4
+        supervisor.rounds = 4
         return true
       }
       try {
         val int = x.toInt
-        supervisor.runden = int * 2
+        supervisor.rounds = int * 2
         return true
       } catch {
         case e => println(x + " ist keine Zahl! Bitte gb eine gültige Rundenzahl ein!")

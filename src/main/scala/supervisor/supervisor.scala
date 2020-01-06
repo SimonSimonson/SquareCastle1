@@ -14,38 +14,39 @@ class supervisor(controller: Controller) extends Publisher{
   var bot:KI = _
   var bot2:KI =_
   var map:Map = _
-  var runden = 0
+  var rounds = 0
   var botyesno = false
   var card:Card =_
   var playersturn:Player =_
   var state:Boolean =_
   //state wechselt zwischen spieler1 und 2 / spieler1 und bot
 
-  def otherplayer():Unit={
+  def otherplayer():Boolean={
     state = !state
+    state
   }
 
 
   def newRound(): Int = {
-    println("ANZAHL RUNDEN " + runden)
-    if (runden <= 1) {
+    println("ANZAHL RUNDEN " + rounds)
+    if (rounds <= 0) {
       publish(new GameOverEvent)
       return -1
     }
-    runden = runden - 1
-    controller.print(map)
+    rounds = rounds - 1
+    //controller.print(map)
     publish(new InsertedEvent)
     if (state) {
-      card = controller.Kartezeigen(p1)
+      card = controller.showCard(p1)
       playersturn = p1
     } else {
-      card = controller.Kartezeigen(p2)
+      card = controller.showCard(p2)
       playersturn = p2
     }
     publish(new NewRoundEvent)
     publish(new CardChangedEvent(card))
     if(p2 == null && !state || p1 == null) {
-      publish(new BotEvent) //man muss nur nach dem spielerzug einmal Newround sagen, dann läuft botzug automatisch ab
+      publish(new BotEvent)
     }
     return 1
   }
@@ -56,7 +57,9 @@ class supervisor(controller: Controller) extends Publisher{
     //println(this.card)
     return i
   }
-  def showPoints(): Unit ={
+  def showPoints(): Boolean ={
+    if(p1 == null && p2 == null && bot == null && bot2 == null)
+      false
     controller.printpunkte(p1,p2,bot,bot2)
   }
 
@@ -67,7 +70,7 @@ class supervisor(controller: Controller) extends Publisher{
     var a = 0
     var name2 = ""
     if(p1 != null) {
-      a = p1.Punkte
+      a = p1.Points
       name2 = p1.toString()
     }
     else {
@@ -76,7 +79,7 @@ class supervisor(controller: Controller) extends Publisher{
       name2 = bot2.toString()
     }
     if(p2 != null) {
-      b = p2.Punkte
+      b = p2.Points
       name = p2.toString()
     }
     else {
@@ -85,9 +88,9 @@ class supervisor(controller: Controller) extends Publisher{
       name = bot.toString()
     }
     if(a > b)
-      return s + "SPIELER "+ name2+" GEWINNT"
+      return s + name2+" GEWINNT"
     else if(a < b )
-      return s + "SPIELER " + name + " GEWINNT"
+      return s + name + " GEWINNT"
     else{
       return s + "UNENTSCHIEDEN"
 

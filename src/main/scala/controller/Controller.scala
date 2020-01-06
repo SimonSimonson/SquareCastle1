@@ -51,16 +51,16 @@ class Controller extends Publisher{
 
     return Card(s1,s2,s3,s4)
   }
-  def Kartezeigen(player:Player): Card ={
+  def showCard(player:Player): Card ={
     val card = RandomCard()
-    if(Kartezeigen(player,card)) {
+    if(showCard(player,card)) {
       //publish(new NewRoundEvent)
       return card
     }
     else
       return null
   }
-  def Kartezeigen(player: Player, card: Card): Boolean ={
+  def showCard(player: Player, card: Card): Boolean ={
     if(card == null)
       return false
     if(player == null) {
@@ -82,39 +82,9 @@ class Controller extends Publisher{
       //notifyObservers(Console.RED + "Spieler " + player.toString() + " ist an der Reihe",0)
     //notifyObservers(Console.WHITE,0)
   }
-  /*
-  def selectCard(player:Player): Card ={
-    val card1 = RandomCard()
-    val card2 = RandomCard()
-    val card3 = RandomCard()
-
-    notifyObservers(Console.RED + "Spieler " + player.toString() + " ist an der Reihe",0)
-    notifyObservers(Console.WHITE,0)
-
-    printcard(card1)
-    printcard(card2)
-    printcard(card3)
-
-    notifyObservers(Console.RED + "Wähle eine Karte aus (Bsp.: Gib für die erste Karte eine 1 ein!", 0)
-    val x = scala.io.StdIn.readLine().toString
-
-    x match {
-      case "1" =>
-        printcard(card1)
-        return card1
-      case "2" =>
-        printcard(card2)
-        return card2
-      case "3" =>
-        printcard(card3)
-        return card3
-    }
-
-  }
-  */
 
 //return 1: normaler fall, return -1: fehler fall,  return 2 : spieler darf nocheinmal
-  def Optionen(card: Card, map: Map, player: Player): Int = {
+  def Options(card: Card, map: Map, player: Player): Int = {
 
       //auslagern durch neuen parameter der String
       val x = befehl
@@ -189,7 +159,7 @@ class Controller extends Publisher{
           if(map.field(ix)(iy) != null)
             ar(ix)(iy)= 0
           else{
-            if(map.pruefen(card,ix,iy))
+            if(map.check(card,ix,iy))
               ar(ix)(iy) = 1
             else
               ar(ix)(iy) = 0
@@ -280,16 +250,18 @@ class Controller extends Publisher{
   }
   def printpunkte(p1:Player, p2:Player, bot:KI, bot2:KI): Boolean ={
     if(p1 != null)
-      publish(new updateEvent(Console.RED+"Punkte von Spieler " + p1.toString() +":  "+ p1.Punkte,0 ))
+      publish(new updateEvent(Console.RED+"Punkte von Spieler " + p1.toString() +":  "+ p1.Points,0 ))
     else
       publish(new updateEvent(Console.RED+"Punkte von BOT1 " + bot2.toString() +":  "+ bot2.Punkte,0 ))
     if(p2 != null)
-      publish(new updateEvent(Console.RED+"Punkte von Spieler " + p2.toString() +":  "+ p2.Punkte,0 ))
+      publish(new updateEvent(Console.RED+"Punkte von Spieler " + p2.toString() +":  "+ p2.Points,0 ))
     else
       publish(new updateEvent(Console.RED+"Punkte von BOT2 " + bot.toString() +":  "+ bot.Punkte,0 ))
     true
   }
   def rotatePic(image:BufferedImage): BufferedImage={
+    if(image == null)
+      return null
     ///println("DREHE BILD")
     val transform = new AffineTransform
     transform.rotate(1.5708, image.getWidth / 2, image.getHeight / 2)
@@ -298,11 +270,12 @@ class Controller extends Publisher{
   }
 
   def rotatePic(rot: Int, image: BufferedImage): BufferedImage = {
+    if(image == null)
+      return null
     var tmp: BufferedImage = null
     tmp = image
     var count = rot
     var x = rot
-
     if(rot < 0) {
       x = (rot * -1) % 4
       x = 4-x

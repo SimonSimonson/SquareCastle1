@@ -1,5 +1,5 @@
 package main.scala.TUI
-import controller.states.{StateA, StateB}
+import controller.states.{PvP, PvBot}
 import main.scala.util.{Observable, Observer}
 import controller.{Controller, updateEvent}
 import main.scala.model.Player
@@ -96,8 +96,8 @@ case class TUI(controller:Controller, supervisor: supervisor) extends Reactor {
     //supervisor.map = new Map(10,10)
     //supervisor.p1 = new Player("Peter")
     //supervisor.p2 = new Player("Kurt")
-    controller.changeState(new StateB)
-    supervisor.runden = 4
+    controller.changeState(new PvBot)
+    supervisor.rounds = 4
   }
 
 
@@ -164,7 +164,7 @@ case class TUI(controller:Controller, supervisor: supervisor) extends Reactor {
           return -1
         }
       }
-      supervisor.runden = anzInt * 2
+      supervisor.rounds = anzInt * 2
       x.toInt
     } else {
       var max = (x * y) / 2

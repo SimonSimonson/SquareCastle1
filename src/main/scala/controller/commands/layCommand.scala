@@ -14,11 +14,13 @@ case class layCommand() extends Command{
     y = ypos
     return map.Setcard(card,x,y)
   }
-
-  override def undo(card: Card,map: Map): Unit ={
+  override def undo(card: Card,map: Map): Boolean ={
+    if(map == null || card == null)
+      false
     var deleted = map.field(x)(y)
     map.field(x)(y) = null
     card.cleanall()
     map.cleanaround(x,y)
+    true
   }
 }

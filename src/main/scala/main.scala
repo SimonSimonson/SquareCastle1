@@ -60,9 +60,10 @@ object main {
         tui.update(print, 0)
         return
       }*/
-      supervisor.newRound()
       //supervisor.showPoints()
       s = scala.io.StdIn.readLine().toString
+      supervisor.newRound()
+
       tui.input(s)
       while(supervisor.newRoundactive()==2){
         s = scala.io.StdIn.readLine().toString
