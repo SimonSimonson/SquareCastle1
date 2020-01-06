@@ -8,9 +8,10 @@ class playerFactoryTest extends WordSpec with Matchers{
 
     val fac = new playerFactory
     "when create is called" in {
-      fac.create("Player", "Peter") should not be (null)
-      fac.create("a", "") should not be (null)
-      fac.create("Player", "Peter") should be (new Player("Peter"))
+      fac.create("a", "")._1 should be (null)
+      fac.create("a", "")._2 should not be (null)
+      fac.create("Player", "Peter")._2 should be (null)
+      fac.create("Player", "Peter")._1 should not be (null)
 
     }
   }}

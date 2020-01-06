@@ -285,7 +285,7 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
       //im supervisor eine methode schreiben die sagt ob voll ist, runden auf maximalen intwert setzen (abfragen ob runden kleiner 0 sind oder spielfeld voll
       supervisor.rounds = 1000//map.toInt * map.toInt
     } else {
-      if (x.isBlank) {
+      if (x.equals("")) {
         supervisor.rounds = 4
         return true
       }
