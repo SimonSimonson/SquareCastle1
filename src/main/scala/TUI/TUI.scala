@@ -22,7 +22,6 @@ case class TUI(controller:Controller, supervisor: supervisor) extends Reactor {
         print(event.word)
   }
   //false: Ausgabe, true: Reinschreiben der Antwort
-  //es fehlen noch die drehungen, die sich grade unendlich drehen
   def settings(int: Int, mode : Boolean) : Int ={
     int match {
 
@@ -82,12 +81,11 @@ case class TUI(controller:Controller, supervisor: supervisor) extends Reactor {
       case 5 => {
         if (!mode) {
           prettyprint(Console.RED + "Gib deinen Namen ein Spieler " + 2)
-          1
         } else {
           val player2 = setPlayer(2)
           supervisor.p2 = player2
-          1
         }
+        return 1
       }
       0
     }
@@ -104,9 +102,7 @@ case class TUI(controller:Controller, supervisor: supervisor) extends Reactor {
   def setPlayer(spielernr: Int): (Player) = {
     val f = new playerFactory
     val player = f.create("Player", input)
-
     return (player._1)
-
   }
 
 
@@ -118,15 +114,13 @@ case class TUI(controller:Controller, supervisor: supervisor) extends Reactor {
     0
   }
 
-
   def botornot(): KI = {
     val y = input
     if (y.equals("Ja") || y.equals("ja") || y.equals("JA") || y.equals("j") || y.equals("J")) {
       return new KI()
     }
     null
-    }
-
+  }
 
   var x = 0
   var y = 0
@@ -150,9 +144,13 @@ case class TUI(controller:Controller, supervisor: supervisor) extends Reactor {
 
   def Runden(): Int = {
     val anzahl = input
-    val anzInt = anzahl.toInt
-    if(anzahl==null)
-      return -1
+    var anzInt = 0
+    try{
+      anzInt = anzahl.toInt
+    }catch{
+      case e => return -1
+    }
+
     if (anzInt <= (x * y) / 2) {
       for (c <- anzahl) {
         if (!c.isDigit) {

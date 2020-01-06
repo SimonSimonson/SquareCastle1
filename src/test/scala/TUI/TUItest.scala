@@ -1,9 +1,5 @@
 package test.scala.TUI
-import main.scala.util.{Observable, Observer}
 import controller.Controller
-import main.scala.model.Player
-import main.scala.model.KI
-import main.scala.model.Map
 import main.scala.TUI.TUI
 import org.scalatest.{Matchers, WordSpec}
 import supervisor.supervisor
@@ -16,15 +12,6 @@ class TUItest extends WordSpec with Matchers {
       val controller = new Controller
       val supervisor = new supervisor(controller)
       val tui = new TUI(controller, supervisor)
-      /*
-      "when not start" in {
-        tui.start(0, new KI , new Map(3,3),-1, new Player("Peter"), new Player("Kurt")) should be (-1)
-      }
-      "when no Bot" in {
-        tui.start(0, null , new Map(3,3),-1, new Player("Peter"), new Player("Kurt")) should be (-1)
-      }
-       */
-
       "when newgame" in {
         tui.input("Ja")
         tui.newGame() should be (1)
@@ -35,6 +22,33 @@ class TUItest extends WordSpec with Matchers {
         //val b = new KI
         tui.input("nein")
         tui.botornot() should be (null)
+      }
+      "when settings is called " in {
+        tui.settings(0, false) should be (1)
+        tui.settings(0, true) should be (-1)
+
+        tui.settings(1, false) should be (1)
+        tui.input("4x4")
+        tui.settings(1, true) should be (1)
+
+        tui.settings(2, false) should be (1)
+        tui.input("4")
+        tui.settings(2, true) should be (1)
+        tui.input("a")
+        tui.settings(2, true) should be (-1)
+
+        tui.settings(3, false) should be (1)
+        tui.settings(3, true) should be (1)
+
+        tui.settings(4, false) should be (1)
+        tui.input("Ja")
+        tui.settings(4, true) should be (302)
+        tui.input("Nein")
+        tui.settings(4, true) should be (300)
+
+        tui.settings(5, false) should be (1)
+        tui.settings(5, true) should be (1)
+
       }
     }
   }
