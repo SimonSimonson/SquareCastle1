@@ -281,8 +281,9 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
 
   def setRound(x: String, z: Int, box: JCheckBox, map: String): Boolean = {
     if (box.isSelected){
+      //rounds auf maximum setzen
       //im supervisor eine methode schreiben die sagt ob voll ist, runden auf maximalen intwert setzen (abfragen ob runden kleiner 0 sind oder spielfeld voll
-      supervisor.rounds = map.toInt * map.toInt
+      supervisor.rounds = 1000//map.toInt * map.toInt
     } else {
       if (x.isBlank) {
         supervisor.rounds = 4

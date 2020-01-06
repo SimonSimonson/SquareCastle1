@@ -121,6 +121,16 @@ class Map(mx: Int, my: Int){
       field(x+1)(y).cleansides(2)
     }
   }
-
+  def isFull(): Boolean={
+    for {
+      i <- field.indices
+      j <- field.indices
+    } {
+      if (field(i)(j) == null)
+        return false
+    }
+    println("MAP IST VOLL IHR HUREN")
+    true
+  }
 
 }

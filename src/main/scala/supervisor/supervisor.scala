@@ -55,6 +55,10 @@ class supervisor(controller: Controller) extends Publisher{
     //controller.print(map)
     //publish(new NewRoundEvent)
     //println(this.card)
+    if(map.isFull()){
+      publish(new InsertedEvent)
+      publish(new GameOverEvent)
+    }
     return i
   }
   def showPoints(): Boolean ={
