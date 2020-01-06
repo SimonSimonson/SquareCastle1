@@ -56,7 +56,7 @@ class Controllertest extends WordSpec with Matchers{
       c.getPoints(p1,p2) should be (3,2)
     }
     "when tipp is called" in {
-      c.tipp(card, null) should not be (true)
+      c.tipp(card, null) should be (null)
       //c.tipp(card, null) should not be (true)
     }
     "when print of a card is called" in{
@@ -77,7 +77,7 @@ class Controllertest extends WordSpec with Matchers{
       c.print(null) should be (false)
 
       c.printpunkte(p1, p2, bot, bot2) should be (true)
-      c.printpunkte(null, p2, bot, bot2) should be (false)
+      c.printpunkte(null, p2, bot, bot2) should be (true)
     }
     "when rotate is called" in {
       c.rotatePic(null) should not be (true)

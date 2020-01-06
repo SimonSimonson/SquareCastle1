@@ -12,11 +12,14 @@ case class layCommand() extends Command{
   override def execute(xpos:Int, ypos:Int,card: Card,map: Map): Try[Int] ={
     x = xpos
     y = ypos
+    //für test
+    if(x < 0 || y < 0)
+      return Success[Int](-2)
     return map.Setcard(card,x,y)
   }
   override def undo(card: Card,map: Map): Boolean ={
     if(map == null || card == null)
-      false
+      return false
     var deleted = map.field(x)(y)
     map.field(x)(y) = null
     card.cleanall()

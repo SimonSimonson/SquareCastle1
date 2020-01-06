@@ -42,7 +42,7 @@ class SupervisorTest extends WordSpec with Matchers{
     "when showPoints is called" in {
       val supersinnlos = new supervisor(c)
       supersinnlos.showPoints() should be (false)
-      s.otherplayer() should be (true)
+      s.otherplayer() should be (false)
     }
     "when endgame is called" in {
       s.p1.addPoints(5)

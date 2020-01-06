@@ -149,9 +149,10 @@ class Controller extends Publisher{
   }
 
   def tipp(card: Card, map: Map): Array[Array[Int]] = {
-    var ar:Array[Array[Int]] = Array.ofDim[Int](map.getmx(),map.getmy())
     if(map == null || card == null)
-      false
+      return null
+    var ar:Array[Array[Int]] = Array.ofDim[Int](map.getmx(),map.getmy())
+
     println(Console.WHITE)
     for (iy <- 0 until map.getmy()) {
       for (zeile <- 0 to 5) {

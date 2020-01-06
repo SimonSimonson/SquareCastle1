@@ -63,7 +63,7 @@ class supervisor(controller: Controller) extends Publisher{
   }
   def showPoints(): Boolean ={
     if(p1 == null && p2 == null && bot == null && bot2 == null)
-      false
+      return false
     controller.printpunkte(p1,p2,bot,bot2)
   }
 
