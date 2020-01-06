@@ -39,8 +39,9 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
   var startsign = false
 
 
-  //val schriftIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ.png"))
-  val schriftIMG = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/graphics/SQ.png"))
+
+  val schriftIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ.png"))
+  //val schriftIMG = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/graphics/SQ.png"))
   //var cells: Array[Array[GuiCell]] = Array.ofDim[GuiCell](supervisor.map.getmx(), supervisor.map.getmy())
 
   val schrift = new Panel {
@@ -49,8 +50,8 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
     }
   }
 
-  //val castleIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ2.png"))
-  val castleIMG = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/graphics/SQ2.png"))
+  val castleIMG = ImageIO.read(new File("/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/graphics/SQ2.png"))
+  //val castleIMG = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/graphics/SQ2.png"))
   //var cells: Array[Array[GuiCell]] = Array.ofDim[GuiCell](supervisor.map.getmx(), supervisor.map.getmy())
 
   val castle = new Panel {
@@ -212,7 +213,7 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
 
   def setMap(x: String, z: Int): Boolean = {
     try {
-      if (x.isBlank) {
+      if (x.equals("")) {
         supervisor.map = new Map(10, 10)
         return true
       }
@@ -235,12 +236,12 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
   //var cells: Array[Array[GuiCell]] = Array.ofDim[GuiCell](supervisor.map.getmx(), supervisor.map.getmy())
 // z ausbauen super hässlich
   def setPlayer(player: String, player2: String, z: Int): Boolean = {
-    if (player.isBlank && player2.isBlank && z == 1) {
+    if (player.equals("") && player2.equals("") && z == 1) {
       supervisor.p1 = new Player("Kurt")
       supervisor.p2 = new Player("Franz")
       return true
     }
-    if (player.isBlank && player2.isBlank && z == 2) {
+    if (player.equals("") && player2.equals("") && z == 2) {
       supervisor.p1 = new Player("Klaus")
       supervisor.bot = new KI()
       return true
@@ -248,7 +249,8 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
     if (z == 1) {
       supervisor.p1 = new Player(player)
       supervisor.p2 = new Player(player2)
-      val gui = new GUI(supervisor, controller)
+      val gui = new GUI(supervisor, controller, check)
+
       supervisor.newRound()
 
 
@@ -266,7 +268,8 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
         controller.changeState(new PvBot)
       }
       supervisor.bot = new KI()
-      val gui = new GUI(supervisor, controller)
+
+      val gui = new GUI(supervisor, controller,check)
 
       //supervisor.newRound()
       supervisor.newRound()
@@ -279,8 +282,11 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
     }
   }
 
+  var check = false
+
   def setRound(x: String, z: Int, box: JCheckBox, map: String): Boolean = {
     if (box.isSelected){
+      check = true
       //rounds auf maximum setzen
       //im supervisor eine methode schreiben die sagt ob voll ist, runden auf maximalen intwert setzen (abfragen ob runden kleiner 0 sind oder spielfeld voll
       supervisor.rounds = 1000//map.toInt * map.toInt

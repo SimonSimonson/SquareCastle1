@@ -18,7 +18,7 @@ import main.scala.model.{Card, KI, Map, Player}
 import scala.swing.Swing.LineBorder
 import scala.swing.event.ButtonClicked
 
-class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
+class GUI(supervisor:supervisor, controller: Controller, showRound:Boolean) extends MainFrame {
 
   title = "Square Castle"
   background = java.awt.Color.WHITE
@@ -43,10 +43,9 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
 
     val rotateRight = new Button("")
     val rotateLeft = new Button("")
-    val tipp = new Button("")
     val pause = new Button("")
 
-    rotateRight.background = java.awt.Color.GRAY.brighter().brighter()
+    rotateRight.background = java.awt.Color.WHITE
     rotateRight.preferredSize = new Dimension(75, 90)
     rotateRight.verticalAlignment = Alignment.Center
     rotateRight.verticalTextPosition = Alignment.Bottom
@@ -56,11 +55,6 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
     rotateLeft.verticalAlignment = Alignment.Center
     rotateLeft.verticalTextPosition = Alignment.Bottom
 
-    tipp.background = java.awt.Color.WHITE
-    tipp.preferredSize = new Dimension(75, 90)
-    tipp.verticalAlignment = Alignment.Center
-    tipp.verticalTextPosition = Alignment.Bottom
-
     pause.background = java.awt.Color.WHITE
     pause.preferredSize = new Dimension(75, 90)
     pause.verticalAlignment = Alignment.Center
@@ -68,7 +62,6 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
 
     val rotateRight_l = new Label("")
     val rotateLeft_l = new Label("")
-    val tipp_l = new Label("")
     val pause_l = new Label("")
 
     header.font = new Font("Verdana", 1, 20)
@@ -83,26 +76,21 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
     add(rotateLeft, constraints(0, 4))
     add(rotateLeft_l, constraints(0, 5, 1, 1, 0, 0.1))
 
-    add(tipp, constraints(0, 7))
-    add(tipp_l, constraints(0, 8, 1, 1, 0, 0.1))
-
-    add(pause, constraints(0, 10))
-    add(pause_l, constraints(0, 11, 1, 1, 0, 0.1))
+    add(pause, constraints(0, 7))
+    add(pause_l, constraints(0, 8, 1, 1, 0, 0.1))
 
     rotateRight.icon = new ImageIcon(ImageIO.read(getClass.getResource("graphics/rechts.png")))
     rotateLeft.icon = new ImageIcon(ImageIO.read(getClass.getResource("graphics/links.png")))
-    tipp.icon = new ImageIcon(ImageIO.read(getClass.getResource("graphics/tipp.png")))
     pause.icon = new ImageIcon(ImageIO.read(getClass.getResource("graphics/pause.png")))
 
     /*
     rotateRight.text = "<html><body>R" + "<br> I" + "<br>G" + "<br>H" + "<br>T" + "</body></html>\""
     rotateLeft.text = "turn left"
-    tipp.text = "hint"
     pause.text = "wait"
      */
 
-    listenTo(rotateRight, rotateLeft, tipp, pause)
-    val buttons: List[Button] = List(rotateRight, rotateLeft, tipp, pause)
+    listenTo(rotateRight, rotateLeft, pause)
+    val buttons: List[Button] = List(rotateRight, rotateLeft, pause)
     reactions += {
       case ButtonClicked(b) =>
           if(b == rotateRight){
@@ -111,10 +99,6 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
           }
           if(b == rotateLeft){
             controller.befehl = "l"
-            supervisor.newRoundactive()
-          }
-          if(b == tipp){
-            controller.befehl = "tipp"
             supervisor.newRoundactive()
           }
           if(b == pause){
@@ -302,9 +286,11 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
 
     add(pointsLabel2, constraints(0, 6, 1, 1, 0, 0.1))
 
-    add(remaining, constraints(0, 7, 1, 1, 0, 0.1))
+    if(!showRound) {
+      add(remaining, constraints(0, 7, 1, 1, 0, 0.1))
 
-    add(rundenLabel, constraints(0, 8, 1, 1, 0, 0.1))
+      add(rundenLabel, constraints(0, 8, 1, 1, 0, 0.1))
+    }
 
     add(cardLabel, constraints(0, 9, 1, 1, 0, 0.1))
 
@@ -546,4 +532,5 @@ class GUI(supervisor:supervisor, controller: Controller) extends MainFrame {
       supervisor.newRound()
 
   }
+
 }
