@@ -38,7 +38,7 @@ class Controllertest extends WordSpec with Matchers{
       c.befehl = "r"
       c.Options(card,map,p1) should be (2)
       c.befehl = "wait"
-      c.Options(card,map,p1) should be (2)
+      c.Options(card,map,p1) should be (1)
       c.befehl = "l"
       c.Options(card,map,p1) should be (2)
       c.befehl = "i 0 0"
@@ -48,7 +48,7 @@ class Controllertest extends WordSpec with Matchers{
       c.befehl = "tipp"
       c.Options(card,map,p1) should be (2)
       c.befehl = "x"
-      c.Options(card,map,p1) should be (2)
+      c.Options(card,map,p1) should be (0)
     }
     "when getPoints" in {
       p1.addPoints(3)
@@ -82,10 +82,10 @@ class Controllertest extends WordSpec with Matchers{
     "when rotate is called" in {
       c.rotatePic(null) should not be (true)
       c.rotatePic(1,null) should not be (true)
-/*
-      var tmp = ImageIO.read(new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/0000.png"))
+
+      var tmp = ImageIO.read(new File("./src/main/scala/GUI/cardIMG/0000.png"))
       c.rotatePic(tmp) should not be (null)
-      c.rotatePic(2, tmp) should not be (null)*/
+      c.rotatePic(2, tmp) should not be (null)
 
     }
 
