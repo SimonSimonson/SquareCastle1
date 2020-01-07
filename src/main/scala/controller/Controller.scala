@@ -42,6 +42,7 @@ class Controller extends Publisher{
     bot.addPoints(card.getAngelegte())
     //publish(new InsertedEvent)
     //publish(new BotEvent)
+    true
   }
 
   def RandomCard(): Card= {
@@ -174,7 +175,7 @@ class Controller extends Publisher{
           }
         }
         publish(new updateEvent("",0))
-      }
+     }
 
     }
     ar
