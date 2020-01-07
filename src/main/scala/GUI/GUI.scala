@@ -507,10 +507,8 @@ class GUI(supervisor:supervisor, controller: Controller, showRound:Boolean) exte
   reactions += {
     case event: NewRoundEvent => //ALLES NEU MALEN(neue spieler gesetzt, neue Karte
       refreshRightPanel()
-      println("111111111111111111")
       draw()
     case event: InsertedEvent =>
-      println("22222222222222222")
       draw()
     case event: DoesntFitEvent =>
       doesntFit()
@@ -536,14 +534,12 @@ class GUI(supervisor:supervisor, controller: Controller, showRound:Boolean) exte
       System.exit(1)
 
     case event: TippEvent =>
-      println("TIIIIIIIIIIIPPPPPP")
       val nums = controller.tipp(supervisor.card, supervisor.map)
       for {
         i <- cells.indices
         j <- cells.indices
       } {
         if(nums(i)(j) == -1)
-          println("FFFFEEEEEEEHHHHHLLLLLEEEEERRR")
         if (nums(i)(j) == 1)
           highlightCell(j, i)
       }
