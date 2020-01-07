@@ -30,7 +30,7 @@ class PvBotTest extends WordSpec with Matchers {
       c.befehl = "tipp"
       B.handle(true,c,playerA,null, bot,null,map,Card) should be (2)
       c.befehl = "Peter"
-      B.handle(true,c,playerA,null, bot,null,map,Card) should be (0)
+      B.handle(true,c,playerA,null, bot,null,map,Card) should be (2)
 
 
 
