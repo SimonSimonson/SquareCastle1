@@ -21,7 +21,7 @@ class PvBotTest extends WordSpec with Matchers {
       c.befehl = "l"
       B.handle(true,c,playerA,null, bot,null,map,Card) should be (2)
       c.befehl = "wait"
-      B.handle(true,c,playerA,null, bot,null,map,Card) should be (1)
+      B.handle(true,c,playerA,null, bot,null,map,Card) should be (2)
       c.befehl = "i 0 0"
       B.handle(true,c,playerA,null, bot,null,map,Card) should be (1)
       B.handle(true,c,playerA,null, bot,null,map,Card) should be (2)

@@ -38,7 +38,7 @@ class Controllertest extends WordSpec with Matchers{
       c.befehl = "r"
       c.Options(card,map,p1) should be (2)
       c.befehl = "wait"
-      c.Options(card,map,p1) should be (1)
+      c.Options(card,map,p1) should be (2)
       c.befehl = "l"
       c.Options(card,map,p1) should be (2)
       c.befehl = "i 0 0"
