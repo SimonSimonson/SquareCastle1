@@ -23,7 +23,9 @@ class Controller extends Publisher{
   }
 
 
-  def Calculatebot(bot: KI, card: Card,map:Map):Unit ={
+  def Calculatebot(bot: KI, card: Card,map:Map):Boolean ={
+    if(bot == null)
+      return false
     val data = bot.anlegen(map, card)
     for (i <- 0 until data._3) {
       card.rotateRight()
@@ -32,7 +34,7 @@ class Controller extends Publisher{
     if (data._1 < 0 || data._2 < 0 || data._3 < 0) {
       map.setRandom(card)
       //notifyObservers("beep boop ich kann nicht anlegen", 0);
-      return
+      return true
     }
     publish(new updateEvent("Bot legt auf " + data._1 + " " + data._2, 0))
     //card.cleanall()
@@ -157,13 +159,17 @@ class Controller extends Publisher{
     for (iy <- 0 until map.getmy()) {
       for (zeile <- 0 to 5) {
         for (ix <- 0 until map.getmx()) {
-          if(map.field(ix)(iy) != null)
+          if(map.field(ix)(iy) != null) {
             ar(ix)(iy)= 0
-          else{
-            if(map.check(card,ix,iy))
+            printline(zeile,card)
+          } else{
+            if(map.check(card,ix,iy)) {
+              highlight(zeile)
               ar(ix)(iy) = 1
-            else
+            } else {
+              nullprint(zeile)
               ar(ix)(iy) = 0
+            }
 
           }
         }
@@ -173,6 +179,7 @@ class Controller extends Publisher{
     }
     ar
   }
+
   def printline(zeile: Int, card: Card): Boolean={
     if(zeile < 0 || card == null)
       return false

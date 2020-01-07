@@ -24,7 +24,7 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
   background = java.awt.Color.WHITE
   var myCard: Card = _
   var myPicture: BufferedImage =_
-  val path = "/Users/julian/Desktop/SE/SquareCastle/src/main/scala/GUI/cardIMG/"
+  val path = "./src/main/scala/GUI/cardIMG/"
   //val path =  "/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/"
 
   val label: Label =
@@ -54,7 +54,7 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
           supervisor.otherplayer()
           supervisor.newRound()
         }
-        redrawCell
+        //redrawCell
 
 
     }
@@ -76,8 +76,18 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
     //label.text = getCellText
     repaint
   }
+  def highlight():Unit={
+    contents.clear()
+    println("highlight")
+      myPicture = ImageIO.read(new File(path + "Tipp.png"))
+      label.icon = new ImageIcon(myPicture.getScaledInstance(label.size.width, label.size.height, Image.SCALE_SMOOTH))
+      contents.clear()
+      contents += cell
+    repaint
+  }
 
   def setCellPicture: Unit = {
+    println("empty")
     if(supervisor.card == null || myCard == null){
       myPicture = ImageIO.read(new File(path + "Empty.png"))
       label.icon= new ImageIcon(myPicture)
