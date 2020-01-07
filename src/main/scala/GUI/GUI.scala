@@ -550,7 +550,6 @@ class GUI(supervisor:supervisor, controller: Controller, showRound:Boolean) exte
     case event: WaitEvent =>
       supervisor.otherplayer()
       supervisor.newRound()
-
   }
 
 }
