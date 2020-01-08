@@ -530,7 +530,6 @@ class GUI(supervisor:supervisor, controller: Controller, showRound:Boolean) exte
         i <- cells.indices
         j <- cells.indices
       } {
-        if(nums(i)(j) == -1)
         if (nums(i)(j) == 1)
           highlightCell(j, i)
       }
