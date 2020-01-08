@@ -1,30 +1,21 @@
 package GUI
 
 import scala.swing._
-import javax.swing.{JFrame, JPanel, JScrollPane}
-import java.io.File
-
+import javax.swing.{JFrame, JPanel}
 import javax.imageio.ImageIO
 import javax.swing.ImageIcon
-import java.awt.Image
-
 import controller.{BotEvent, CardChangedEvent, Controller, DoesntFitEvent, GameOverEvent, InsertedEvent, NewRoundEvent, TippEvent, WaitEvent}
 import javax.swing.JOptionPane
-import javax.swing.JPasswordField
-import javax.swing.JTextField
 import supervisor.supervisor
-import main.scala.model.{Card, KI, Map, Player}
-
-import scala.swing.Swing.LineBorder
+import main.scala.model.Card
 import scala.swing.event.ButtonClicked
+
 
 class GUI(supervisor:supervisor, controller: Controller, showRound:Boolean) extends MainFrame {
 
   title = "Square Castle"
   background = java.awt.Color.WHITE
   preferredSize = new Dimension(1000, 700)
-
-
 
   var cells: Array[Array[GuiCell]] = Array.ofDim[GuiCell](supervisor.map.getmx(), supervisor.map.getmy())
   /*val panel = new Panel {

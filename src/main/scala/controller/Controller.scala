@@ -139,10 +139,6 @@ class Controller extends Publisher{
     2
   }
 
-
-
-
-
   def getPoints(player1: Player, player2: Player): (Int,Int) ={
     val points1 = player1.getPoints()
     //println(points1)
