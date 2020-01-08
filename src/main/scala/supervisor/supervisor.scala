@@ -52,7 +52,7 @@ class supervisor(controller: Controller) extends Publisher{
   }
   def newRoundactive(): Int = {
     var i = controller.state.handle(state,controller,p1 ,p2 ,bot, bot2 ,map, card)
-    //controller.print(map)
+    //controller.print(map)Error downloading org.scala-sbt:main_2.12:1.3.3
     //publish(new NewRoundEvent)
     //println(this.card)
     if(map.isFull()){

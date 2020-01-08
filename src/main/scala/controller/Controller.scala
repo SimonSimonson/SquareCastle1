@@ -39,6 +39,8 @@ class Controller extends Publisher{
     publish(new updateEvent("Bot legt auf " + data._1 + " " + data._2, 0))
     //card.cleanall()
     map.Setcard(card, data._1, data._2)
+    println("Player "+ bot + " bekommt " + card.getAngelegte()+ "  Punkte")
+
     bot.addPoints(card.getAngelegte())
     //publish(new InsertedEvent)
     //publish(new BotEvent)
@@ -68,18 +70,18 @@ class Controller extends Publisher{
       return false
     if(player == null) {
       //publish(new BotEvent)
-      publish(new updateEvent(Console.RED + "BOT ist an der Reihe",0))
+      //publish(new updateEvent(Console.RED + "BOT ist an der Reihe",0))
       true
     } else {
       publish(new PlayerEvent)
-      publish(new updateEvent(Console.RED + "Spieler " + player.toString() + " ist an der Reihe", 0))
+      //publish(new updateEvent(Console.RED + "Spieler " + player.toString() + " ist an der Reihe", 0))
     }
     publish(new updateEvent(Console.WHITE,0))
-    printcard(card)
-    if(player != null)
-      publish(new updateEvent(Console.BLUE + "r.... rechts rum rotieren"+ Console.CYAN + "  l.... links rum rotieren"+
-        Console.MAGENTA + "  i x y.... Einfügen bei (x,y)"+ Console.YELLOW + "  wait.... eine runde aussetzen"+
-        Console.BLACK + "  tipp .... zeigt wo man anlegen kann"+ Console.RED + "  exit .... beenden",0))
+    //printcard(card)
+    //if(player != null)
+      //publish(new updateEvent(Console.BLUE + "r.... rechts rum rotieren"+ Console.CYAN + "  l.... links rum rotieren"+
+        //Console.MAGENTA + "  i x y.... Einfügen bei (x,y)"+ Console.YELLOW + "  wait.... eine runde aussetzen"+
+        //Console.BLACK + "  tipp .... zeigt wo man anlegen kann"+ Console.RED + "  exit .... beenden",0))
     true
 
       //notifyObservers(Console.RED + "Spieler " + player.toString() + " ist an der Reihe",0)
@@ -112,8 +114,7 @@ class Controller extends Publisher{
       } else if (array(0).equals("i")) {
         if (invoker.ExecuteCommand(new layCommand,array(1).toInt,array(2).toInt,card,map).get == 1) {
           val punkte = card.getAngelegte()
-          if(player != null)
-            player.addPoints(punkte)
+          player.addPoints(punkte)
           publish(new InsertedEvent)
           publish(new updateEvent("Spieler "+ player.toString()+ " erhält "+ punkte + " Punkte",0))
           //println("Spieler "+ player.toString()+ " erhält "+ punkte + " Punkte")

@@ -2,7 +2,7 @@ package main.scala
 import GUI.{GUI, startScreen}
 import controller.Controller
 import supervisor.supervisor
-
+import model.Player
 object main {
   def main(args: Array[String]): Unit = {
     val Controller = new Controller
