@@ -298,7 +298,6 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
     add(startButtons, BorderPanel.Position.Center)
 
   }
-
   centerOnScreen
   visible = true
 

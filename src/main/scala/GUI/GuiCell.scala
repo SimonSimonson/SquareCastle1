@@ -113,7 +113,7 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
 
   def findImage(x: (Int, Int, Int, Int)): BufferedImage = {
     x match {
-      case (0, 0, 0, 0) => ImageIO.read(new File(path + "0000.jpeg"))
+      case (0, 0, 0, 0) => ImageIO.read(new File(path + "0000.png"))
       case (0, 0, 1, 0) => ImageIO.read(new File(path + "0010.png"))
       case (0, 0, 1, 1) => ImageIO.read(new File(path + "0011.png"))
       case (2, 0, 0, 1) => ImageIO.read(new File(path + "2001.png"))
