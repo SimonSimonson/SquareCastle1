@@ -16,12 +16,13 @@ case class Invoker(controller: Controller){
         case Success(v) => Success(v)
       }
     }
-    def Undo(card: Card,map: Map)={
+    def Undo(card: Card,map: Map):Boolean={
       stack match{
-        case Nil =>
+        case Nil =>false
         case head::stack1 => {
           head.undo(card,map)
           stack =stack1
+          true
         }
       }
     }
