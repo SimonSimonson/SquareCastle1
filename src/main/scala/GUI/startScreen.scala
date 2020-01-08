@@ -1,32 +1,16 @@
 package GUI
 
-import java.awt
-
 import scala.swing._
-import scala.swing.Swing.LineBorder
-import scala.swing.event._
-import scala.io.Source._
-import java.awt.image.BufferedImage
-
-import javax.swing.{JFrame, JPanel, JScrollPane}
-import java.io.{File, FileInputStream}
-
 import javax.swing.JPanel
 import java.io.File
-
 import controller.states.{BotvBot, PvP, PvBot}
 import javax.imageio.ImageIO
 import javax.swing.ImageIcon
-import java.awt.Image
-
 import controller.Controller
 import javax.swing.JOptionPane
-import javax.swing.JPasswordField
 import javax.swing.JTextField
 import supervisor.supervisor
-import java.awt.event.ActionListener
-
-import scala.swing.event.{ButtonClicked, MouseClicked}
+import scala.swing.event.ButtonClicked
 import main.scala.model.{KI, Map, Player}
 import javax.swing.JCheckBox
 
@@ -37,8 +21,6 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
   background = java.awt.Color.WHITE
   preferredSize = new Dimension(1000, 700)
   var startsign = false
-
-
 
   val schriftIMG = ImageIO.read(new File("./src/main/scala/GUI/graphics/SQ.png"))
   //var cells: Array[Array[GuiCell]] = Array.ofDim[GuiCell](supervisor.map.getmx(), supervisor.map.getmy())
@@ -57,7 +39,6 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
       g.drawImage(castleIMG, 200, 225, null)
     }
   }
-
 
   val imgPanel = new GridBagPanel() {
     preferredSize = new Dimension(150, 400)
@@ -103,11 +84,10 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
       c
 
     }
-
     schriftLabel.icon = new ImageIcon(ImageIO.read(getClass.getResource("graphics/SQ.png")))
     castleLabel.icon = new ImageIcon(ImageIO.read(getClass.getResource("graphics/SQ2.png")))
-
   }
+
   val startButtons = new GridBagPanel() {
     preferredSize = new Dimension(800, 400)
     background = java.awt.Color.WHITE
@@ -136,23 +116,14 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
       case ButtonClicked(b) =>
 
         if (b == pvp) {
-          //methode settings
-          //controller.status = new StatusA
           choosePVP
-
-          //val gui = new GUI(supervisor, controller, supervisor.p1, supervisor.p2, null)
           startScreen.this.visible = false
         }
         if (b == pvbot) {
-          //methode settings
-          //controller.status = new StatusA
           choosePVBOT
-          //supervisor.newRound()
-          //val gui = new GUI(supervisor, controller)
           startScreen.this.visible = false
         }
     }
-
 
     // Quelle : http://otfried.org/scala/index_42.html
     def constraints(x: Int, y: Int,
@@ -171,9 +142,7 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
       c.fill = fill
       c.anchor = GridBagPanel.Anchor.North
       c
-
     }
-
   }
 
   def choosePVP: Unit = {
@@ -185,12 +154,10 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
     val message = Array(" Set mapsize (Bsp: ZxZ): ", " z", map, " ", " Play until the field is full?" , box," (Or set number of Rounds:)", rundenAnzahl, " ", " Player 1:", player1, "   ", " Player 2:", player2)
     val option: Int = JOptionPane.showConfirmDialog(null, message, "SquareCastle", JOptionPane.OK_CANCEL_OPTION)
 
-
     setMap(map.getText(), 1)
     setRound(rundenAnzahl.getText(), 1, box, map.getText())
     setPlayer(player1.getText, player2.getText, 1)
   }
-
 
   def choosePVBOT: Unit = {
     val map = new JTextField
@@ -204,10 +171,8 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
     setRound(rundenAnzahl.getText, 2, box, map.getText())
     setPlayer(player1.getText, "", 2)
     supervisor.bot = new KI
-    supervisor.botyesno =true
-    //controller.changeState(new StateB)
+    supervisor.botyesno = true
   }
-
 
   def setMap(x: String, z: Int): Boolean = {
     try {
@@ -231,8 +196,9 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
         return false
     }
   }
+
   //var cells: Array[Array[GuiCell]] = Array.ofDim[GuiCell](supervisor.map.getmx(), supervisor.map.getmy())
-// z ausbauen super hässlich
+  // z ausbauen super hässlich
   def setPlayer(player: String, player2: String, z: Int): Boolean = {
     if (player.equals("") && player2.equals("") && z == 1) {
       supervisor.p1 = new Player("Kurt")
@@ -244,40 +210,45 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
       supervisor.bot = new KI()
       return true
     }
+  startGame(player, player2, 1)
+  return true
+  }
+
+  def startGame(player:String, player2:String, z:Int): Boolean ={
+
     if (z == 1) {
-      supervisor.p1 = new Player(player)
-      supervisor.p2 = new Player(player2)
-      val gui = new GUI(supervisor, controller, check)
+    supervisor.p1 = new Player(player)
+    supervisor.p2 = new Player(player2)
+    val gui = new GUI(supervisor, controller, check)
 
-      supervisor.newRound()
+    supervisor.newRound()
 
+    gui.updateCard(supervisor.card)
+    controller.changeState(new PvP)
+    startsign = true
+    return true
+  } else if (z == 2) {
 
-      gui.updateCard(supervisor.card)
-      controller.changeState(new PvP)
-      startsign = true
-      return true
-    } else if (z == 2) {
+    if(player  == "bot") {
+    supervisor.bot2 = new KI()
+    controller.changeState(new BotvBot)
+  } else {
+    supervisor.p1 = new Player(player)
+    controller.changeState(new PvBot)
+  }
+    supervisor.bot = new KI()
 
-      if(player  == "bot") {
-        supervisor.bot2 = new KI()
-        controller.changeState(new BotvBot)
-      } else {
-        supervisor.p1 = new Player(player)
-        controller.changeState(new PvBot)
-      }
-      supervisor.bot = new KI()
+    val gui = new GUI(supervisor, controller,check)
 
-      val gui = new GUI(supervisor, controller,check)
+    supervisor.newRound()
+    gui.updateCard(supervisor.card)
 
-      //supervisor.newRound()
-      supervisor.newRound()
-      gui.updateCard(supervisor.card)
+    startsign = true
+    return true
+  } else {
+    return false
+  }
 
-      startsign = true
-      return true
-    } else {
-      return false
-    }
   }
 
   var check = false
@@ -298,7 +269,7 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
         supervisor.rounds = int * 2
         return true
       } catch {
-        case e => println(x + " ist keine Zahl! Bitte gb eine gültige Rundenzahl ein!")
+        case e => println(x + " ist keine Zahl! Bitte gib eine gültige Rundenzahl ein!")
           if (z == 1) {
             choosePVP
             return false
@@ -311,10 +282,6 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
   true
   }
 
-
-
-
-
   menuBar = new MenuBar {
     contents += new Menu("") {
       contents += new Separator()
@@ -325,14 +292,12 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
     }
   }
 
-
   contents = new BorderPanel {
     //add(menuBar, BorderPanel.Position.North)
     add(imgPanel, BorderPanel.Position.North)
     add(startButtons, BorderPanel.Position.Center)
 
   }
-
   centerOnScreen
   visible = true
 

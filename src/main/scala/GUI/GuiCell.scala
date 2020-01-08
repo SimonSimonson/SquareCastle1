@@ -1,22 +1,16 @@
 package GUI
 
-import java.awt.{Graphics2D, Image}
+import java.awt.Image
 import java.awt.image.BufferedImage
 import java.io.File
-
 import controller.Controller
 import javax.imageio.ImageIO
 import main.scala.model.Card
-
 import scala.swing.Swing.LineBorder
 import scala.swing.event.MouseClicked
 import scala.swing.{BorderPanel, Dimension, Font, GridPanel, Label}
-import java.awt.geom.AffineTransform
-import java.awt.image.AffineTransformOp
-
 import javax.swing.ImageIcon
 import supervisor.supervisor
-
 
 
 case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controller) extends GridPanel(1, 1) {
@@ -119,7 +113,7 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
 
   def findImage(x: (Int, Int, Int, Int)): BufferedImage = {
     x match {
-      case (0, 0, 0, 0) => ImageIO.read(new File(path + "0000.jpeg"))
+      case (0, 0, 0, 0) => ImageIO.read(new File(path + "0000.png"))
       case (0, 0, 1, 0) => ImageIO.read(new File(path + "0010.png"))
       case (0, 0, 1, 1) => ImageIO.read(new File(path + "0011.png"))
       case (2, 0, 0, 1) => ImageIO.read(new File(path + "2001.png"))
