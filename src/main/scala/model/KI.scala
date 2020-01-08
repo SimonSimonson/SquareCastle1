@@ -61,14 +61,12 @@ case class KI() {
 
     all(3) = punktefeld(map, card)
     card.rotateRight()
-    //println(all(3).flatten.max)
-    //card.cleanall()
 
-    var opt = List(all(0).flatten.max, all(1).flatten.max, all(2).flatten.max, all(3).flatten.max)
+    val opt = List(all(0).flatten.max, all(1).flatten.max, all(2).flatten.max, all(3).flatten.max)
     //println("LISTE DER PUNKTE : " + opt)
-    var tmp = opt.sorted
-    var rolls = opt.indexOf(tmp(3))
-    if(opt(0)==0 && opt(3)==0)
+    val tmp = opt.sorted
+    val rolls = opt.indexOf(tmp(3))
+    if(opt(0) == 0 && opt(3) == 0)
       return (-1, -1, -1)
 
     val a = all(rolls).toList :: list
@@ -83,9 +81,9 @@ case class KI() {
       }
       i += 1;
     }
-    //Legt, wenn egal ist wie oft er die Karte dreht, irgendwo an
+    /*//Legt, wenn egal ist wie oft er die Karte dreht, irgendwo an
     if(opt(0)==opt(3))
-      return (i, iy, rolls)
+      return (i, iy, rolls)*/
     (-1, -1, -1)
   }
 
