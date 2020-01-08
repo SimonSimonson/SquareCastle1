@@ -14,7 +14,6 @@ case class Invoker(controller: Controller){
       val problem = command.execute(x,y,card,map)
       problem match {
         case Success(v) => Success(v)
-        case Failure(e) => Failure(e)
       }
     }
     def Undo(card: Card,map: Map)={
