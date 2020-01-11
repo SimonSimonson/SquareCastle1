@@ -1,7 +1,6 @@
 package util
 
-import main.scala.model.Player
-import main.scala.model.KI
+import gamemodel.model.{KI, Player}
 
 case class playerFactory() extends PlayerFactoryInterface {
 //BRICHT AB WENN BOT NICHT ANLEGEN KANN

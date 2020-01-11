@@ -1,18 +1,19 @@
 package main.scala
-import GUI.startScreen
-import controller.{Controller, ControllerInterface}
-import supervisor.{SupervisorInterface, supervisor}
+import aview.GUI.startScreen
+import aview.TUI.TUI
+import gamecontrol.controller.{Controller, ControllerInterface}
+import gamecontrol.supervisor.{SupervisorInterface, supervisor}
 object main {
   def main(args: Array[String]): Unit = {
     val Controller:ControllerInterface = new Controller
     val supervisor:SupervisorInterface = new supervisor(Controller)
 
-    val tui = new TUI.TUI(Controller, supervisor)
+    val tui = new TUI(Controller, supervisor)
     tui.testfall()
 
     val start = new startScreen(supervisor,Controller)
 
-    //val gui = new GUI(supervisor)
+    //val gui = new aview.GUI.GUI.GUI(gamecontrol.controller.supervisor)
 
     //////////////////////////////////////////////////INITIALISIERUNG\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -53,13 +54,13 @@ object main {
 
     //state sagt ob spieler1 oder 2 dran ist bzw spieler1 oder bot
     while(true){
-      /*if(supervisor.newRound(state) == -1){
+      /*if(gamecontrol.controller.supervisor.newRound(state) == -1){
         tui.update("Spiel beendet",0)
-        val print = supervisor.endgame()
+        val print = gamecontrol.controller.supervisor.endgame()
         tui.update(print, 0)
         return
       }*/
-      //supervisor.showPoints()
+      //gamecontrol.controller.supervisor.showPoints()
       s = scala.io.StdIn.readLine().toString
       supervisor.newRound()
 

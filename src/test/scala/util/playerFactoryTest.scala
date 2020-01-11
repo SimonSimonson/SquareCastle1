@@ -1,6 +1,6 @@
 package util
 
-import main.scala.model.Player
+import gamemodel.model.Player
 import org.scalatest.{Matchers, WordSpec}
 
 class playerFactoryTest extends WordSpec with Matchers{
