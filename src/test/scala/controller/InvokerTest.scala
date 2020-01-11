@@ -12,7 +12,7 @@ class InvokerTest extends WordSpec with Matchers {
   "Invoker" when {
     "new" should {
       val c = new Controller
-      val invoker = new Invoker(c)
+      val invoker = new Invoker()
       val card = new Card(0,0,0,0)
       val map = new Map(4,4)
       "undo command" in {

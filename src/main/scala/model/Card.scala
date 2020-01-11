@@ -2,27 +2,29 @@ package main.scala.model
 
 import java.util
 
-case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
+import model.CardInterface
+
+case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) extends CardInterface{
   if(side0 > 2  || side1 > 2 || side2 > 2 || side3 > 2 ) {
     //println("ungültige Eingabe")
 
     throw new Exception
   }
   //STRUKTUR DER KARTE
-  var mysides:Array[Int] = new Array[Int](4)
+  override var mysides:Array[Int] = new Array[Int](4)
   mysides(0)= side0;
   mysides(1)= side1;
   mysides(2)= side2;
   mysides(3)= side3;
 
   //ANGELEGTE KARTEN UND WAS ANGELEGT IST
-  val none:Array[Card] = new Array[Card](4)
-  val roads:Array[Card] = new Array[Card](4)
-  val castle:Array[Card] = new Array[Card](4)
+  override val none:Array[CardInterface] = new Array[CardInterface](4)
+  override val roads:Array[CardInterface] = new Array[CardInterface](4)
+  override val castle:Array[CardInterface] = new Array[CardInterface](4)
 
   //VERGLEICHT AUS IRGENDEINEM GRUND DIE STRINGS UND NICHT DIE OBJEKTE
   //REKTUSIVE METHODE, DIE ALLE ANGELEGTEN KARTEN DER 3 ARRAYS OBEN DURCHLÄUFT UND DIE GLEICHEN ZÄHLT
-  def getAngelegteR(kind: Int, l: Int, prev: Card, list: util.ArrayList[Card]): Int = {
+  override def getAngelegteR(kind: Int, l: Int, prev: CardInterface, list: util.ArrayList[Card]): Int = {
     list.add(this)
     var sum = 0
     kind match{
@@ -53,14 +55,14 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
     }
     sum + 1
   }
-  def contains( list : util.ArrayList[Card], card : Card): Boolean={
+  override def contains( list : util.ArrayList[Card], card : CardInterface): Boolean={
     list.forEach(c => {
       if (card.eq(c))
         return true
     })
       false
   }
-  def getAngelegte(): Int = {
+  override def getAngelegte(): Int = {
     var sum = 0
     //println("Wege angelegt: "+ getAngelegteR(1, 0, this) + " Burgen angelegt: " + getAngelegteR(2, 0,this))
     var wege = getAngelegteR(1, 0, null, new util.ArrayList[Card]())
@@ -78,7 +80,7 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
     wege + burgen*2
   }
 
-  def rotateRight(): Boolean ={
+  override def rotateRight(): Boolean ={
     val rotRight:Array[Int] = new Array[Int](4)
     rotRight(0) = mysides(3)
     rotRight(1) = mysides(0)
@@ -88,7 +90,7 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
     true
   }
 
-  def rotateLeft(): Boolean ={
+  override def rotateLeft(): Boolean ={
     val rotLeft:Array[Int] = new Array[Int](4)
     rotLeft(0) = mysides(1)
     rotLeft(1) = mysides(2)
@@ -98,7 +100,7 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
     true
   }
 
-  def getantipos(pos:Int): Int ={
+  override def getantipos(pos:Int): Int ={
     var pos2 = 0
     pos match{
       case 0 => pos2 = 2
@@ -108,12 +110,12 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
     }
     return pos2
   }
-  def passt(card: Card, pos1: Int, pos2: Int): Boolean = {
+  override def passt(card: CardInterface, pos1: Int, pos2: Int): Boolean = {
     //println("Vergleiche "+ this.mysides(pos1) + " mit "+ card.mysides(pos2))
     return this.mysides(pos1) == card.mysides(pos2)
   }
   //Schreibt Verbundene Karten in die Instanzvariablen
-  def anlegen(pos:Int, karte:Card): Boolean ={
+  override def anlegen(pos:Int, karte:CardInterface): Boolean ={
 
     if(karte != null) {
 
@@ -134,7 +136,7 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
   }
 
   //bereinigen einer seite
-  def cleansides(pos:Int) :Boolean={
+  override def cleansides(pos:Int) :Boolean={
     val pos2 = getantipos(pos)
     if(none(pos)!=null )//&& none(pos).none(pos2)==this)
       none(pos).none(pos2)=null
@@ -148,7 +150,7 @@ case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) {
 
     true
   }
-  def cleanall() : Boolean ={
+  override def cleanall() : Boolean ={
     cleansides(0)
     cleansides(1)
     cleansides(2)

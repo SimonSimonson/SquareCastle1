@@ -1,6 +1,7 @@
 package controller
 
 import main.scala.model.Card
+import model.CardInterface
 
 import scala.swing.event.Event
 
@@ -22,8 +23,8 @@ class BotEvent extends Event {
 class GameOverEvent extends Event {
 
 }
-class CardChangedEvent(card: Card) extends Event {
-  val newcard = card
+class CardChangedEvent(card: CardInterface) extends Event {
+  val newcard:CardInterface = card
 }
 
 class TippEvent extends Event {

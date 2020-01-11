@@ -2,19 +2,20 @@
 package main.scala.model
 
 
+import model.{CardInterface, MapInterface}
+
 import scala.util.{Failure, Success, Try}
 
-class Map(mx: Int, my: Int){
-  val field = Array.ofDim[Card](mx,my)
-  val mid = (mx/2,my/2)
-  def getmx(): Int ={
+class Map(mx: Int, my: Int) extends MapInterface{
+  override val field = Array.ofDim[CardInterface](mx,my)
+  override def getmx(): Int ={
     mx
   }
-  def getmy(): Int ={
+  override def getmy(): Int ={
     my
   }
 //prüft die Karten, legt aber noch nicht an
-  def check(card : Card, x:Int, y : Int): Boolean ={
+  override def check(card : CardInterface, x:Int, y : Int): Boolean ={
     if(x+1 < mx && field(x+1)(y) != null ) {
       if(!card.passt(field(x+1)(y),1,3))
         return false
@@ -45,7 +46,7 @@ class Map(mx: Int, my: Int){
   }
 
   //gibt die Punkte an der Stelle ohne wirklich anzulegen(für den bot)
-  def getpointswithoutputting(card: Card, x:Int, y:Int): Int ={
+  override def getpointswithoutputting(card: CardInterface, x:Int, y:Int): Int ={
     if(Setcard(card,x,y).get != -1){
 
       val points = card.getAngelegte()
@@ -56,7 +57,7 @@ class Map(mx: Int, my: Int){
     return -1
   }
   //setzt eine karte an eine random stelle in der map (für den Bot)
-  def setRandom(card: Card): Boolean ={
+  override def setRandom(card: CardInterface): Boolean ={
     if(card == null){
       return false
     }
@@ -77,7 +78,7 @@ class Map(mx: Int, my: Int){
   var y = 0
 
 //Setzt die Karte nach dem Prüfen auf das Spielfeld.
-  def Setcard(card : Card, x:Int , y : Int): Try[Int] ={
+  override def Setcard(card : CardInterface, x:Int , y : Int): Try[Int] ={
     if(x > mx-1 || y > my-1)
       return new Success[Int](-1)
 
@@ -105,7 +106,7 @@ class Map(mx: Int, my: Int){
 
     return Success(1)
   }
-  def cleanaround(x:Int,y:Int){
+  override def cleanaround(x:Int,y:Int){
     if(x+1 < mx && field(x+1)(y) != null ) {
      field(x+1)(y).cleansides(3)
     }
@@ -121,7 +122,7 @@ class Map(mx: Int, my: Int){
       field(x+1)(y).cleansides(2)
     }
   }
-  def isFull(): Boolean={
+  override def isFull(): Boolean={
     for {
       i <- field.indices
       j <- field.indices

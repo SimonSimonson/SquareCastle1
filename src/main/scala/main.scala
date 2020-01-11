@@ -1,12 +1,11 @@
 package main.scala
-import GUI.{GUI, startScreen}
-import controller.Controller
-import supervisor.supervisor
-import model.Player
+import GUI.startScreen
+import controller.{Controller, ControllerInterface}
+import supervisor.{SupervisorInterface, supervisor}
 object main {
   def main(args: Array[String]): Unit = {
-    val Controller = new Controller
-    val supervisor = new supervisor(Controller)
+    val Controller:ControllerInterface = new Controller
+    val supervisor:SupervisorInterface = new supervisor(Controller)
 
     val tui = new TUI.TUI(Controller, supervisor)
     tui.testfall()

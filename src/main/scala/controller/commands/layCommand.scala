@@ -1,15 +1,13 @@
 package controller.commands
 
-import main.scala.model.Card
-import main.scala.model.Map
-import supervisor.supervisor
+import model.{CardInterface, MapInterface}
 
 import scala.util.{Failure, Success, Try}
 
 case class layCommand() extends Command{
   override var x: Int = _
   override var y: Int = _
-  override def execute(xpos:Int, ypos:Int,card: Card,map: Map): Try[Int] ={
+  override def execute(xpos:Int, ypos:Int, card: CardInterface, map: MapInterface): Try[Int] ={
     x = xpos
     y = ypos
     //für test
@@ -17,7 +15,7 @@ case class layCommand() extends Command{
       return Success[Int](-2)
     return map.Setcard(card,x,y)
   }
-  override def undo(card: Card,map: Map): Boolean ={
+  override def undo(card: CardInterface,map: MapInterface): Boolean ={
     if(map == null || card == null)
       return false
     var deleted = map.field(x)(y)

@@ -1,17 +1,16 @@
 package main.scala.TUI
-import controller.states.{PvP, PvBot}
-import main.scala.util.{Observable, Observer}
-import controller.{Controller, updateEvent}
+import controller.states.{PvBot, PvP}
+import controller.{Controller, ControllerInterface, updateEvent}
 import main.scala.model.Player
 import main.scala.model.KI
 import main.scala.model.Map
-import util.playerFactory
-import supervisor.supervisor
+import util.{PlayerFactoryInterface, playerFactory}
+import supervisor.{SupervisorInterface, supervisor}
 
 import scala.swing.Reactor
 
 
-case class TUI(controller:Controller, supervisor: supervisor) extends Reactor {
+case class TUI(controller:ControllerInterface, supervisor: SupervisorInterface) extends Reactor {
   //controller.add(this)
   this.listenTo(controller)
     reactions += {
@@ -100,7 +99,7 @@ case class TUI(controller:Controller, supervisor: supervisor) extends Reactor {
 
 
   def setPlayer(spielernr: Int): (Player) = {
-    val f = new playerFactory
+    val f:PlayerFactoryInterface = new playerFactory
     val player = f.create("Player", input)
     return (player._1)
   }

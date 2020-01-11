@@ -3,19 +3,22 @@ package GUI
 import scala.swing._
 import javax.swing.JPanel
 import java.io.File
-import controller.states.{BotvBot, PvP, PvBot}
+
+import controller.states.{BotvBot, PvBot, PvP}
 import javax.imageio.ImageIO
 import javax.swing.ImageIcon
-import controller.Controller
+import controller.{Controller, ControllerInterface}
+import javafx.scene.media.{AudioClip, Media, MediaPlayer}
 import javax.swing.JOptionPane
 import javax.swing.JTextField
-import supervisor.supervisor
+import supervisor.{SupervisorInterface, supervisor}
+
 import scala.swing.event.ButtonClicked
 import main.scala.model.{KI, Map, Player}
 import javax.swing.JCheckBox
 
 
-class startScreen(supervisor: supervisor, controller: Controller) extends MainFrame {
+class startScreen(supervisor: SupervisorInterface, controller: ControllerInterface) extends MainFrame {
 
   title = "Square Castle"
   background = java.awt.Color.WHITE
@@ -94,6 +97,18 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
     val pvp = new Button("PvP")
     val pvbot = new Button("PvE")
 
+
+    val a = getClass.getResource("./sounds/Soundtrack.mp3")
+    println(a.toString)
+    /*val clip = new AudioClip(a.toString)
+    clip.play()
+
+    val f = new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/sounds/Soundtrack.mp3");
+    val media = new Media(f.toURI.toString)
+    val mediaPlayer: MediaPlayer = new MediaPlayer(media)
+    mediaPlayer.setAutoPlay(true)
+    mediaPlayer.play()*/
+
     pvp.background = java.awt.Color.GRAY.brighter().brighter()
     pvp.preferredSize = new Dimension(200, 150)
     pvp.verticalAlignment = Alignment.Center
@@ -166,7 +181,6 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
     val box = new JCheckBox
     val message = Array(" Set mapsize (Bsp: ZxZ): ", " z", map, " ", " Play until the field is full?" , box, " Set number of Rounds:", rundenAnzahl, " ", " Player:", player1)
     val option: Int = JOptionPane.showConfirmDialog(null, message, "SquareCastle", JOptionPane.OK_CANCEL_OPTION)
-
     setMap(map.getText(), 2)
     setRound(rundenAnzahl.getText, 2, box, map.getText())
     setPlayer(player1.getText, "", 2)
@@ -200,65 +214,44 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
   //var cells: Array[Array[GuiCell]] = Array.ofDim[GuiCell](supervisor.map.getmx(), supervisor.map.getmy())
   // z ausbauen super hässlich
   def setPlayer(player: String, player2: String, z: Int): Boolean = {
-    if (player.equals("") && player2.equals("") && z == 1) {
-      supervisor.p1 = new Player("Kurt")
-      supervisor.p2 = new Player("Franz")
-      return true
-    }
+
     if (player.equals("") && player2.equals("") && z == 2) {
       supervisor.p1 = new Player("Klaus")
-      supervisor.bot = new KI()
-      return true
     }
-  startGame(player, player2, 1)
-  return true
-  }
-
-  def startGame(player:String, player2:String, z:Int): Boolean ={
-
     if (z == 1) {
-    supervisor.p1 = new Player(player)
-    supervisor.p2 = new Player(player2)
-    val gui = new GUI(supervisor, controller, check)
-
-    supervisor.newRound()
-
-    gui.updateCard(supervisor.card)
-    controller.changeState(new PvP)
-    startsign = true
-    return true
-  } else if (z == 2) {
-
-    if(player  == "bot") {
-    supervisor.bot2 = new KI()
-    controller.changeState(new BotvBot)
-  } else {
-    supervisor.p1 = new Player(player)
-    controller.changeState(new PvBot)
-  }
-    supervisor.bot = new KI()
-
-    val gui = new GUI(supervisor, controller,check)
-
-    supervisor.newRound()
-    gui.updateCard(supervisor.card)
-
-    startsign = true
-    return true
-  } else {
-    return false
+      if (player.equals("") && player2.equals("")) {
+        supervisor.p1 = new Player("Kurt")
+        supervisor.p2 = new Player("Franz")
+      } else {
+        supervisor.p1 = new Player(player)
+        supervisor.p2 = new Player(player2)
+      }
+      controller.changeState(new PvP)
+      startsign = true
+    } else {
+      if (player == "bot") {
+        supervisor.bot = new KI
+        supervisor.bot2 = new KI()
+        controller.changeState(new BotvBot)
+      } else {
+        supervisor.p1 = new Player(player)
+        supervisor.bot = new KI
+        controller.changeState(new PvBot)
+      }
+    }
+    startGame()
+    true
   }
 
-  }
 
   var check = false
 
   def setRound(x: String, z: Int, box: JCheckBox, map: String): Boolean = {
-    if (box.isSelected){
+    if (box.isSelected) {
       check = true
       //rounds auf maximum setzen
       //im supervisor eine methode schreiben die sagt ob voll ist, runden auf maximalen intwert setzen (abfragen ob runden kleiner 0 sind oder spielfeld voll
-      supervisor.rounds = 1000//map.toInt * map.toInt
+      supervisor.rounds = 1000 //map.toInt * map.toInt
     } else {
       if (x.equals("")) {
         supervisor.rounds = 4
@@ -279,7 +272,18 @@ class startScreen(supervisor: supervisor, controller: Controller) extends MainFr
           }
       }
     }
-  true
+    true
+  }
+
+  def startGame(): Boolean = {
+
+    val gui = new GUI(supervisor, controller, check)
+
+    supervisor.newRound()
+    gui.updateCard(supervisor.card)
+
+    startsign = true
+    return true
   }
 
   menuBar = new MenuBar {

@@ -6,16 +6,17 @@ import controller.commands.layCommand
 import controller.states.State
 import main.scala.model.{Card, Map, Player}
 import main.scala.model.KI
+import model.{CardInterface, KIInterface, MapInterface, PlayerInterface}
 
 import scala.swing.Publisher
 
-class Controller extends Publisher{
+class Controller extends ControllerInterface {
 
-  var state:State = _
-  var befehl:String = _
-  val invoker:Invoker = new Invoker(this)
+  override var state:State = _
+  override var befehl:String = _
+  override val invoker:Invoker = new Invoker()
 
-  def changeState(state: State):Boolean={
+  override def changeState(state: State):Boolean={
     if(state== null)
       return false
     this.state = state
@@ -23,7 +24,7 @@ class Controller extends Publisher{
   }
 
 
-  def Calculatebot(bot: KI, card: Card,map:Map):Boolean ={
+  override def Calculatebot(bot: KIInterface, card: CardInterface, map:MapInterface):Boolean ={
     if(bot == null)
       return false
     val data = bot.anlegen(map, card)
@@ -56,7 +57,7 @@ class Controller extends Publisher{
 
     return Card(s1,s2,s3,s4)
   }
-  def showCard(player:Player): Card ={
+  override def showCard(player:PlayerInterface): Card ={
     val card = RandomCard()
     if(showCard(player,card)) {
       //publish(new NewRoundEvent)
@@ -65,7 +66,7 @@ class Controller extends Publisher{
     else
       return null
   }
-  def showCard(player: Player, card: Card): Boolean ={
+  def showCard(player: PlayerInterface, card: CardInterface): Boolean ={
     if(card == null)
       return false
     if(player == null) {
@@ -89,7 +90,7 @@ class Controller extends Publisher{
   }
 
 //return 1: normaler fall, return -1: fehler fall,  return 2 : spieler darf nocheinmal
-  def Options(card: Card, map: Map, player: Player): Int = {
+  override def Options(card: CardInterface, map: MapInterface, player: PlayerInterface): Int = {
 
       //auslagern durch neuen parameter der String
       val x = befehl
@@ -140,7 +141,7 @@ class Controller extends Publisher{
     2
   }
 
-  def getPoints(player1: Player, player2: Player): (Int,Int) ={
+  override def getPoints(player1: PlayerInterface, player2: PlayerInterface): (Int,Int) ={
     val points1 = player1.getPoints()
     //println(points1)
     val points2 = player2.getPoints()
@@ -148,7 +149,7 @@ class Controller extends Publisher{
     return (points1,points2)
   }
 
-  def tipp(card: Card, map: Map): Array[Array[Int]] = {
+  override def tipp(card: CardInterface, map: MapInterface): Array[Array[Int]] = {
     if(map == null || card == null)
       return null
     var ar:Array[Array[Int]] = Array.ofDim[Int](map.getmx(),map.getmy())
@@ -178,7 +179,7 @@ class Controller extends Publisher{
     ar
   }
 
-  def printline(zeile: Int, card: Card): Boolean={
+  def printline(zeile: Int, card: CardInterface): Boolean={
     if(zeile < 0 || card == null)
       return false
     zeile match{
@@ -193,7 +194,7 @@ class Controller extends Publisher{
     true
   }
 
-  def printcard(card: Card): Boolean ={
+  def printcard(card: CardInterface): Boolean ={
     if(card == null)
       return false
     publish(new updateEvent(" _________", 0))
@@ -235,7 +236,7 @@ class Controller extends Publisher{
     true
   }
 
-  def print(map: Map): Boolean ={
+  override def print(map: MapInterface): Boolean ={
     if(map == null)
       return false
     publish(new updateEvent(Console.WHITE,0))
@@ -254,7 +255,7 @@ class Controller extends Publisher{
     }
     true
   }
-  def printpunkte(p1:Player, p2:Player, bot:KI, bot2:KI): Boolean ={
+  override def printpunkte(p1:PlayerInterface, p2:PlayerInterface, bot:KIInterface, bot2:KIInterface): Boolean ={
     if(p1 != null)
       publish(new updateEvent(Console.RED+"Punkte von Spieler " + p1.toString() +":  "+ p1.Points,0 ))
     else
@@ -275,7 +276,7 @@ class Controller extends Publisher{
     return op.filter(image, null)
   }
 
-  def rotatePic(rot: Int, image: BufferedImage): BufferedImage = {
+  override def rotatePic(rot: Int, image: BufferedImage): BufferedImage = {
     if(image == null)
       return null
     var tmp: BufferedImage = null

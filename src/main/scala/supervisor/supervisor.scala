@@ -1,33 +1,31 @@
 package supervisor
 
 
-import controller.{BotEvent, CardChangedEvent, Controller, GameOverEvent, InsertedEvent, NewRoundEvent}
-import main.scala.model.{Card, Map, Player}
-import main.scala.util.{Observable, Observer}
-import main.scala.model.KI
+import controller.{BotEvent, CardChangedEvent, ControllerInterface, GameOverEvent, InsertedEvent, NewRoundEvent}
 
-import scala.swing.Publisher
+import model.{CardInterface, KIInterface, MapInterface, PlayerInterface}
 
-class supervisor(controller: Controller) extends Publisher{
-  var p1:Player = _
-  var p2:Player = _
-  var bot:KI = _
-  var bot2:KI =_
-  var map:Map = _
-  var rounds = 0
-  var botyesno = false
-  var card:Card =_
-  var playersturn:Player =_
-  var state:Boolean =_
+
+class supervisor(controller: ControllerInterface) extends SupervisorInterface {
+  override var p1:PlayerInterface = _
+  override var p2:PlayerInterface = _
+  override var bot:KIInterface = _
+  override var bot2:KIInterface =_
+  override var map:MapInterface = _
+  override var rounds = 0
+  override var botyesno = false
+  override var card:CardInterface =_
+  override var playersturn:PlayerInterface =_
+  override var state:Boolean =_
   //state wechselt zwischen spieler1 und 2 / spieler1 und bot
 
-  def otherplayer():Boolean={
+  override def otherplayer():Boolean={
     state = !state
     state
   }
 
 
-  def newRound(): Int = {
+  override def newRound(): Int = {
     println("ANZAHL RUNDEN " + rounds)
     if (rounds <= 0) {
       publish(new GameOverEvent)
@@ -50,7 +48,7 @@ class supervisor(controller: Controller) extends Publisher{
     }
     return 1
   }
-  def newRoundactive(): Int = {
+  override def newRoundactive(): Int = {
     var i = controller.state.handle(state,controller,p1 ,p2 ,bot, bot2 ,map, card)
     //controller.print(map)Error downloading org.scala-sbt:main_2.12:1.3.3
     //publish(new NewRoundEvent)
@@ -61,13 +59,13 @@ class supervisor(controller: Controller) extends Publisher{
     }
     return i
   }
-  def showPoints(): Boolean ={
+  override def showPoints(): Boolean ={
     if(p1 == null && p2 == null && bot == null && bot2 == null)
       return false
     controller.printpunkte(p1,p2,bot,bot2)
   }
 
-  def endgame(): String = {
+  override def endgame(): String = {
     var s = ""
     var b = 0
     var name = ""

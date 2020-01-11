@@ -1,13 +1,14 @@
 package main.scala.model
 
-import main.scala.model.{Card, Map, Player}
+import model.{CardInterface, KIInterface, MapInterface}
+
 import scala.language.postfixOps
 
-case class KI() {
-  var Punkte = 0
+case class KI() extends KIInterface{
+  override var Punkte = 0
 
 
-  def addPoints(punkte: Int): Boolean = {
+  override def addPoints(punkte: Int): Boolean = {
     if (punkte < 0)
        return false
     Punkte += punkte
@@ -15,13 +16,13 @@ case class KI() {
   }
 
 
-  def getPoints(): Int = {
+  override def getPoints(): Int = {
 
     Punkte
   }
 
   // gibt array mit Punkten für jedes Feld zurück
-  def punktefeld(map: Map, card: Card): (Array[Array[Int]]) = {
+  def punktefeld(map: MapInterface, card: CardInterface): (Array[Array[Int]]) = {
 
     var punkte = Array.ofDim[Int](map.field.length, map.field(1).length)
 
@@ -41,7 +42,7 @@ case class KI() {
   }
 
   //GIBT DIE X,Y KOORDINATEN DER BESTEN FUNKTION UND DIE ANZAHL DER ROLLS ZURÜCK   FEEEHLER: falsche punktezahlen(immer+2) in arrays
-  def anlegen(map: Map, card: Card): (Int, Int, Int) = {
+  override def anlegen(map: MapInterface, card: CardInterface): (Int, Int, Int) = {
     var all = Array.ofDim[Array[Array[Int]]](4)
     val list = List()
     all(0) = punktefeld(map, card)

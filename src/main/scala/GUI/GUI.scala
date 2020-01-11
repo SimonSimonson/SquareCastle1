@@ -4,14 +4,16 @@ import scala.swing._
 import javax.swing.{JFrame, JPanel}
 import javax.imageio.ImageIO
 import javax.swing.ImageIcon
-import controller.{BotEvent, CardChangedEvent, Controller, DoesntFitEvent, GameOverEvent, InsertedEvent, NewRoundEvent, TippEvent, WaitEvent}
+import controller.{BotEvent, CardChangedEvent, Controller, ControllerInterface, DoesntFitEvent, GameOverEvent, InsertedEvent, NewRoundEvent, TippEvent, WaitEvent}
 import javax.swing.JOptionPane
-import supervisor.supervisor
+import supervisor.{SupervisorInterface, supervisor}
 import main.scala.model.Card
+import model.CardInterface
+
 import scala.swing.event.ButtonClicked
 
 
-class GUI(supervisor:supervisor, controller: Controller, showRound:Boolean) extends MainFrame {
+class GUI(supervisor:SupervisorInterface, controller: ControllerInterface, showRound:Boolean) extends MainFrame {
 
   title = "Square Castle"
   background = java.awt.Color.WHITE
@@ -473,7 +475,7 @@ class GUI(supervisor:supervisor, controller: Controller, showRound:Boolean) exte
 
 
 
-  def updateCard(card:Card): Unit ={
+  def updateCard(card:CardInterface): Unit ={
     var guicell = new GuiCell(0,0, supervisor,controller)
     guicell.myCard = card
     guicell.setCellPicture

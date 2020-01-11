@@ -3,20 +3,23 @@ package GUI
 import java.awt.Image
 import java.awt.image.BufferedImage
 import java.io.File
-import controller.Controller
+
+import controller.{Controller, ControllerInterface}
 import javax.imageio.ImageIO
 import main.scala.model.Card
+
 import scala.swing.Swing.LineBorder
 import scala.swing.event.MouseClicked
 import scala.swing.{BorderPanel, Dimension, Font, GridPanel, Label}
 import javax.swing.ImageIcon
-import supervisor.supervisor
+import model.CardInterface
+import supervisor.{SupervisorInterface}
 
 
-case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controller) extends GridPanel(1, 1) {
+case class GuiCell(x: Int, y: Int, supervisor: SupervisorInterface, controller: ControllerInterface) extends GridPanel(1, 1) {
   preferredSize = new Dimension(50, 150)
   background = java.awt.Color.WHITE
-  var myCard: Card = _
+  var myCard: CardInterface = _
   var myPicture: BufferedImage =_
   val path = "./src/main/scala/GUI/cardIMG/"
   //val path =  "/home/simon/IdeaProjects/SquareCastle1/src/main/scala/GUI/cardIMG/"
@@ -55,7 +58,7 @@ case class GuiCell(x: Int, y: Int, supervisor: supervisor, controller: Controlle
   }
   //FALSCHE RUNDENANZAHL, SPIELER DER GEWINNT FALSCH ANGEZEIGT, BOT REPARIEREN
 
-  def setCard(card:Card): Unit ={
+  def setCard(card:CardInterface): Unit ={
     myCard=card
     //redrawCell
   }
