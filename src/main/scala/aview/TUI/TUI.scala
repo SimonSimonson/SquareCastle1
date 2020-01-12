@@ -12,7 +12,7 @@ import gamemodel.model
 import scala.swing.Reactor
 
 
-case class TUI(controller:ControllerInterface, supervisor: SupervisorInterface) extends Reactor {
+case class TUI(controller:ControllerInterface, supervisor: SupervisorInterface) extends TUIInterface {
   //gamecontrol.controller.add(this)
   this.listenTo(controller)
     reactions += {
@@ -22,8 +22,9 @@ case class TUI(controller:ControllerInterface, supervisor: SupervisorInterface) 
       if(event.code == 1)
         print(event.word)
   }
+
   //false: Ausgabe, true: Reinschreiben der Antwort
-  def settings(int: Int, mode : Boolean) : Int ={
+  override def settings(int: Int, mode : Boolean) : Int ={
     int match {
 
       case 0 => {
@@ -145,22 +146,18 @@ case class TUI(controller:ControllerInterface, supervisor: SupervisorInterface) 
   }
 
 
-
-  def Runden(): Int = {
+  override def Runden(): Int = {
     val anzahl = input
     var anzInt = 0
     try {
       anzInt = anzahl.toInt
     } catch {
-      case e => return -1
-    }
-
-    for (c <- anzahl) {
-      if (!c.isDigit) {
+      case e => {
         update(Console.WHITE + "SPIEL WIRD ABGEBROCHEN! ?#!*!?!#", 1)
         return -1
       }
     }
+
     supervisor.rounds = anzInt * 2
     return anzInt * 2
   }
@@ -176,13 +173,13 @@ case class TUI(controller:ControllerInterface, supervisor: SupervisorInterface) 
     println()
   }
 
-  var input = ""
-   def input(string: String): Unit={
+  override var input = ""
+  override def input(string: String): Unit={
      controller.befehl = string
     input = string
   }
 
-  def update(string: String, i: Int): Unit ={
+  override def update(string: String, i: Int): Unit ={
 
     if(i == 0)
       println(string)

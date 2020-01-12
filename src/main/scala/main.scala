@@ -1,6 +1,6 @@
 package main.scala
 import aview.GUI.startScreen
-import aview.TUI.TUI
+import aview.TUI.{TUI, TUIInterface}
 import gamecontrol.controller.{Controller, ControllerInterface}
 import gamecontrol.supervisor.{SupervisorInterface, supervisor}
 object main {
@@ -8,7 +8,7 @@ object main {
     val Controller:ControllerInterface = new Controller
     val supervisor:SupervisorInterface = new supervisor(Controller)
 
-    val tui = new TUI(Controller, supervisor)
+    val tui:TUIInterface = new TUI(Controller, supervisor)
     //tui.testfall()
 
     val start = new startScreen(supervisor,Controller)
@@ -63,7 +63,6 @@ object main {
       //gamecontrol.controller.supervisor.showPoints()
       s = scala.io.StdIn.readLine().toString
       supervisor.newRound()
-
       tui.input(s)
       while(supervisor.newRoundactive()==2){
         s = scala.io.StdIn.readLine().toString
