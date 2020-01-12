@@ -1,6 +1,5 @@
-package gamecontrol
+package gamecontrol.controller
 
-import gamecontrol.controller.{Controller, Invoker}
 import gamecontrol.controller.commands.layCommand
 import gamemodel.model.{Card, Map}
 import org.scalatest.{Matchers, WordSpec}

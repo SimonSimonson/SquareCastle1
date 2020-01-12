@@ -1,15 +1,11 @@
-package gamecontrol
+package gamecontrol.controller
 
 import java.io.File
 
-import gamecontrol.controller.Controller
 import gamecontrol.states.PvP
 import gamemodel.model.{Card, KI, Map, Player}
 import javax.imageio.ImageIO
-import javax.management.ObjectInstance
 import org.scalatest._
-
-import scala.Some
 
 class Controllertest extends WordSpec with Matchers {
   "A Controller" when {
@@ -99,7 +95,7 @@ class Controllertest extends WordSpec with Matchers {
         c.rotatePic(null) should not be (true)
         c.rotatePic(1, null) should not be (true)
 
-        var tmp = ImageIO.read(new File("./src/main/scala/aview.GUI.GUI.GUI/cardIMG/0000.png"))
+        var tmp = ImageIO.read(new File("./src/main/scala/aview/GUI/cardIMG/0000.png"))
         c.rotatePic(tmp) should not be (null)
         c.rotatePic(2, tmp) should not be (null)
 

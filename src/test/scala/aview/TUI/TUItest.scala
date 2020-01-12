@@ -6,7 +6,7 @@ import gamecontrol.supervisor.supervisor
 class TUItest extends WordSpec with Matchers {
 
 
-  "A aview.TUI.TUI" when {
+  "A aview.TUI" when {
     "new" should {
 
       val controller = new Controller
