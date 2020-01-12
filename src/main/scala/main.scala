@@ -9,7 +9,7 @@ object main {
     val supervisor:SupervisorInterface = new supervisor(Controller)
 
     val tui = new TUI(Controller, supervisor)
-    tui.testfall()
+    //tui.testfall()
 
     val start = new startScreen(supervisor,Controller)
 

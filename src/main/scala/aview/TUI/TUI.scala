@@ -90,17 +90,17 @@ case class TUI(controller:ControllerInterface, supervisor: SupervisorInterface) 
         }
         return 1
       }
-      0
+      case _ => 0
     }
   }
-  def testfall(): Unit ={
+ /* def testfall(): Unit ={
     //gamecontrol.controller.supervisor.map = new Map(10,10)
     //gamecontrol.controller.supervisor.p1 = new Player("Peter")
     //gamecontrol.controller.supervisor.p2 = new Player("Kurt")
     controller.changeState(new PvBot)
     supervisor.rounds = 4
   }
-
+*/
 
   def setPlayer(spielernr: Int): (Player) = {
     val f:PlayerFactoryInterface = new playerFactory
@@ -135,7 +135,8 @@ case class TUI(controller:ControllerInterface, supervisor: SupervisorInterface) 
     y = array(1).toInt
     if(x < 2 || y < 2){
       update(Console.WHITE + "Das Spielfeld muss mindestens 2x2 groß sein!", 0)
-      setMap()
+      //setMap()
+      return null
     } else {
       val mapSize = new model.Map(array(0).toInt, array(1).toInt)
       supervisor.map = mapSize
@@ -148,27 +149,20 @@ case class TUI(controller:ControllerInterface, supervisor: SupervisorInterface) 
   def Runden(): Int = {
     val anzahl = input
     var anzInt = 0
-    try{
+    try {
       anzInt = anzahl.toInt
-    }catch{
+    } catch {
       case e => return -1
     }
 
-    if (anzInt <= (x * y) / 2) {
-      for (c <- anzahl) {
-        if (!c.isDigit) {
-          update(Console.WHITE + "SPIEL WIRD ABGEBROCHEN! ?#!*!?!#", 1)
-          return -1
-        }
+    for (c <- anzahl) {
+      if (!c.isDigit) {
+        update(Console.WHITE + "SPIEL WIRD ABGEBROCHEN! ?#!*!?!#", 1)
+        return -1
       }
-      supervisor.rounds = anzInt * 2
-      x.toInt
-    } else {
-      var max = (x * y) / 2
-      update(Console.WHITE + "Das Spielfeld ist zu klein, du darfst maximal " + max + " Runden auswählen!", 0)
-      Runden()
     }
-
+    supervisor.rounds = anzInt * 2
+    return anzInt * 2
   }
 
   def prettyprint(s: String): Unit = {

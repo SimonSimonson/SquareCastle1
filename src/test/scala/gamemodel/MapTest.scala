@@ -59,8 +59,6 @@ class MapTest extends WordSpec with Matchers {
       map.field(0)(1) = new Card(0,0,0,0)
       map.field(2)(1) = new Card(0,0,0,0)
       map.cleanaround(1,1) should be (true)
-
-
     }
 
     }}

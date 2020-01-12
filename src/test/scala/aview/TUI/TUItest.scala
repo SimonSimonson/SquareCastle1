@@ -49,6 +49,18 @@ class TUItest extends WordSpec with Matchers {
         tui.settings(5, false) should be (1)
         tui.settings(5, true) should be (1)
 
+        tui.settings(6, false) should be (0)
+      }
+      "when SetMap" in{
+        tui.input = "1x1"
+        tui.setMap() should be (null)
+      }
+      "when Runden" in {
+        tui.input = "a"
+        tui.Runden() should be (-1)
+        tui.input = "3"
+        tui.Runden() should be (6)
+
       }
     }
   }
