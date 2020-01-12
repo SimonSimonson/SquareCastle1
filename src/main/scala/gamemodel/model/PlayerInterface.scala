@@ -37,7 +37,7 @@ trait MapInterface{
   def getpointswithoutputting(card: CardInterface, x:Int, y:Int): Int
   def setRandom(card: CardInterface): Boolean
   def Setcard(card : CardInterface, x:Int , y : Int): Try[Int]
-  def cleanaround(x:Int,y:Int)
+  def cleanaround(x:Int,y:Int): Boolean
   def isFull(): Boolean
 }
 trait KIInterface {

@@ -100,10 +100,8 @@ class Map(mx: Int, my: Int) extends MapInterface{
       card.cleanall()
       return new Success[Int](-1)
     }
-
-    return Success(1)
   }
-  override def cleanaround(x:Int,y:Int){
+  override def cleanaround(x:Int,y:Int): Boolean ={
     if(x+1 < mx && field(x+1)(y) != null ) {
      field(x+1)(y).cleansides(3)
     }
@@ -118,6 +116,7 @@ class Map(mx: Int, my: Int) extends MapInterface{
     if(y-1 >= 0 && field(x)(y-1) != null ) {
       field(x+1)(y).cleansides(2)
     }
+    true
   }
   override def isFull(): Boolean={
     for {

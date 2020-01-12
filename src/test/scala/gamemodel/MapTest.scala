@@ -5,6 +5,8 @@ import gamecontrol.controller.Controller
 import gamemodel.model.Card
 import org.scalatest._
 
+import scala.util.Success
+
 class MapTest extends WordSpec with Matchers {
 
 
@@ -43,8 +45,23 @@ class MapTest extends WordSpec with Matchers {
     "have random Card" in {
       val card = new Card(0,0,0,0)
       map.setRandom(card) should be (true)
+      map.setRandom(null) should be (false)
     }
+    "when Random Card" in {
+      val card = new Card(0,1,2,1)
+      map.Setcard(card, 5, 5) should be (Success(-1))
 
+    }
+    "when cleanaround " in {
+      val map = new model.Map(3,3)
+      map.field(1)(0) = new Card(0,0,0,0)
+      map.field(1)(2) = new Card(0,0,0,0)
+      map.field(0)(1) = new Card(0,0,0,0)
+      map.field(2)(1) = new Card(0,0,0,0)
+      map.cleanaround(1,1) should be (true)
+
+
+    }
 
     }}
 }

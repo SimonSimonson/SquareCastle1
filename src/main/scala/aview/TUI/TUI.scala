@@ -29,9 +29,11 @@ case class TUI(controller:ControllerInterface, supervisor: SupervisorInterface) 
       case 0 => {
         if (!mode)
           prettyprint(Console.RED + "Neues Spiel erstellen ?")
-        else if (newGame() == 0) {
-          update("SPIEL WIRD BEENDET", 1)
-          return -1
+        else{
+          if(newGame()==0) {
+            update("SPIEL WIRD BEENDET", 1)
+            return -1
+          }
         }
         return 1
       }
