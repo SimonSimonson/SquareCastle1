@@ -33,6 +33,7 @@ class Controllertest extends WordSpec with Matchers {
       "when card is shown" in {
         c.showCard(p1, card) should be(true)
         c.showCard(p1, null) should be(false)
+        c.showCard(null,card) should be (true)
       }
       "when Options for the Player are called" in {
         c.befehl = "r"
@@ -57,27 +58,45 @@ class Controllertest extends WordSpec with Matchers {
       }
       "when tipp is called" in {
         c.tipp(card, null) should be(null)
-        //c.tipp(card, null) should not be (true)
+        c.tipp(card, new Map(4,4)) should not be (null)
       }
       "when print of a card is called" in {
         c.printline(0, card) should be(true)
         c.printline(-3, card) should not be (true)
         c.printline(0, null) should not be (true)
+        c.printline(0, card) should be (true)
+        c.printline(1, card) should be (true)
+        c.printline(2, card) should be (true)
+        c.printline(3, card) should be (true)
+        c.printline(4, card) should be (true)
+        c.printline(5, card) should be (true)
+
+
+
 
         c.printcard(card) should be(true)
         c.printcard(null) should be(false)
 
         c.nullprint(3) should be(true)
         c.nullprint(-2) should be(false)
-
+        c.highlight(0) should be(true)
+        c.highlight(1) should be(true)
+        c.highlight(2) should be(true)
         c.highlight(3) should be(true)
+        c.highlight(4) should be(true)
+        c.highlight(5) should be(true)
         c.highlight(-1) should be(false)
 
         c.print(map) should be(true)
+        map.field(0)(0) = new Card(2,2,2,2)
+        c.print(map) should be(true)
+
         c.print(null) should be(false)
 
         c.printpunkte(p1, p2, bot, bot2) should be(true)
         c.printpunkte(null, p2, bot, bot2) should be(true)
+        c.printpunkte(null, null, bot, bot2) should be(true)
+
       }
       "When a bot is Calculated" in {
         val map = new Map(4, 4)
@@ -95,8 +114,10 @@ class Controllertest extends WordSpec with Matchers {
         c.rotatePic(null) should not be (true)
         c.rotatePic(1, null) should not be (true)
 
+
         var tmp = ImageIO.read(new File("./src/main/scala/aview/GUI/cardIMG/0000.png"))
         c.rotatePic(tmp) should not be (null)
+        c.rotatePic(-1, tmp) should not be (null)
         c.rotatePic(2, tmp) should not be (null)
 
       }

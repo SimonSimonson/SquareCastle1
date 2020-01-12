@@ -31,7 +31,7 @@ class supervisor(controller: ControllerInterface) extends SupervisorInterface {
       return -1
     }
     rounds = rounds - 1
-    controller.print(map)
+    //controller.print(map)
     publish(new InsertedEvent)
     if (state) {
       card = controller.showCard(p1)
