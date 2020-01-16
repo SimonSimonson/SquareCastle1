@@ -11,6 +11,9 @@ libraryDependencies += "org.scala-lang.modules" %% "scala-swing" % "2.1.1"
 
 libraryDependencies += "com.google.inject" % "guice" % "4.1.0"
 
+libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "1.1.1"
+
+libraryDependencies += "com.typesafe.play" %% "play-json" % "2.6.6"
 
 
 // add dependencies on standard Scala modules, in a way
