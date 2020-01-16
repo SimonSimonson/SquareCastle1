@@ -1,19 +1,19 @@
-package main.scala
+package scala
 import aview.GUI.startScreen
 import aview.TUI.{TUI, TUIInterface}
+import com.google.inject.{Guice, Injector}
 import gamecontrol.controller.{Controller, ControllerInterface}
 import gamecontrol.supervisor.{SupervisorInterface, supervisor}
 object main {
   def main(args: Array[String]): Unit = {
-    val Controller:ControllerInterface = new Controller
-    val supervisor:SupervisorInterface = new supervisor(Controller)
-
+    val injecor = Guice.createInjector(new GameModule)
+    val Controller:ControllerInterface = injecor.getInstance(classOf[ControllerInterface])
+    val supervisor:SupervisorInterface = injecor.getInstance(classOf[SupervisorInterface])
+    supervisor.controller = Controller
     val tui:TUIInterface = new TUI(Controller, supervisor)
-    //tui.testfall()
 
     val start = new startScreen(supervisor,Controller)
 
-    //val gui = new aview.GUI.GUI.GUI(gamecontrol.controller.supervisor)
 
     //////////////////////////////////////////////////INITIALISIERUNG\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -54,12 +54,7 @@ object main {
 
     //state sagt ob spieler1 oder 2 dran ist bzw spieler1 oder bot
     while(true){
-      /*if(gamecontrol.controller.supervisor.newRound(state) == -1){
-        tui.update("Spiel beendet",0)
-        val print = gamecontrol.controller.supervisor.endgame()
-        tui.update(print, 0)
-        return
-      }*/
+
       //gamecontrol.controller.supervisor.showPoints()
       s = scala.io.StdIn.readLine().toString
       supervisor.newRound()
@@ -73,13 +68,5 @@ object main {
         return
 
     }
-
-    //Bot testen die methoden
-    //Controller.tipp(legen1, field)
-    //Pushen, Commiten, unten neuer Branch, später
-    //wenn fertig  alles committen pushen in Branch, dann in lokalen master(checkout sagen)
-    //merge into in den lokalen master
-
-
   }
 }

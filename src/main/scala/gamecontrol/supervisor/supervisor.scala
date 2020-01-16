@@ -1,11 +1,13 @@
 package gamecontrol.supervisor
 
+import com.google.inject.Inject
 import gamecontrol.{BotEvent, CardChangedEvent, GameOverEvent, InsertedEvent, NewRoundEvent}
-import gamecontrol.controller.{ControllerInterface}
+import gamecontrol.controller.ControllerInterface
 import gamemodel.model.{CardInterface, KIInterface, MapInterface, PlayerInterface}
 
 
-class supervisor(controller: ControllerInterface) extends SupervisorInterface {
+class supervisor @Inject()() extends SupervisorInterface {
+  override var controller:ControllerInterface =_
   override var p1:PlayerInterface = _
   override var p2:PlayerInterface = _
   override var bot:KIInterface = _

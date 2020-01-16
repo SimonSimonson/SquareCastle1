@@ -1,14 +1,12 @@
 
 package gamemodel
 
-import gamecontrol.controller.Controller
 import gamemodel.model.Card
 import org.scalatest._
 
 import scala.util.Success
 
 class MapTest extends WordSpec with Matchers {
-
 
   "A Map" when { "new" should {
       val map = new model.Map(3,3)
@@ -33,14 +31,7 @@ class MapTest extends WordSpec with Matchers {
       map.check(legen2, 1, 1) should be (false)
 
     }
-    "have tipp" in {
-      val Controller = new Controller
-      val card = new Card(0,1,2,1)
-      val map = new model.Map(3,3)
 
-      //Controller.tipp(card,map) should be (true)
-
-    }
 
     "have random Card" in {
       val card = new Card(0,0,0,0)

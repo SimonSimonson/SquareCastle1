@@ -9,6 +9,10 @@ libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.8" % "test"
 
 libraryDependencies += "org.scala-lang.modules" %% "scala-swing" % "2.1.1"
 
+libraryDependencies += "com.google.inject" % "guice" % "4.1.0"
+
+
+
 // add dependencies on standard Scala modules, in a way
 // supporting cross-version publishing
 // taken from: http://github.com/scala/scala-module-dependency-sample

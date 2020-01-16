@@ -15,7 +15,7 @@ trait ControllerInterface extends Publisher {
 
   def Calculatebot(bot: KIInterface, card: CardInterface, map: MapInterface): Boolean
 
-  def showCard(player: PlayerInterface): Card
+  def showCard(player: PlayerInterface): CardInterface
 
   def Options(card: CardInterface, map: MapInterface, player: PlayerInterface): Int
 

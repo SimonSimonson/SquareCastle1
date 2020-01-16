@@ -10,7 +10,8 @@ class TUItest extends WordSpec with Matchers {
     "new" should {
 
       val controller = new Controller
-      val supervisor = new supervisor(controller)
+      val supervisor = new supervisor()
+      supervisor.controller = controller
       val tui = new TUI(controller, supervisor)
       "when newgame" in {
         tui.input("Ja")

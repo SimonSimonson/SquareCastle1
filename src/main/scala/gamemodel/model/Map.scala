@@ -1,9 +1,12 @@
 
 package gamemodel.model
 
+import com.google.inject.Inject
+import javax.inject.Named
+
 import scala.util.{Success, Try}
 
-class Map(mx: Int, my: Int) extends MapInterface{
+class Map @Inject()(@Named("num")mx: Int,@Named("num")my: Int) extends MapInterface{
   override val field = Array.ofDim[CardInterface](mx,my)
   override def getmx(): Int ={
     mx

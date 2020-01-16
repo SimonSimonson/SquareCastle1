@@ -1,11 +1,12 @@
 package gamecontrol.supervisor
 
+import gamecontrol.controller.{Controller, ControllerInterface}
 import gamemodel.model.{CardInterface, KIInterface, MapInterface, PlayerInterface}
 
 import scala.swing.Publisher
 
 trait SupervisorInterface extends Publisher{
-
+  var controller:ControllerInterface
   var p1:PlayerInterface
   var p2:PlayerInterface
   var bot:KIInterface

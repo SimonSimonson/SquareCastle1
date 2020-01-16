@@ -2,7 +2,11 @@ package gamemodel.model
 
 import java.util
 
-case class Card(side0: Int, side1: Int, side2: Int, side3: Int ) extends CardInterface{
+import com.google.inject.Inject
+import javax.inject.Named
+
+
+case class Card @Inject() (@Named("num")side0: Int, @Named("num")side1: Int, @Named("num")side2: Int, @Named("num")side3: Int ) extends CardInterface{
   if(side0 > 2  || side1 > 2 || side2 > 2 || side3 > 2 ) {
     //println("ungültige Eingabe")
 

@@ -2,14 +2,14 @@ package gamecontrol.controller
 
 import java.awt.geom.AffineTransform
 import java.awt.image.{AffineTransformOp, BufferedImage}
-
 import gamecontrol.{CardChangedEvent, DoesntFitEvent, InsertedEvent, PlayerEvent, TippEvent, WaitEvent, updateEvent}
 import gamecontrol.controller.commands.layCommand
 import gamecontrol.states.State
 import gamemodel.model.{Card, CardInterface, KIInterface, MapInterface, PlayerInterface}
+import com.google.inject.{Guice, Inject}
 
-class Controller extends ControllerInterface {
-
+class Controller @Inject() extends ControllerInterface {
+  val injector = Guice.createInjector(new GameModule)
   override var state:State = _
   override var befehl:String = _
   override val invoker:Invoker = new Invoker()
@@ -46,16 +46,20 @@ class Controller extends ControllerInterface {
     true
   }
 
-  def RandomCard(): Card= {
+  def RandomCard(): CardInterface= {
     val r = scala.util.Random
     val s1 = r.nextInt(3)
     val s2 = r.nextInt(3)
     val s3 = r.nextInt(3)
     val s4 = r.nextInt(3)
-
-    return Card(s1,s2,s3,s4)
+    val card = injector.getInstance(classOf[CardInterface])
+    card.mysides(0) = s1
+    card.mysides(1) = s2
+    card.mysides(2) = s3
+    card.mysides(3) = s4
+    return card
   }
-  override def showCard(player:PlayerInterface): Card ={
+  override def showCard(player:PlayerInterface): CardInterface ={
     val card = RandomCard()
     if(showCard(player,card)) {
       //publish(new NewRoundEvent)

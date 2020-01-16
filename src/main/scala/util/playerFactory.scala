@@ -2,6 +2,7 @@ package util
 
 import gamemodel.model.{KI, Player}
 
+
 case class playerFactory() extends PlayerFactoryInterface {
 //BRICHT AB WENN BOT NICHT ANLEGEN KANN
 override

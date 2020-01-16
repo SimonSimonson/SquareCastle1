@@ -10,7 +10,8 @@ class SupervisorTest extends WordSpec with Matchers{
   "A Supervisor" when { "new" should {
     val c = new Controller
     c.befehl = "r"
-    val s = new supervisor(c)
+    val s = new supervisor()
+    s.controller = c
 
     c.state = new PvP
     s.map = new Map(4,4)
@@ -46,7 +47,8 @@ class SupervisorTest extends WordSpec with Matchers{
       s.newRoundactive() should be (2)
     }
     "when showPoints is called" in {
-      val supersinnlos = new supervisor(c)
+      val supersinnlos = new supervisor()
+      supersinnlos.controller = c
       supersinnlos.showPoints() should be (false)
       s.showPoints() should be (true)
       s.otherplayer() should be (true)
