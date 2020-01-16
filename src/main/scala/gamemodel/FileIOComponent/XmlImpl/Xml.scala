@@ -1,3 +1,4 @@
+/*
 package gamemodel.FileIOComponent.XmlImpl
 
 import com.google.inject.Guice
@@ -36,3 +37,4 @@ class Xml extends FileIOInterface {
 
 
 }
+*/

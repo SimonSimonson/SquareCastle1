@@ -1,11 +1,9 @@
-package de.htwg.se.gladiators.model.fileIoComponent.fileIoJsonImpl
+package JsonImpl
 
 import com.google.inject.Guice
-import com.google.inject.name.Names
 import gamemodel.FileIOComponent.FileIOInterface
 import gamemodel.model.{CardInterface, MapInterface}
 import play.api.libs.json._
-//import net.codingwell.scala.scalaguice.InjectorExtentions._
 import scala.io.Source
 
 
