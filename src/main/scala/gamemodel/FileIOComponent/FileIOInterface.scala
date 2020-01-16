@@ -1,12 +1,12 @@
 package gamemodel.FileIOComponent
 
-import gamecontrol.supervisor.SupervisorInterface
+import gamemodel.model.MapInterface
 
 
 trait FileIOInterface {
 
-  def load: ()
+  def load(): MapInterface
 
-  def save(supervisor: SupervisorInterface): Unit
+  def save(map:MapInterface): Unit
 
 }

@@ -132,4 +132,7 @@ class Map @Inject()(@Named("num")mx: Int,@Named("num")my: Int) extends MapInterf
     true
   }
 
+  override def setCell(x: Int, y: Int, card: CardInterface): Unit ={
+    field(x)(y) = card
+  }
 }

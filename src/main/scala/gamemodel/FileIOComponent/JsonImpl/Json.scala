@@ -1,74 +1,62 @@
-package gamemodel.FileIOComponent.JsonImpl
+package de.htwg.se.gladiators.model.fileIoComponent.fileIoJsonImpl
 
-import gamecontrol.supervisor.SupervisorInterface
+import com.google.inject.Guice
+import com.google.inject.name.Names
 import gamemodel.FileIOComponent.FileIOInterface
-import play.api.libs.json.{JsNumber, JsObject, JsValue, Json}
-
+import gamemodel.model.{CardInterface, MapInterface}
+import play.api.libs.json._
+//import net.codingwell.scala.scalaguice.InjectorExtentions._
 import scala.io.Source
 
-class FileIO extends FileIOInterface {
-  override def load: () = {
 
-    val source: String = Source.fromFile("state.json").getLines.mkString
+class Json extends FileIOInterface {
+
+  override def load: MapInterface = {
+    var playingField: MapInterface = null
+    val source: String = Source.fromFile("playingfield.json").getLines.mkString
     val json: JsValue = Json.parse(source)
-    val size = (json \ "grid" \ "size").get.toString.toInt
-    // val injector = Guice.createInjector(new SudokuModule)
-    /*size match {
-      case 1 => grid = injector.instance[GridInterface](Names.named("tiny"))
-      case 4 => grid = injector.instance[GridInterface](Names.named("small"))
-      case 9 => grid = injector.instance[GridInterface](Names.named("normal"))
-      case _ =>
-    }*/
-    for (index <- 0 until size * size) {
-      val row = (json \\ "row") (index).as[Int]
-      val col = (json \\ "col") (index).as[Int]
-      val cell = (json \\ "cell") (index)
-      val value = (cell \ "value").as[Int]
-      // grid = grid.setField(row, col, value)
-      val given = (cell \ "given").as[Boolean]
-      val showCandidates = (cell \ "showCandidates").as[Boolean]
-      // if (given) grid = grid.setGiven(row, col, value)
-      // if (showCandidates) grid = grid.setShowCandidates(row, col)
+    val size = (json \ "playingfield" \ "size").toString().toInt//.get.toString.toInt
+    val injector = Guice.createInjector(new GameModule)
+
+    playingField = injector.getInstance((classOf[MapInterface]))
+    for (index <- 0 until (size * size)) {
+      val line = (json \\ "line")(index).as[Int]
+      val row = (json \\ "row")(index).as[Int]
+      val cell = (json \\ "cell")(index).as[String]
+      val ar = cell.split("")
+      val card = injector.getInstance(classOf[CardInterface])
+      card.mysides(0) = ar(0).toInt
+      card.mysides(1) = ar(1).toInt
+      card.mysides(2) = ar(2).toInt
+      card.mysides(3) = ar(3).toInt
+      playingField.setCell(line, row, card)
     }
+    playingField
   }
 
-  override def save(s:SupervisorInterface): Unit = {
+  override def save(playingField: MapInterface): Unit = {
     import java.io._
-    val pw = new PrintWriter(new File("grid.json"))
-    pw.write(Json.prettyPrint(gridToJson(s)))
-    pw.close
-    Json["map"] = s.map.field
+    val pw = new PrintWriter(new File("playingfield.json"))
+    pw.write(Json.stringify(fieldToJson(playingField)))
+    pw.close()
   }
-/*
-  implicit val playerWrites = new Writes[InterfacePerson] {
-    override def writes(player: InterfacePerson): JsValue = Json.obj(
-      "player_one" -> player.toString
-    )
-  }*/
-  def pack(s:SupervisorInterface):JsObject ={
 
-
-
-  }
-  def gridToJson(s:SupervisorInterface) = {
-    val gridSize = 10
+  def fieldToJson(playingField: MapInterface) = {
     Json.obj(
-      "grid" -> Json.obj(
-        "size" -> JsNumber(gridSize),
+      "playingfield" -> Json.obj(
+        "size" -> JsNumber(playingField.field.length),
         "cells" -> Json.toJson(
           for {
-            row <- 0 until gridSize
-            col <- 0 until gridSize
+            line <- 0 until playingField.field.length
+            row <- 0 until playingField.field.length
           } yield {
             Json.obj(
+              "line" -> line,
               "row" -> row,
-              "col" -> col,
-              "cell" -> Json.toJson(grid.getValue(row, col))
-            )
+              "cell" -> Json.toJson(playingField.field(line)(row).toString))
           }
         )
       )
     )
   }
-
 }

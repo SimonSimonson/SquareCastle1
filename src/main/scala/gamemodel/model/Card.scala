@@ -161,6 +161,6 @@ case class Card @Inject() (@Named("num")side0: Int, @Named("num")side1: Int, @Na
   }
 
 
-  override def toString: String = "Card("+mysides(0)+" "+mysides(1)+" "+mysides(2)+" "+ mysides(3)+")"
+  override def toString: String = mysides(0)+" "+mysides(1)+" "+mysides(2)+" "+ mysides(3)
   //override def equals(card: Card): Boolean = ???
 }

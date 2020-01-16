@@ -30,7 +30,6 @@ trait CardInterface {
 }
 trait MapInterface{
   val field:Array[Array[CardInterface]]
-
   def getmy(): Int
   def getmx(): Int
   def check(card : CardInterface, x:Int, y : Int): Boolean
@@ -39,6 +38,7 @@ trait MapInterface{
   def Setcard(card : CardInterface, x:Int , y : Int): Try[Int]
   def cleanaround(x:Int,y:Int): Boolean
   def isFull(): Boolean
+  def setCell(x:Int, y:Int , card:CardInterface)
 }
 trait KIInterface {
   var Punkte : Int
