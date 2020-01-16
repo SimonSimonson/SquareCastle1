@@ -1,7 +1,7 @@
 package aview.GUI
 
 import aview.GUI
-import gamecontrol.controller.ControllerInterface
+import gamecontrol.controller.{ControllerInterface, Controller}
 import gamecontrol.supervisor.SupervisorInterface
 import gamecontrol._
 import gamemodel.model.CardInterface
@@ -397,7 +397,12 @@ class GUI(supervisor:SupervisorInterface, controller: ControllerInterface, showR
         GUI.this.visible = false
         draw()
       })
-
+      contents += new MenuItem(scala.swing.Action("Save") {
+        controller.save(supervisor.map)
+      })
+      contents += new MenuItem(scala.swing.Action("Load") {
+        controller.load
+      })
       contents += new MenuItem(scala.swing.Action("Change Playernames") {
         var input = JOptionPane.showInputDialog(
           null,

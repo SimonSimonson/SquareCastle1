@@ -28,4 +28,8 @@ trait ControllerInterface extends Publisher {
   def printpunkte(p1: PlayerInterface, p2: PlayerInterface, bot: KIInterface, bot2: KIInterface): Boolean
 
   def rotatePic(rot: Int, image: BufferedImage): BufferedImage
+
+  def save(map: MapInterface): Unit
+
+  def load(): MapInterface
 }

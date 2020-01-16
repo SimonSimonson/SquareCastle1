@@ -2,17 +2,20 @@ package gamecontrol.controller
 
 import java.awt.geom.AffineTransform
 import java.awt.image.{AffineTransformOp, BufferedImage}
+
 import gamecontrol.{CardChangedEvent, DoesntFitEvent, InsertedEvent, PlayerEvent, TippEvent, WaitEvent, updateEvent}
 import gamecontrol.controller.commands.layCommand
 import gamecontrol.states.State
 import gamemodel.model.{Card, CardInterface, KIInterface, MapInterface, PlayerInterface}
 import com.google.inject.{Guice, Inject}
+import gamemodel.FileIOComponent.FileIOInterface
 
 class Controller @Inject() extends ControllerInterface {
   val injector = Guice.createInjector(new GameModule)
   override var state:State = _
   override var befehl:String = _
   override val invoker:Invoker = new Invoker()
+  var fileIo = injector.getInstance((classOf[FileIOInterface]))
 
   override def changeState(state: State):Boolean={
     if(state== null)
@@ -292,6 +295,17 @@ class Controller @Inject() extends ControllerInterface {
     for (i <- 0 until count)
       tmp = rotatePic(tmp)
     return tmp
+  }
+
+
+  def save(map: MapInterface): Unit = {
+    fileIo.save(map)
+  }
+
+  def load(): MapInterface = {
+    publish(new InsertedEvent)
+    fileIo.load
+
   }
 
 
