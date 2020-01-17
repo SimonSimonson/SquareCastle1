@@ -37,11 +37,11 @@ class Xml extends FileIOInterface {
   }
 
   def fieldToXml(playingField: MapInterface): Unit ={
-    <playingField size={ playingField.size.toString }>
+    <playingField size={ playingField.field.size.toString }>
       {
       for {
-        line <- 0 until playingField.size
-        row <- 0 until playingField.size
+        line <- 0 until playingField.field.size
+        row <- 0 until playingField.field.size
       } yield cellToXml(playingField, line, row, card)
       }
     </playingField>
