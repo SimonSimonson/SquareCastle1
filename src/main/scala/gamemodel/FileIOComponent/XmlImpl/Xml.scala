@@ -10,7 +10,7 @@ import scala.xml._
 import scala.xml.{NodeSeq, PrettyPrinter}
 
 class Xml extends FileIOInterface {
-  /*
+
   override def load: MapInterface = {
 
     var playingField: MapInterface = null
@@ -40,9 +40,9 @@ class Xml extends FileIOInterface {
     <playingField size={ playingField.size.toString }>
       {
       for {
+        line <- 0 until playingField.size
         row <- 0 until playingField.size
-        col <- 0 until playingField.size
-      } yield fieldToXml(playingField, row, col)
+      } yield cellToXml(playingField, line, row, card)
       }
     </playingField>
   }
@@ -58,13 +58,11 @@ class Xml extends FileIOInterface {
     pw.close
   }
 
-  def cellToXML(playingField: MapInterface, line: Int, row: Int, card: CardInterface) ={
+  def cellToXml(playingField: MapInterface, line: Int, row: Int, card: CardInterface) ={
     <cell line={ line.toString } row={ row.toString } given={ playingField.setCell(line, row, card).toString } >
       { playingField.setCell(line, row, card) }
     </cell>
   }
-
-   */
 
 }
 
