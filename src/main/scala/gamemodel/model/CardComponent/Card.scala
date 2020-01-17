@@ -1,10 +1,10 @@
-package gamemodel.model
+package gamemodel.model.CardComponent
 
 import java.util
 
 import com.google.inject.Inject
+import gamemodel.model.CardInterface
 import javax.inject.Named
-
 
 case class Card @Inject() (@Named("num")side0: Int, @Named("num")side1: Int, @Named("num")side2: Int, @Named("num")side3: Int ) extends CardInterface{
   if(side0 > 2  || side1 > 2 || side2 > 2 || side3 > 2 ) {

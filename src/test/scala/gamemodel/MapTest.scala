@@ -1,7 +1,8 @@
 
 package gamemodel
 
-import gamemodel.model.Card
+import gamemodel.model.CardComponent.Card
+import gamemodel.model.MapComponent.Map
 import org.scalatest._
 
 import scala.util.Success
@@ -9,7 +10,7 @@ import scala.util.Success
 class MapTest extends WordSpec with Matchers {
 
   "A Map" when { "new" should {
-      val map = new model.Map(3,3)
+      val map = new Map(3,3)
     "have a new field" in {
       val field = Array.ofDim[Card](3,3)
     }
@@ -44,7 +45,7 @@ class MapTest extends WordSpec with Matchers {
 
     }
     "when cleanaround " in {
-      val map = new model.Map(3,3)
+      val map = new Map(3,3)
       map.field(1)(0) = new Card(0,0,0,0)
       map.field(1)(2) = new Card(0,0,0,0)
       map.field(0)(1) = new Card(0,0,0,0)

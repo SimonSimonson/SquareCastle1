@@ -1,6 +1,8 @@
-package gamemodel.model
+package gamemodel.model.PlayerComponent
+
 import com.google.inject.Inject
 import com.google.inject.name.Named
+import gamemodel.model.PlayerInterface
 
 case class Player @Inject()(@Named("name")name: String ) extends PlayerInterface{
 

@@ -1,13 +1,14 @@
 
-package gamemodel.model
+package gamemodel.model.MapComponent
 
 import com.google.inject.Inject
+import gamemodel.model.{CardInterface, MapInterface}
 import javax.inject.Named
 
 import scala.util.{Success, Try}
 
 class Map @Inject()(@Named("num")mx: Int,@Named("num")my: Int) extends MapInterface{
-  override val field = Array.ofDim[CardInterface](mx,my)
+  override var field = Array.ofDim[CardInterface](mx,my)
   override def getmx(): Int ={
     mx
   }
@@ -134,5 +135,13 @@ class Map @Inject()(@Named("num")mx: Int,@Named("num")my: Int) extends MapInterf
 
   override def setCell(x: Int, y: Int, card: CardInterface): Unit ={
     field(x)(y) = card
+  }
+
+  override def getFieldString(x:Int,y:Int):String={
+    val a = field(x)(y)
+    if(a!= null)
+      return a.toString
+    else
+      return "4 4 4 4"
   }
 }

@@ -1,6 +1,7 @@
 package util
 
-import gamemodel.model.{KI, Player}
+import gamemodel.model.KIComponent.KI
+import gamemodel.model.PlayerComponent.Player
 
 
 case class playerFactory() extends PlayerFactoryInterface {

@@ -1,8 +1,9 @@
 package gamecontrol.supervisor
 
-import com.google.inject.Inject
-import gamecontrol.{BotEvent, CardChangedEvent, GameOverEvent, InsertedEvent, NewRoundEvent}
+import com.google.inject.{Guice, Inject}
+import gamecontrol.{BotEvent, CardChangedEvent, GameOverEvent, InsertedEvent, NewRoundEvent, SaveEvent}
 import gamecontrol.controller.ControllerInterface
+import gamemodel.FileIOComponent.FileIOInterface
 import gamemodel.model.{CardInterface, KIInterface, MapInterface, PlayerInterface}
 
 
@@ -18,6 +19,8 @@ class supervisor @Inject()() extends SupervisorInterface {
   override var card:CardInterface =_
   override var playersturn:PlayerInterface =_
   override var state:Boolean =_
+  val injector = Guice.createInjector(new GameModule)
+  var fileIo = injector.getInstance((classOf[FileIOInterface]))
   //state wechselt zwischen spieler1 und 2 / spieler1 und bot
 
   override def otherplayer():Boolean={
@@ -33,7 +36,7 @@ class supervisor @Inject()() extends SupervisorInterface {
       return -1
     }
     rounds = rounds - 1
-    //controller.print(map)
+    controller.print(map)
     publish(new InsertedEvent)
     if (state) {
       card = controller.showCard(p1)
@@ -98,5 +101,15 @@ class supervisor @Inject()() extends SupervisorInterface {
 
     }
   }
+
+  def save(map: MapInterface): Unit = {
+    fileIo.save(map)
+  }
+
+  def load(): Unit = {
+    map = fileIo.load()
+    publish(new SaveEvent)
+  }
+
 
 }

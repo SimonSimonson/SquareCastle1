@@ -1,7 +1,7 @@
 package aview.TUI
 
 import gamemodel.model
-import gamemodel.model.{KI, Player}
+import gamemodel.model.PlayerComponent.Player
 
 import scala.swing.Reactor
 

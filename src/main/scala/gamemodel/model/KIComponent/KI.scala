@@ -1,4 +1,6 @@
-package gamemodel.model
+package gamemodel.model.KIComponent
+
+import gamemodel.model.{CardInterface, KIInterface, MapInterface}
 
 case class KI() extends KIInterface{
   override var Punkte = 0

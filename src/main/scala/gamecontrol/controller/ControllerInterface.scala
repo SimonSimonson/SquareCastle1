@@ -2,7 +2,7 @@ package gamecontrol.controller
 
 import java.awt.image.BufferedImage
 import gamecontrol.states.State
-import gamemodel.model.{Card, CardInterface, KIInterface, MapInterface, PlayerInterface}
+import gamemodel.model.{CardInterface, KIInterface, MapInterface, PlayerInterface}
 import scala.swing.Publisher
 
 trait ControllerInterface extends Publisher {
@@ -29,7 +29,4 @@ trait ControllerInterface extends Publisher {
 
   def rotatePic(rot: Int, image: BufferedImage): BufferedImage
 
-  def save(map: MapInterface): Unit
-
-  def load(): MapInterface
 }

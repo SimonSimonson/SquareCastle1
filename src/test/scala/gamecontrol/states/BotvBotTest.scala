@@ -1,7 +1,9 @@
 package gamecontrol.states
 
 import gamecontrol.controller.Controller
-import gamemodel.model.{Card, KI, Map}
+import gamemodel.model.CardComponent.Card
+import gamemodel.model.KIComponent.KI
+import gamemodel.model.MapComponent.Map
 import org.scalatest.{Matchers, WordSpec}
 
 class BotvBotTest extends WordSpec with Matchers {

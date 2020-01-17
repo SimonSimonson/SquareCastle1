@@ -3,7 +3,10 @@ package gamecontrol.controller
 import java.io.File
 
 import gamecontrol.states.PvP
-import gamemodel.model.{Card, KI, Map, Player}
+import gamemodel.model.CardComponent.Card
+import gamemodel.model.KIComponent.KI
+import gamemodel.model.MapComponent
+import gamemodel.model.PlayerComponent.Player
 import javax.imageio.ImageIO
 import org.scalatest._
 
@@ -12,7 +15,7 @@ class Controllertest extends WordSpec with Matchers {
     "new" should {
       val c = new Controller
       val state = new PvP
-      val map = new Map(4, 4)
+      val map = new MapComponent.Map(4, 4)
       val p1 = new Player("Peter")
       val p2 = new Player("Gandalf")
       val bot = new KI()
@@ -58,7 +61,7 @@ class Controllertest extends WordSpec with Matchers {
       }
       "when tipp is called" in {
         c.tipp(card, null) should be(null)
-        c.tipp(card, new Map(4,4)) should not be (null)
+        c.tipp(card, new MapComponent.Map(4,4)) should not be (null)
       }
       "when print of a card is called" in {
         c.printline(0, card) should be(true)
@@ -99,7 +102,7 @@ class Controllertest extends WordSpec with Matchers {
 
       }
       "When a bot is Calculated" in {
-        val map = new Map(4, 4)
+        val map = new MapComponent.Map(4, 4)
         val p1 = new Player("Peter")
         val p2 = new Player("Gandalf")
         val bot = new KI()

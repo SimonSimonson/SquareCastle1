@@ -19,6 +19,9 @@ class PlayerEvent extends Event {
 class BotEvent extends Event {
 
 }
+class SaveEvent extends Event {
+
+}
 class GameOverEvent extends Event {
 
 }

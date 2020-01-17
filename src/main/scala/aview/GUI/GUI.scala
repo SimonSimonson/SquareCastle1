@@ -18,7 +18,7 @@ class GUI(supervisor:SupervisorInterface, controller: ControllerInterface, showR
   background = java.awt.Color.WHITE
   preferredSize = new Dimension(1000, 700)
 
-  var cells: Array[Array[GuiCell]] = Array.ofDim[GuiCell](supervisor.map.getmx(), supervisor.map.getmy())
+  var cells: Array[Array[GuiCell]] = Array.ofDim[GuiCell](supervisor.map.field.size, supervisor.map.field.size)
   /*val panel = new Panel {
     override def paint(g: Graphics2D): Unit = {
       g.drawImage(castleIMG, 200, 225, null)
@@ -398,10 +398,10 @@ class GUI(supervisor:SupervisorInterface, controller: ControllerInterface, showR
         draw()
       })
       contents += new MenuItem(scala.swing.Action("Save") {
-        controller.save(supervisor.map)
+        supervisor.save(supervisor.map)
       })
       contents += new MenuItem(scala.swing.Action("Load") {
-        controller.load
+        supervisor.load
       })
       contents += new MenuItem(scala.swing.Action("Change Playernames") {
         var input = JOptionPane.showInputDialog(
@@ -426,13 +426,10 @@ class GUI(supervisor:SupervisorInterface, controller: ControllerInterface, showR
   }
 
   contents = new BorderPanel {
-
     add(menuBar, BorderPanel.Position.North)
-    //add(statusPanel, BorderPanel.Position.East)
     add(actionPanel, BorderPanel.Position.West)
     add(grid, BorderPanel.Position.Center)
     add(rightPanel, BorderPanel.Position.East)
-
   }
   centerOnScreen
   visible = true
@@ -507,6 +504,11 @@ class GUI(supervisor:SupervisorInterface, controller: ControllerInterface, showR
       draw()
     case event: InsertedEvent =>
       draw()
+    case event: SaveEvent =>
+      cells =  Array.ofDim[GuiCell](supervisor.map.field.size, supervisor.map.field.size)
+      //array füllen
+      repaint
+      draw()
     case event: DoesntFitEvent =>
       doesntFit()
     case event: CardChangedEvent =>
@@ -515,7 +517,7 @@ class GUI(supervisor:SupervisorInterface, controller: ControllerInterface, showR
       //gamecontrol.controller.befehl = ""
       supervisor.newRoundactive()
       supervisor.otherplayer()
-      draw
+      draw()
       supervisor.newRound()
       //gamecontrol.controller.supervisor.newRound()
 

@@ -2,6 +2,8 @@ package gamemodel.model
 
 import java.util
 
+import gamemodel.model.CardComponent.Card
+
 import scala.util.Try
 
 trait PlayerInterface {
@@ -29,7 +31,7 @@ trait CardInterface {
   def toString: String
 }
 trait MapInterface{
-  val field:Array[Array[CardInterface]]
+  var field:Array[Array[CardInterface]]
   def getmy(): Int
   def getmx(): Int
   def check(card : CardInterface, x:Int, y : Int): Boolean
@@ -39,6 +41,7 @@ trait MapInterface{
   def cleanaround(x:Int,y:Int): Boolean
   def isFull(): Boolean
   def setCell(x:Int, y:Int , card:CardInterface)
+  def getFieldString(x:Int,y:Int):String
 }
 trait KIInterface {
   var Punkte : Int

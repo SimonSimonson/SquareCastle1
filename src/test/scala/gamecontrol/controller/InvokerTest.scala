@@ -1,7 +1,8 @@
 package gamecontrol.controller
 
 import gamecontrol.controller.commands.layCommand
-import gamemodel.model.{Card, Map}
+import gamemodel.model.CardComponent.Card
+import gamemodel.model.MapComponent.Map
 import org.scalatest.{Matchers, WordSpec}
 
 import scala.util.Success

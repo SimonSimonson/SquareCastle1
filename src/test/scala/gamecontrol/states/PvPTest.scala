@@ -1,7 +1,9 @@
 package gamecontrol.states
 
 import gamecontrol.controller.Controller
-import gamemodel.model.{Card, Map, Player}
+import gamemodel.model.CardComponent.Card
+import gamemodel.model.MapComponent.Map
+import gamemodel.model.PlayerComponent.Player
 import org.scalatest.{Matchers, WordSpec}
 
 class PvPTest extends WordSpec with Matchers {

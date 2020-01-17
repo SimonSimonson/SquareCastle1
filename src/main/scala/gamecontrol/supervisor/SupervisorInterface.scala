@@ -23,5 +23,7 @@ trait SupervisorInterface extends Publisher{
   def newRoundactive(): Int
   def showPoints(): Boolean
   def endgame(): String
+  def save(map: MapInterface): Unit
+  def load(): Unit
 
 }

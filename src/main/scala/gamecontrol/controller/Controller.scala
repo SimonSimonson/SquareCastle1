@@ -6,7 +6,7 @@ import java.awt.image.{AffineTransformOp, BufferedImage}
 import gamecontrol.{CardChangedEvent, DoesntFitEvent, InsertedEvent, PlayerEvent, TippEvent, WaitEvent, updateEvent}
 import gamecontrol.controller.commands.layCommand
 import gamecontrol.states.State
-import gamemodel.model.{Card, CardInterface, KIInterface, MapInterface, PlayerInterface}
+import gamemodel.model.{CardInterface, KIInterface, MapInterface, PlayerInterface}
 import com.google.inject.{Guice, Inject}
 import gamemodel.FileIOComponent.FileIOInterface
 
@@ -297,16 +297,6 @@ class Controller @Inject() extends ControllerInterface {
     return tmp
   }
 
-
-  def save(map: MapInterface): Unit = {
-    fileIo.save(map)
-  }
-
-  def load(): MapInterface = {
-    publish(new InsertedEvent)
-    fileIo.load
-
-  }
 
 
 }

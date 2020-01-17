@@ -2,7 +2,10 @@ package gamecontrol.supervisor
 
 import gamecontrol.controller.Controller
 import gamecontrol.states.PvP
-import gamemodel.model.{Card, KI, Map, Player}
+import gamemodel.model.CardComponent.Card
+import gamemodel.model.KIComponent.KI
+import gamemodel.model.MapComponent
+import gamemodel.model.PlayerComponent.Player
 import org.scalatest._
 
 
@@ -14,7 +17,7 @@ class SupervisorTest extends WordSpec with Matchers{
     s.controller = c
 
     c.state = new PvP
-    s.map = new Map(4,4)
+    s.map = new MapComponent.Map(4,4)
     s.p1 = new Player("Peter")
     s.p2 = new Player("Gandalf")
     //s.bot = new KI()
@@ -40,7 +43,7 @@ class SupervisorTest extends WordSpec with Matchers{
       s.p1 = new Player("Peter")
       s.p2 = new Player("Gandalf")
       s.rounds = 1
-      s.map = new Map(1,1)
+      s.map = new MapComponent.Map(1,1)
       s.newRoundactive() should be (2)
       c.befehl = "i 0 0"
       s.newRoundactive() should be (1)

@@ -5,7 +5,9 @@ import java.io.File
 import gamecontrol.controller.ControllerInterface
 import gamecontrol.states.{BotvBot, PvBot, PvP}
 import gamecontrol.supervisor.SupervisorInterface
-import gamemodel.model.{KI, Map, Player}
+import gamemodel.model.KIComponent.KI
+import gamemodel.model.MapComponent
+import gamemodel.model.PlayerComponent.Player
 import javax.imageio.ImageIO
 import javax.swing._
 
@@ -186,11 +188,11 @@ class startScreen(supervisor: SupervisorInterface, controller: ControllerInterfa
   def setMap(x: String, z: Int): Boolean = {
     try {
       if (x.equals("")) {
-        supervisor.map = new Map(10, 10)
+        supervisor.map = new MapComponent.Map(10, 10)
         return true
       }
       val intX = x.toInt
-      supervisor.map = new Map(intX, intX)
+      supervisor.map = new MapComponent.Map(intX, intX)
       true
     } catch {
       case e =>

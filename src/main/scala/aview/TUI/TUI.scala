@@ -1,13 +1,14 @@
 package aview.TUI
 
-import gamecontrol.controller.{ControllerInterface}
-
+import gamecontrol.controller.ControllerInterface
 import util.{PlayerFactoryInterface, playerFactory}
 import gamecontrol.states.PvBot
 import gamecontrol.supervisor.SupervisorInterface
 import gamecontrol.updateEvent
-import gamemodel.model.{KI, Player}
 import gamemodel.model
+import gamemodel.model.KIComponent.KI
+import gamemodel.model.MapComponent.Map
+import gamemodel.model.PlayerComponent.Player
 
 import scala.swing.Reactor
 
@@ -129,7 +130,7 @@ case class TUI(controller:ControllerInterface, supervisor: SupervisorInterface) 
   var x = 0
   var y = 0
 
-  def setMap(): model.Map = {
+  def setMap(): Map = {
     val i = input
     val array = i.split("x")
     x = array(0).toInt
@@ -139,7 +140,7 @@ case class TUI(controller:ControllerInterface, supervisor: SupervisorInterface) 
       //setMap()
       return null
     } else {
-      val mapSize = new model.Map(array(0).toInt, array(1).toInt)
+      val mapSize = new Map(array(0).toInt, array(1).toInt)
       supervisor.map = mapSize
       return mapSize
     }

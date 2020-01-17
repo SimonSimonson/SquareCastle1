@@ -1,6 +1,6 @@
 package gamemodel
 
-import gamemodel.model.Player
+import gamemodel.model.PlayerComponent.Player
 import org.scalatest._
 
 class PlayerTest extends WordSpec with Matchers {
