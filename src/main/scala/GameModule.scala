@@ -1,8 +1,10 @@
 package scala
+import JsonImpl.Json
 import com.google.inject.AbstractModule
 import com.google.inject.name.Names
 import gamecontrol.controller.{Controller, ControllerInterface}
 import gamecontrol.supervisor.{SupervisorInterface, supervisor}
+import gamemodel.FileIOComponent.FileIOInterface
 import gamemodel.model.{Card, CardInterface, KI, KIInterface, Map, MapInterface, Player, PlayerInterface}
 
 class GameModule extends AbstractModule{
@@ -18,5 +20,6 @@ class GameModule extends AbstractModule{
     bind(classOf[CardInterface]).to(classOf[Card])
     bind(classOf[ControllerInterface]).to(classOf[Controller])
     bind(classOf[SupervisorInterface]).to(classOf[supervisor])
+    bind(classOf[FileIOInterface]).to(classOf[Json])
   }
 }
