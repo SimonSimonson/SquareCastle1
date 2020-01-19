@@ -25,5 +25,7 @@ class GameModule extends AbstractModule{
     bind(classOf[CardInterface]).to(classOf[Card])
     bind(classOf[ControllerInterface]).to(classOf[Controller])
     bind(classOf[SupervisorInterface]).to(classOf[supervisor])
+    bind(classOf[FileIOInterface]).to(classOf[Json])
+
   }
 }
