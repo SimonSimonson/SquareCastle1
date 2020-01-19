@@ -1,4 +1,4 @@
-package gamemodel
+package gamemodel.model
 
 import gamemodel.model.PlayerComponent.Player
 import org.scalatest._

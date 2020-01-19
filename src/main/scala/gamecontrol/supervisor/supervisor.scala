@@ -108,7 +108,7 @@ class supervisor @Inject()() extends SupervisorInterface {
 
   def load(): Unit = {
     map = fileIo.load()
-    publish(new SaveEvent)
+    publish(new InsertedEvent)
   }
 
 
