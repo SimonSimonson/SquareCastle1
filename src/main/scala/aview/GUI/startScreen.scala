@@ -8,7 +8,7 @@ import gamecontrol.supervisor.SupervisorInterface
 import gamemodel.model.KIComponent.KI
 import gamemodel.model.MapComponent
 import gamemodel.model.PlayerComponent.Player
-import javafx.scene.media.{AudioClip, Media, MediaPlayer}
+//import javafx.scene.media.{AudioClip, Media, MediaPlayer}
 import javax.imageio.ImageIO
 import javax.swing._
 
