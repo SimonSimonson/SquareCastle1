@@ -46,8 +46,7 @@ class Json extends FileIOInterface {
   }
 
   def fieldToJson(playingField: MapInterface) = {
-    if(playingField == null)
-       null
+
     Json.obj(
       "playingfield" -> Json.obj(
         "size" -> JsNumber(playingField.field.length),

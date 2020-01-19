@@ -17,7 +17,6 @@ class JsonTest extends WordSpec with Matchers {
         json.save(new Map(4,4)) should be (true)
         json.load should not be (null)
         json.fieldToJson(new Map(4,4)) should not be (null)
-        json.fieldToJson(null) should be (null)
 
 
       }
