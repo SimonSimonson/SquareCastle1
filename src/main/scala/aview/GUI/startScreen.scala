@@ -199,7 +199,7 @@ class startScreen(supervisor: SupervisorInterface, controller: ControllerInterfa
       supervisor.map = new MapComponent.Map(intX, intX)
       true
     } catch {
-      case e =>
+      case e: Throwable =>
         println(x + " ist keine Zahl! Bitte gib eine gültige Mapgrösse ein!")
         if (z == 1) {
           choosePVP
@@ -263,7 +263,7 @@ class startScreen(supervisor: SupervisorInterface, controller: ControllerInterfa
         supervisor.rounds = int * 2
         return true
       } catch {
-        case e => println(x + " ist keine Zahl! Bitte gib eine gültige Rundenzahl ein!")
+        case e:Throwable => println(x + " ist keine Zahl! Bitte gib eine gültige Rundenzahl ein!")
           if (z == 1) {
             choosePVP
             return false

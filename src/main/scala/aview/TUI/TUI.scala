@@ -153,7 +153,7 @@ case class TUI(controller:ControllerInterface, supervisor: SupervisorInterface) 
     try {
       anzInt = anzahl.toInt
     } catch {
-      case e => {
+      case e: Throwable => {
         update(Console.WHITE + "SPIEL WIRD ABGEBROCHEN! ?#!*!?!#", 1)
         return -1
       }

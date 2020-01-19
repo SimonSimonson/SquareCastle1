@@ -105,7 +105,7 @@ case class GuiCell(x: Int, y: Int, supervisor: SupervisorInterface, controller: 
         label.icon= new ImageIcon(dimg)
         return
       }catch {
-        case e =>label.icon = new ImageIcon(myPicture)
+        case e:Throwable =>label.icon = new ImageIcon(myPicture)
       }
 
     }
