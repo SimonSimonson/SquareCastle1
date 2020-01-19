@@ -44,7 +44,10 @@ class Xml extends FileIOInterface {
     </playingField>
   }
 
-  override def save(playingField: MapInterface): Unit = saveString(playingField)
+  override def save(playingField: MapInterface): Boolean = {
+    saveString(playingField)
+    true
+  }
 
   def saveString(playingField: MapInterface): Unit = {
     import java.io._

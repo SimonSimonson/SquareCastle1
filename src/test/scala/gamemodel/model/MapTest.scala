@@ -31,6 +31,10 @@ class MapTest extends WordSpec with Matchers {
       field(1)(1)= null
       map.check(legen2, 1, 1) should be (false)
 
+      map.field(1)(0) = null
+      map.field(2)(1) = null
+      map.check(legen2, 1, 1) should be (false)
+
     }
 
 
@@ -52,6 +56,10 @@ class MapTest extends WordSpec with Matchers {
       map.field(2)(1) = new Card(0,0,0,0)
       map.cleanaround(1,1) should be (true)
     }
-
+    "when setCell, get fieldstring" in {
+      map.getFieldString(1,1) should be ("4 4 4 4")
+      map.setCell(1, 1,new Card(0,0,0,0))
+      map.getFieldString(1,1) should be ("0 0 0 0")
+    }
     }}
 }

@@ -37,14 +37,17 @@ class Json extends FileIOInterface {
     playingField
   }
 
-  override def save(playingField: MapInterface): Unit = {
+  override def save(playingField: MapInterface): Boolean = {
     import java.io._
     val pw = new PrintWriter(new File("playingfield.json"))
     pw.write(Json.stringify(fieldToJson(playingField)))
     pw.close()
+    true
   }
 
   def fieldToJson(playingField: MapInterface) = {
+    if(playingField == null)
+       null
     Json.obj(
       "playingfield" -> Json.obj(
         "size" -> JsNumber(playingField.field.length),

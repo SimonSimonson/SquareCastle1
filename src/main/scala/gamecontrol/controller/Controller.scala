@@ -64,12 +64,9 @@ class Controller @Inject() extends ControllerInterface {
   }
   override def showCard(player:PlayerInterface): CardInterface ={
     val card = RandomCard()
-    if(showCard(player,card)) {
-      //publish(new NewRoundEvent)
-      return card
-    }
-    else
-      return null
+    showCard(player,card)
+
+    return card
   }
   def showCard(player: PlayerInterface, card: CardInterface): Boolean ={
     if(card == null)

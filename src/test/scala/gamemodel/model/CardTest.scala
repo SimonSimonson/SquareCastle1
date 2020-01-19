@@ -1,5 +1,7 @@
 package gamemodel.model
 
+import java.util
+
 import gamemodel.model.CardComponent.Card
 import org.scalatest._
 
@@ -44,15 +46,23 @@ class CardTest extends WordSpec with Matchers {
       val karte3 = Card(1,1,1,1)
       val karte4 = Card(2,2,2,2)
 
+      val roads = new util.ArrayList[Card]()
+      karte1.getAngelegteR(0, 1, null, roads ) should be(1)
+      karte1.getAngelegteR(1, 1, null, roads ) should be(1)
+      karte1.getAngelegteR(2, 1, null, roads ) should be(1)
+
       karte1.anlegen(0, karte2)
       karte1.anlegen(1, karte3)
       karte1.anlegen(2, karte4)
 
+      karte1.getAngelegteR(0, 1, null, roads ) should be(2)
+
+
       karte1.cleansides(0) should be (true)
       karte1.cleansides(1) should be (true)
       karte1.cleansides(2) should be (true)
+      karte2.toString should be ("0 0 0 0")
     }
-
   }}
 
 
