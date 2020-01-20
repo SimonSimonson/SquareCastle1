@@ -1,102 +1,18 @@
-<playingField size="10">
+<playingField size="4">
     <cell line="0" row="0"> 4 4 4 4 </cell>
     <cell line="0" row="1"> 4 4 4 4 </cell>
     <cell line="0" row="2"> 4 4 4 4 </cell>
     <cell line="0" row="3"> 4 4 4 4 </cell>
-    <cell line="0" row="4"> 4 4 4 4 </cell>
-    <cell line="0" row="5"> 4 4 4 4 </cell>
-    <cell line="0" row="6"> 4 4 4 4 </cell>
-    <cell line="0" row="7"> 4 4 4 4 </cell>
-    <cell line="0" row="8"> 4 4 4 4 </cell>
-    <cell line="0" row="9"> 4 4 4 4 </cell>
     <cell line="1" row="0"> 4 4 4 4 </cell>
     <cell line="1" row="1"> 4 4 4 4 </cell>
     <cell line="1" row="2"> 4 4 4 4 </cell>
     <cell line="1" row="3"> 4 4 4 4 </cell>
-    <cell line="1" row="4"> 4 4 4 4 </cell>
-    <cell line="1" row="5"> 4 4 4 4 </cell>
-    <cell line="1" row="6"> 4 4 4 4 </cell>
-    <cell line="1" row="7"> 4 4 4 4 </cell>
-    <cell line="1" row="8"> 4 4 4 4 </cell>
-    <cell line="1" row="9"> 4 4 4 4 </cell>
     <cell line="2" row="0"> 4 4 4 4 </cell>
     <cell line="2" row="1"> 4 4 4 4 </cell>
     <cell line="2" row="2"> 4 4 4 4 </cell>
     <cell line="2" row="3"> 4 4 4 4 </cell>
-    <cell line="2" row="4"> 4 4 4 4 </cell>
-    <cell line="2" row="5"> 4 4 4 4 </cell>
-    <cell line="2" row="6"> 4 4 4 4 </cell>
-    <cell line="2" row="7"> 4 4 4 4 </cell>
-    <cell line="2" row="8"> 4 4 4 4 </cell>
-    <cell line="2" row="9"> 4 4 4 4 </cell>
     <cell line="3" row="0"> 4 4 4 4 </cell>
     <cell line="3" row="1"> 4 4 4 4 </cell>
     <cell line="3" row="2"> 4 4 4 4 </cell>
     <cell line="3" row="3"> 4 4 4 4 </cell>
-    <cell line="3" row="4"> 4 4 4 4 </cell>
-    <cell line="3" row="5"> 4 4 4 4 </cell>
-    <cell line="3" row="6"> 4 4 4 4 </cell>
-    <cell line="3" row="7"> 4 4 4 4 </cell>
-    <cell line="3" row="8"> 4 4 4 4 </cell>
-    <cell line="3" row="9"> 4 4 4 4 </cell>
-    <cell line="4" row="0"> 4 4 4 4 </cell>
-    <cell line="4" row="1"> 4 4 4 4 </cell>
-    <cell line="4" row="2"> 4 4 4 4 </cell>
-    <cell line="4" row="3"> 4 4 4 4 </cell>
-    <cell line="4" row="4"> 2 0 0 1 </cell>
-    <cell line="4" row="5"> 4 4 4 4 </cell>
-    <cell line="4" row="6"> 4 4 4 4 </cell>
-    <cell line="4" row="7"> 4 4 4 4 </cell>
-    <cell line="4" row="8"> 4 4 4 4 </cell>
-    <cell line="4" row="9"> 4 4 4 4 </cell>
-    <cell line="5" row="0"> 4 4 4 4 </cell>
-    <cell line="5" row="1"> 4 4 4 4 </cell>
-    <cell line="5" row="2"> 4 4 4 4 </cell>
-    <cell line="5" row="3"> 4 4 4 4 </cell>
-    <cell line="5" row="4"> 4 4 4 4 </cell>
-    <cell line="5" row="5"> 4 4 4 4 </cell>
-    <cell line="5" row="6"> 4 4 4 4 </cell>
-    <cell line="5" row="7"> 4 4 4 4 </cell>
-    <cell line="5" row="8"> 4 4 4 4 </cell>
-    <cell line="5" row="9"> 4 4 4 4 </cell>
-    <cell line="6" row="0"> 4 4 4 4 </cell>
-    <cell line="6" row="1"> 4 4 4 4 </cell>
-    <cell line="6" row="2"> 4 4 4 4 </cell>
-    <cell line="6" row="3"> 4 4 4 4 </cell>
-    <cell line="6" row="4"> 4 4 4 4 </cell>
-    <cell line="6" row="5"> 4 4 4 4 </cell>
-    <cell line="6" row="6"> 4 4 4 4 </cell>
-    <cell line="6" row="7"> 4 4 4 4 </cell>
-    <cell line="6" row="8"> 4 4 4 4 </cell>
-    <cell line="6" row="9"> 4 4 4 4 </cell>
-    <cell line="7" row="0"> 4 4 4 4 </cell>
-    <cell line="7" row="1"> 4 4 4 4 </cell>
-    <cell line="7" row="2"> 4 4 4 4 </cell>
-    <cell line="7" row="3"> 4 4 4 4 </cell>
-    <cell line="7" row="4"> 4 4 4 4 </cell>
-    <cell line="7" row="5"> 4 4 4 4 </cell>
-    <cell line="7" row="6"> 4 4 4 4 </cell>
-    <cell line="7" row="7"> 4 4 4 4 </cell>
-    <cell line="7" row="8"> 4 4 4 4 </cell>
-    <cell line="7" row="9"> 4 4 4 4 </cell>
-    <cell line="8" row="0"> 4 4 4 4 </cell>
-    <cell line="8" row="1"> 4 4 4 4 </cell>
-    <cell line="8" row="2"> 4 4 4 4 </cell>
-    <cell line="8" row="3"> 4 4 4 4 </cell>
-    <cell line="8" row="4"> 4 4 4 4 </cell>
-    <cell line="8" row="5"> 4 4 4 4 </cell>
-    <cell line="8" row="6"> 4 4 4 4 </cell>
-    <cell line="8" row="7"> 4 4 4 4 </cell>
-    <cell line="8" row="8"> 4 4 4 4 </cell>
-    <cell line="8" row="9"> 4 4 4 4 </cell>
-    <cell line="9" row="0"> 4 4 4 4 </cell>
-    <cell line="9" row="1"> 4 4 4 4 </cell>
-    <cell line="9" row="2"> 4 4 4 4 </cell>
-    <cell line="9" row="3"> 4 4 4 4 </cell>
-    <cell line="9" row="4"> 4 4 4 4 </cell>
-    <cell line="9" row="5"> 4 4 4 4 </cell>
-    <cell line="9" row="6"> 4 4 4 4 </cell>
-    <cell line="9" row="7"> 4 4 4 4 </cell>
-    <cell line="9" row="8"> 4 4 4 4 </cell>
-    <cell line="9" row="9"> 4 4 4 4 </cell>
 </playingField>

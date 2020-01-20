@@ -19,8 +19,15 @@ class Xml extends FileIOInterface {
     //val playingField = new Map(size,size)
     val cellNodes = (file \\ "playingField")
     for (x <- cellNodes) {
-      val line: Int = (x \ "@line").text.toInt
-      val row: Int = (x \ "@row").text.toInt
+      try {
+        val line: Int = (x \ "@line").text.toInt
+        val row: Int = (x \ "@row").text.toInt
+      }catch {
+        case e => return null
+      }
+
+
+
       val cell: String = (x \ "@cell").toString
       val ar = cell.split("\\s+")
       val card = new Card( ar(0).toInt,ar(1).toInt,ar(2).toInt,ar(3).toInt)
