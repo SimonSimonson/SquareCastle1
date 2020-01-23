@@ -24,7 +24,6 @@ class Controller @Inject() extends ControllerInterface {
     true
   }
 
-
   override def Calculatebot(bot: KIInterface, card: CardInterface, map:MapInterface):Boolean ={
     if(bot == null)
       return false

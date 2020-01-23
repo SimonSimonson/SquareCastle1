@@ -3,6 +3,7 @@ package gamecontrol.controller.commands
 import gamemodel.model.{CardInterface, MapInterface}
 
 import scala.util.Try
+
 trait Command {
   var x:Int
   var y:Int
