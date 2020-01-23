@@ -8,6 +8,7 @@ import gamecontrol.supervisor.SupervisorInterface
 import gamemodel.model.KIComponent.KI
 import gamemodel.model.MapComponent
 import gamemodel.model.PlayerComponent.Player
+import javafx.scene.media.AudioClip
 //import javafx.scene.media.{AudioClip, Media, MediaPlayer}
 import javax.imageio.ImageIO
 import javax.swing._
@@ -95,14 +96,14 @@ class startScreen(supervisor: SupervisorInterface, controller: ControllerInterfa
     val pvp = new Button("PvP")
     val pvbot = new Button("PvE")
 
-/*
+
     val a = getClass.getResource("./sounds/Soundtrack.mp3")
     println(a.toString)
     val clip = new AudioClip(a.toString)
     clip.play()
 
-
-    val f = new File("/home/simon/IdeaProjects/SquareCastle1/src/main/scala/aview.GUI.GUI.GUI/sounds/Soundtrack.mp3");
+    /*
+    val f = new File("./sounds/Soundtrack.mp3");
     val media = new Media(f.toURI.toString)
     val mediaPlayer: MediaPlayer = new MediaPlayer(media)
     mediaPlayer.setAutoPlay(true)

@@ -1,5 +1,8 @@
+/*
+
 package gamemodel.FileIOComponent.XmlImpl
 
+import com.google.inject.Guice
 import gamemodel.FileIOComponent.FileIOInterface
 import gamemodel.model.CardComponent.Card
 import gamemodel.model.{CardInterface, MapInterface}
@@ -72,3 +75,5 @@ class Xml extends FileIOInterface {
   }
 
 }
+
+*/

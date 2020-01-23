@@ -5,7 +5,7 @@ import com.google.inject.name.Names
 import gamecontrol.controller.{Controller, ControllerInterface}
 import gamecontrol.supervisor.{SupervisorInterface, supervisor}
 import gamemodel.FileIOComponent.FileIOInterface
-import gamemodel.FileIOComponent.XmlImpl.Xml
+
 import gamemodel.model.CardComponent.Card
 import gamemodel.model.KIComponent.KI
 import gamemodel.model.MapComponent.Map
