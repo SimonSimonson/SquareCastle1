@@ -17,7 +17,7 @@ case class layCommand() extends Command{
   override def undo(card: CardInterface,map: MapInterface): Boolean ={
     if(map == null || card == null)
       return false
-    var deleted = map.field(x)(y)
+    val deleted = map.field(x)(y)
     map.field(x)(y) = null
     card.cleanall()
     map.cleanaround(x,y)

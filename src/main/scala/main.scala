@@ -3,6 +3,7 @@ import aview.GUI.startScreen
 import aview.TUI.{TUI, TUIInterface}
 import com.google.inject.{Guice, Injector}
 import gamecontrol.controller.{Controller, ControllerInterface}
+import gamecontrol.states.{PvBot, PvP}
 import gamecontrol.supervisor.{SupervisorInterface, supervisor}
 object main {
   def main(args: Array[String]): Unit = {
@@ -11,16 +12,15 @@ object main {
     val supervisor:SupervisorInterface = injecor.getInstance(classOf[SupervisorInterface])
     supervisor.controller = Controller
     val tui:TUIInterface = new TUI(Controller, supervisor)
-
-    val start = new startScreen(supervisor,Controller)
-
+    //val start = new startScreen(supervisor,Controller)
 
     //////////////////////////////////////////////////INITIALISIERUNG\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
     var mode = false
     var s = ""
 
-    /*for(i <- 0 to 4) {      println(this.card.side0+this.card.side1+this.card.side2+this.card.side3)
+    for(i <- 0 to 4) {
+      //println(this.card.side0+this.card.side1+this.card.side2+this.card.side3)
 
       tui.settings(i, mode)
       mode = !mode
@@ -33,17 +33,15 @@ object main {
         s = scala.io.StdIn.readLine().toString
         tui.input(s)
         tui.settings(i + 1, true)
-        //stateA = PvP
-        Controller.changeState(new StateA)
+        Controller.changeState(new PvP)
       }
       if (er == 302) {
-        //stateB = PvBot
-        Controller.changeState(new StateB)
+        Controller.changeState(new PvBot)
 
       }
       mode= !mode
     }
-*/
+
     tui.update(Console.WHITE + "Spiel wird gestartet", 0)
     supervisor.state = true
 
