@@ -9,7 +9,8 @@ case class Invoker() {
 
     private var stack: List[Command] = Nil
 
-    def ExecuteCommand(command: Command, x:Int, y:Int, card: CardInterface, map:MapInterface):Try[Int]={
+    def ExecuteCommand(command: Command, x:Int, y:Int,
+                       card: CardInterface, map:MapInterface):Try[Int]={
       stack = command::stack
       val problem = command.execute(x,y,card,map)
       problem match {

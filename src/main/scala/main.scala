@@ -20,6 +20,7 @@ object main {
     var s = ""
 
 
+    /*
     for(i <- 0 to 4) {
       //println(this.card.side0+this.card.side1+this.card.side2+this.card.side3)
 
@@ -43,6 +44,8 @@ object main {
       mode= !mode
     }
 
+
+     */
 
     tui.update(Console.WHITE + "Spiel wird gestartet", 0)
     supervisor.state = true
