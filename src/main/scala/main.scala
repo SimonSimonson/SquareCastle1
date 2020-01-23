@@ -12,7 +12,7 @@ object main {
     val supervisor:SupervisorInterface = injecor.getInstance(classOf[SupervisorInterface])
     supervisor.controller = Controller
     val tui:TUIInterface = new TUI(Controller, supervisor)
-    //val start = new startScreen(supervisor,Controller)
+    val start = new startScreen(supervisor,Controller)
 
     //////////////////////////////////////////////////INITIALISIERUNG\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
