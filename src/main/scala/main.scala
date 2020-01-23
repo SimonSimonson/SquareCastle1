@@ -18,6 +18,7 @@ object main {
 
     var mode = false
     var s = ""
+/*
 
     /*
     for(i <- 0 to 4) {
@@ -42,6 +43,7 @@ object main {
       }
       mode= !mode
     }
+*/
 
      */
 
