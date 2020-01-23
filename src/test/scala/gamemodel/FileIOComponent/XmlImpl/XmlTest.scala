@@ -1,3 +1,4 @@
+/*
 import gamemodel.FileIOComponent.XmlImpl.Xml
 import gamemodel.model.MapComponent.Map
 import org.scalatest.{Matchers, WordSpec}
@@ -19,3 +20,4 @@ class XmlTest extends WordSpec with Matchers {
     }
   }
 }
+ */
