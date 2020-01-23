@@ -12,12 +12,13 @@ object main {
     val supervisor:SupervisorInterface = injecor.getInstance(classOf[SupervisorInterface])
     supervisor.controller = Controller
     val tui:TUIInterface = new TUI(Controller, supervisor)
-    //val start = new startScreen(supervisor,Controller)
+    val start = new startScreen(supervisor,Controller)
 
     //////////////////////////////////////////////////INITIALISIERUNG\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
     var mode = false
     var s = ""
+/*
 
     for(i <- 0 to 4) {
       //println(this.card.side0+this.card.side1+this.card.side2+this.card.side3)
@@ -41,6 +42,7 @@ object main {
       }
       mode= !mode
     }
+*/
 
     tui.update(Console.WHITE + "Spiel wird gestartet", 0)
     supervisor.state = true
